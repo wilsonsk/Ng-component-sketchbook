@@ -18,16 +18,11 @@ declare var cordova: any;
   templateUrl: 'inspection-form.html',
 })
 export class InspectionFormComponent {
-  token: string;
-  driver: string;
-  company: string;
   imageUrl = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
-    // this.initDriver();
-    // this.onLoadToken();
   }
 
   onOpenCamera() {
