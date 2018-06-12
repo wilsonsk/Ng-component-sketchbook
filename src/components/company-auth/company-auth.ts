@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 /**
@@ -18,6 +19,19 @@ export class CompanyAuthComponent {
                 private alertCtrl: AlertController) {
     }
 
+    ionViewWillLeave() {
+     let options: NativeTransitionOptions = {
+        direction: 'left',
+        duration: 500,
+        slowdownfactor: 3,
+        slidePixels: 20,
+        androiddelay: 150,
+        fixedPixelsTop: 0,
+        fixedPixelsBottom: 60
+       };
+
+     this.nativePageTransitions.slide(options);
+    }
 
     onSubmit(form: NgForm) {
 
