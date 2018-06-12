@@ -24,7 +24,8 @@ export class InspectionFormComponent {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
-              private camera: Camera, private toastCtrl: ToastController, private file: File) {
+              private camera: Camera, private toastCtrl: ToastController, private file: File,
+              private nativePageTransitions: NativePageTransitions) {
   }
 
   ionViewWillLeave() {

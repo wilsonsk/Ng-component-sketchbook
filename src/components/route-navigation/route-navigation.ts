@@ -17,7 +17,7 @@ export class RouteNavigationComponent {
   currentLatitude: number;
   currentLongitude: number;
 
-  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
+  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation, private nativePageTransitions: NativePageTransitions) {
     this.geolocation.getCurrentPosition().then((resp) => {
      this.currentLatitude = resp.coords.latitude
      this.currentLongitude = resp.coords.longitude
