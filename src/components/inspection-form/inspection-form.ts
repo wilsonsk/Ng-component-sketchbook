@@ -18,7 +18,6 @@ declare var cordova: any;
 @Component({
   selector: 'inspection-form',
   templateUrl: 'inspection-form.html',
-  styleUrl: 'inspection-form.scss'
 })
 export class InspectionFormComponent {
   imageUrl = '';

@@ -10,7 +10,6 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'company-auth',
   templateUrl: 'company-auth.html',
-  styleUrl: 'company-auth.scss'
 })
 export class CompanyAuthComponent {
     token: string;

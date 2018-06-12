@@ -12,7 +12,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 @Component({
   selector: 'route-navigation',
   templateUrl: 'route-navigation.html',
-  styleUrl: 'route-navigation.scss'
 })
 export class RouteNavigationComponent {
   currentLatitude: number;
