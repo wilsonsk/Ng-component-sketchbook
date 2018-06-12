@@ -30,7 +30,6 @@ export class InspectionFormComponent {
 
   ionViewWillLeave() {
    let options: NativeTransitionOptions = {
-      direction: 'left',
       duration: 500,
      };
 
