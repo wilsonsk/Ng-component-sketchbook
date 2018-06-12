@@ -1,0 +1,64 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-card>
+      <ion-row padding>
+        <ion-col offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card-header text-center>
+            <h1>{{ company }}</h1>
+          </ion-card-header>
+        </ion-col>
+      </ion-row>
+      <ion-card-content>
+        <ion-row padding-bottom text-center>
+          <ion-col>
+              <p>{{ driver }}'s vehicle inspection</p>
+          </ion-col>
+        </ion-row>
+        <ion-row padding-verticle>
+          <ion-col>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+              <ion-list>
+                <ion-item>
+                  <ion-label fixed>Field 1</ion-label>
+                  <ion-input type="text" name="field1" placeholder="Some placeholder value" ngModel required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>Field 2</ion-label>
+                  <ion-textarea name="field2" ngModel required></ion-textarea>
+                </ion-item>
+              </ion-list>
+              <ion-grid padding-verticle>
+                <ion-row>
+                  <ion-col>
+                    <h5>Take vehicle inspection photo</h5>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <button ion-button icon-left block outline type="button" (click)="onOpenCamera()">
+                      <ion-icon name="camera"></ion-icon>Open Camera
+                    </button>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="imageUrl !=''">
+                  <ion-col>
+                    <img [src]="imageUrl">
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <button ion-button color="secondary" block type="submit" [disabled]="!f.valid">Submit Vehicle Inspection</button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>
