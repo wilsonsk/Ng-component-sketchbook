@@ -6,32 +6,32 @@
 
 <ion-content>
   <ion-grid>
-    <ion-card>
+    <ion-card class="br3">
       <ion-row>
-        <ion-col text-center>
-          <div class="avenir f-subheadline fw5 tracked mt6">Company Authentication</div>
+        <ion-col>
+          <div class="avenir f-headline fw6 tracked mt6 pl5" style="color:#D87C27">Company Authentication</div>
         </ion-col>
       </ion-row>
-      <ion-card-content>
+      <ion-card-content style="padding:0">
         <ion-row >
-          <ion-col text-center>
-              <div class="avenir f2 mt6">Enter your company code to continue to Driver Login.</div>
+          <ion-col>
+              <div class="avenir f2 mt5 pl5">Enter your company code to continue to Driver Login.</div>
           </ion-col>
         </ion-row>
         <ion-row >
           <ion-col>
-            <form class="mt7" #f="ngForm" (ngSubmit)="onSubmit(f)">
-              <ion-list>
+            <form class="mt6 pb5" #f="ngForm" (ngSubmit)="onSubmit(f)" >
+              <ion-list class="w-60 pl6 pr6">
                 <ion-item class="mb5">
-                  <ion-label floating>Company Name</ion-label>
+                  <ion-label floating style="color:#D87C27">Company Name</ion-label>
                   <ion-input type="text" name="company" ngModel required></ion-input>
                 </ion-item>
                 <ion-item class="mb5">
-                  <ion-label floating>Company Code</ion-label>
+                  <ion-label floating style="color:#D87C27">Company Code</ion-label>
                   <ion-input type="password" name="companyCode" ngModel required></ion-input>
                 </ion-item>
               </ion-list>
-              <button class="mt6" type="submit" ion-button block [disabled]="!f.valid">Submit Code</button>
+              <button class="mt6 w-75" type="submit" ion-button block [disabled]="!f.valid" style="background-color:#D87C27; margin: 0 auto;">Submit Code</button>
             </form >
           </ion-col>
         </ion-row>
