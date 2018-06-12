@@ -22,8 +22,8 @@ export class RouteNavigationComponent {
     let options: LaunchNavigatorOptions = {
       start: "45.6387,	-122.6615",
       app: this.launchNavigator.APP.GOOGLE_MAPS,
-      transportMode: this.launchnavigator.TRANSPORT_MODE.DRIVING,
-      launchModeGoogleMaps: this.launchnavigator.LAUNCH_MODE.TURN_BY_TURN
+      transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
+      launchModeGoogleMaps: this.launchNavigator.LAUNCH_MODE.TURN_BY_TURN
 
     };
 
