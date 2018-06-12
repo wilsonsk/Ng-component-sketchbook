@@ -16,7 +16,7 @@ export class CompanyAuthComponent {
     token: string;
 
     constructor(public navCtrl: NavController, private loadingCtrl: LoadingController,
-                private alertCtrl: AlertController) {
+                private alertCtrl: AlertController, private nativePageTransitions: NativePageTransitions) {
     }
 
     ionViewWillLeave() {
