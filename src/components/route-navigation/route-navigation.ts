@@ -13,8 +13,8 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'route-navigation.html'
 })
 export class RouteNavigationComponent {
-  currentLatitude: string;
-  currentLongitude: string;
+  currentLatitude: number;
+  currentLongitude: number;
 
   constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
     this.geolocation.getCurrentPosition().then((resp) => {
