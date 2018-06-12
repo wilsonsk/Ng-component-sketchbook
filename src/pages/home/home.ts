@@ -17,7 +17,7 @@ export class HomePage {
       duration: 500,
       slowdownfactor: 3,
       slidePixels: 20,
-      androiddelay: 15000,
+      androiddelay: 150,
       fixedPixelsTop: 0,
       fixedPixelsBottom: 60
      };
