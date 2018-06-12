@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -31,6 +32,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp)
   ],
