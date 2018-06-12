@@ -20,11 +20,11 @@ export class RouteNavigationComponent {
 
   openMap() {
     let options: LaunchNavigatorOptions = {
-      start: 'London, ON',
+      start: "50.342847, -4.749904",
       app: this.launchNavigator.APP.GOOGLE_MAPS
     };
 
-    this.launchNavigator.navigate('Toronto, ON', options)
+    this.launchNavigator.navigate('50.442847, -4.749904', options)
       .then(
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)
