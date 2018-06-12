@@ -30,10 +30,16 @@ export class InspectionFormComponent {
 
   ionViewWillLeave() {
    let options: NativeTransitionOptions = {
+      direction: 'left',
       duration: 500,
+      slowdownfactor: 3,
+      slidePixels: 20,
+      androiddelay: 150,
+      fixedPixelsTop: 0,
+      fixedPixelsBottom: 60
      };
 
-   this.nativePageTransitions.drawer(options);
+   this.nativePageTransitions.slide(options);
   }
 
   onOpenCamera() {
