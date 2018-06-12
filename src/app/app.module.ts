@@ -11,6 +11,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -51,6 +52,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     Camera,
     FileTransfer,
     NativePageTransitions,
+    LaunchNavigator,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 /**
  * Generated class for the RouteNavigationComponent component.
@@ -12,11 +13,20 @@ import { Component } from '@angular/core';
 })
 export class RouteNavigationComponent {
 
-  text: string;
 
-  constructor() {
-    console.log('Hello RouteNavigationComponent Component');
-    this.text = 'Hello World';
+  constructor(private launchNavigator: LaunchNavigator) {
+    let options: LaunchNavigatorOptions = {
+      start: 'London, ON',
+      app: LaunchNavigator.APPS.GOOGLE_MAPS
+    };
+
+    this.launchNavigator.navigate('Toronto, ON', options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+
   }
+
 
 }
