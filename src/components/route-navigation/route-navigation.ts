@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Geolocation } from '@ionic-native/geolocation';
 
 /**
@@ -23,6 +24,15 @@ export class RouteNavigationComponent {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+  }
+
+  ionViewWillLeave() {
+   let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 500,
+     };
+
+   this.nativePageTransitions.curl(options);
   }
 
   openMap() {

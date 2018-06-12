@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+
 import { NgForm } from '@angular/forms';
 
 import { Camera } from '@ionic-native/camera';
@@ -23,6 +25,15 @@ export class InspectionFormComponent {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
+  }
+
+  ionViewWillLeave() {
+   let options: NativeTransitionOptions = {
+      direction: 'up',
+      duration: 500,
+     };
+
+   this.nativePageTransitions.curl(options);
   }
 
   onOpenCamera() {

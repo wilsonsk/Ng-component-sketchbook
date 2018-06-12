@@ -27,16 +27,11 @@ export class HomePage {
 
   ionViewWillLeave() {
    let options: NativeTransitionOptions = {
-      direction: 'left',
+      direction: 'up',
       duration: 500,
-      slowdownfactor: 3,
-      slidePixels: 20,
-      androiddelay: 150,
-      fixedPixelsTop: 0,
-      fixedPixelsBottom: 60
      };
 
-   this.nativePageTransitions.slide(options);
+   this.nativePageTransitions.curl(options);
   }
 
 
