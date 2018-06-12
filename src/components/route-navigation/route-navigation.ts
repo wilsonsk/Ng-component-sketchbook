@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the RouteNavigationComponent component.
@@ -12,18 +13,24 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
   templateUrl: 'route-navigation.html'
 })
 export class RouteNavigationComponent {
+  currentLatitude: string;
+  currentLongitude: string;
 
-
-  constructor(private launchNavigator: LaunchNavigator) {
-
+  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation) {
+    this.geolocation.getCurrentPosition().then((resp) => {
+     this.currentLatitude = resp.coords.latitude
+     this.currentLongitude = resp.coords.longitude
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   openMap() {
+
     let options: LaunchNavigatorOptions = {
-      start: "45.6387,	-122.6615",
+      start: this.currentLatitude + ', ' + this.currentLongitude,
       app: this.launchNavigator.APP.GOOGLE_MAPS,
       transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
-      launchModeGoogleMaps: this.launchNavigator.LAUNCH_MODE.TURN_BY_TURN
 
     };
 
