@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <ion-grid>
     <ion-card>
       <ion-row>
@@ -15,23 +15,23 @@
       <ion-card-content>
         <ion-row >
           <ion-col text-center>
-              <div class="avenir f2 mt5">Enter your company code to continue to Driver Login.</div>
+              <div class="avenir f2 mt6">Enter your company code to continue to Driver Login.</div>
           </ion-col>
         </ion-row>
         <ion-row >
           <ion-col>
-            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <form class="mt7" #f="ngForm" (ngSubmit)="onSubmit(f)">
               <ion-list>
-                <ion-item>
+                <ion-item class="mb5">
                   <ion-label floating>Company Name</ion-label>
                   <ion-input type="text" name="company" ngModel required></ion-input>
                 </ion-item>
-                <ion-item>
+                <ion-item class="mb5">
                   <ion-label floating>Company Code</ion-label>
                   <ion-input type="password" name="companyCode" ngModel required></ion-input>
                 </ion-item>
               </ion-list>
-              <button type="submit" ion-button block [disabled]="!f.valid">Submit Code</button>
+              <button class="mt6" type="submit" ion-button block [disabled]="!f.valid">Submit Code</button>
             </form >
           </ion-col>
         </ion-row>

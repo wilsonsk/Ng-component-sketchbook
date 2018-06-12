@@ -10,7 +10,7 @@ import { CompanyAuthComponent } from '../components/company-auth/company-auth';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = CompanyAuthComponent;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
