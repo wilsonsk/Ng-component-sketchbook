@@ -21,6 +21,10 @@ export class HomePage {
 
   constructor(private nativePageTransitions: NativePageTransitions, public navCtrl: NavController) {  }
 
+  ionViewDidEnter() {
+    this.nativePageTransitions.fade(null);
+  }
+
   ionViewWillLeave() {
    let options: NativeTransitionOptions = {
       direction: 'left',
