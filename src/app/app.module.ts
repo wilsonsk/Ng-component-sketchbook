@@ -11,8 +11,6 @@ import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -20,15 +18,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
+import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     TabsPage,
-    InspectionFormComponent
+    InspectionFormComponent,
+    RouteNavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +37,10 @@ import { InspectionFormComponent } from '../components/inspection-form/inspectio
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     TabsPage,
-    InspectionFormComponent
+    InspectionFormComponent,
+    RouteNavigationComponent
   ],
   providers: [
     StatusBar,

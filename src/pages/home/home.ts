@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -7,8 +9,24 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(private nativePageTransitions: NativePageTransitions, public navCtrl: NavController) {  }
 
+  ionViewWillLeave() {
+   let options: NativeTransitionOptions = {
+      direction: 'left',
+      duration: 500,
+      slowdownfactor: 3,
+      slidePixels: 20,
+      androiddelay: 15000,
+      fixedPixelsTop: 0,
+      fixedPixelsBottom: 60
+     };
+
+   this.nativePageTransitions.slide(options);
+  }
+
+  onSuccess() {
+    alert('success')
   }
 
 }
