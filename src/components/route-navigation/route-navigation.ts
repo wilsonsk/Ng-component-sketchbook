@@ -21,7 +21,10 @@ export class RouteNavigationComponent {
   openMap() {
     let options: LaunchNavigatorOptions = {
       start: "45.6387,	-122.6615",
-      app: this.launchNavigator.APP.GOOGLE_MAPS
+      app: this.launchNavigator.APP.GOOGLE_MAPS,
+      transportMode: this.launchnavigator.TRANSPORT_MODE.DRIVING,
+      launchModeGoogleMaps: this.launchnavigator.LAUNCH_MODE.TURN_BY_TURN
+
     };
 
     this.launchNavigator.navigate('45.9387,	-122.6615', options)
