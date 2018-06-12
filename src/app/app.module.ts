@@ -20,6 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { DrivelyLogoComponent } from '../components/drively-logo/drively-logo';
 import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
@@ -30,6 +31,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     HomePage,
     TabsPage,
     CompanyAuthComponent,
+    DrivelyLogoComponent,
     InspectionFormComponent,
     RouteNavigationComponent,
   ],
@@ -46,6 +48,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     HomePage,
     TabsPage,
     CompanyAuthComponent,
+    DrivelyLogoComponent,
     InspectionFormComponent,
     RouteNavigationComponent
   ],

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
 /**
  * Generated class for the CompanyAuthComponent component.
  *
@@ -8,15 +9,40 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'company-auth',
-  templateUrl: 'company-auth.html'
+  templateUrl: 'company-auth.html',
+  styleUrl: 'company-auth.scss'
 })
 export class CompanyAuthComponent {
+    token: string;
 
-  text: string;
+    constructor(public navCtrl: NavController, private loadingCtrl: LoadingController,
+                private alertCtrl: AlertController) {
+    }
 
-  constructor() {
-    console.log('Hello CompanyAuthComponent Component');
-    this.text = 'Hello World';
-  }
+
+    onSubmit(form: NgForm) {
+      const loading = this.loadingCtrl.create({
+        content: 'Checking your company code...'
+      });
+      loading.present();
+
+      this.authService.checkCompanyCode(form.value.company, form.value.companyCode)
+        .subscribe((data) => {
+          console.log('checkCompanyCode: ' + data);
+          if(data) {
+            loading.dismiss();
+            this.navCtrl.setRoot(DriverLoginPage);
+          } else {
+            loading.dismiss();
+            const a = this.alertCtrl.create({
+              title: 'Company Code failed or is expired',
+              buttons: ['OK']
+            });
+            a.present();
+          }
+        });
+    }
+
+
 
 }

@@ -16,6 +16,8 @@ import { NavController } from 'ionic-angular';
   //     ]),
   //   ])
   // ]
+  styleUrl: 'home.scss'
+
 })
 export class HomePage {
 

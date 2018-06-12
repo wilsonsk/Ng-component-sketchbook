@@ -1,4 +1,48 @@
-<!-- Generated template for the CompanyAuthComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-header>
+  <ion-navbar class="h4 pl4">
+    <drively-logo></drively-logo>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-card>
+      <ion-row padding>
+        <ion-col offset-sm-1 offset-md-2 offset-lg-3 offset-xl-4>
+          <drively-logo></drively-logo>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card-header>
+            <h1>Drively</h1>
+          </ion-card-header>
+        </ion-col>
+      </ion-row>
+      <ion-card-content>
+        <ion-row padding-bottom>
+          <ion-col>
+              <p>Welcome, please enter your company code to continue to Driver Login.</p>
+          </ion-col>
+        </ion-row>
+        <ion-row padding-verticle>
+          <ion-col>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+              <ion-list>
+                <ion-item>
+                  <ion-label floating>Company Name</ion-label>
+                  <ion-input type="text" name="company" ngModel required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label floating>Company Code</ion-label>
+                  <ion-input type="password" name="companyCode" ngModel required></ion-input>
+                </ion-item>
+              </ion-list>
+              <button type="submit" ion-button block [disabled]="!f.valid">Submit Code</button>
+            </form >
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>
