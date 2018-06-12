@@ -17,7 +17,7 @@ export class RouteNavigationComponent {
   constructor(private launchNavigator: LaunchNavigator) {
     let options: LaunchNavigatorOptions = {
       start: 'London, ON',
-      app: LaunchNavigator.APPS.GOOGLE_MAPS
+      app: this.launchNavigator.APP.GOOGLE_MAPS
     };
 
     this.launchNavigator.navigate('Toronto, ON', options)
@@ -25,7 +25,6 @@ export class RouteNavigationComponent {
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)
       );
-
   }
 
 
