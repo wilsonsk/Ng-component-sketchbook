@@ -20,6 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
 
@@ -28,8 +29,9 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     MyApp,
     HomePage,
     TabsPage,
+    CompanyAuthComponent,
     InspectionFormComponent,
-    RouteNavigationComponent
+    RouteNavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     MyApp,
     HomePage,
     TabsPage,
+    CompanyAuthComponent,
     InspectionFormComponent,
     RouteNavigationComponent
   ],
