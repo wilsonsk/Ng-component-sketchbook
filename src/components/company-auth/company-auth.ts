@@ -20,26 +20,7 @@ export class CompanyAuthComponent {
 
 
     onSubmit(form: NgForm) {
-      const loading = this.loadingCtrl.create({
-        content: 'Checking your company code...'
-      });
-      loading.present();
 
-      this.authService.checkCompanyCode(form.value.company, form.value.companyCode)
-        .subscribe((data) => {
-          console.log('checkCompanyCode: ' + data);
-          if(data) {
-            loading.dismiss();
-            this.navCtrl.setRoot(DriverLoginPage);
-          } else {
-            loading.dismiss();
-            const a = this.alertCtrl.create({
-              title: 'Company Code failed or is expired',
-              buttons: ['OK']
-            });
-            a.present();
-          }
-        });
     }
 
 
