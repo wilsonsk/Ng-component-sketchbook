@@ -5,11 +5,20 @@ import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+
 })
 export class HomePage {
 
   constructor(private nativePageTransitions: NativePageTransitions, public navCtrl: NavController) {  }
+
+  ionViewDidEnter() {
+    let options: NativeTransitionOptions = {
+       duration: 500,
+      };
+
+    this.nativePageTransitions.fade(options);
+  }
 
   ionViewWillLeave() {
    let options: NativeTransitionOptions = {
@@ -25,8 +34,5 @@ export class HomePage {
    this.nativePageTransitions.slide(options);
   }
 
-  onSuccess() {
-    alert('success')
-  }
 
 }
