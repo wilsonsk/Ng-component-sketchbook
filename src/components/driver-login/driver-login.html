@@ -1,4 +1,41 @@
-<!-- Generated template for the DriverLoginComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-header>
+  <ion-navbar class="h4 pl4">
+    <drively-logo></drively-logo>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-grid>
+    <ion-card class="br3">
+      <ion-row>
+        <ion-col>
+          <div class="avenir f-headline fw6 tracked mt6 pl5" style="color:#D87C27">Company Name placeholder</div>
+        </ion-col>
+      </ion-row>
+      <ion-card-content style="padding:0">
+        <ion-row >
+          <ion-col>
+              <div class="avenir f2 mt5 pl5">Welcome back, please enter your Driver username and password to continue to Clock in.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <form class="mt6 pb5" #f="ngForm" (ngSubmit)="onSubmit(f)">
+              <ion-list class="pl6 pr6">
+                <ion-item class="mb5">
+                  <ion-label floating style="color:#D87C27">Driver User Name</ion-label>
+                  <ion-input type="text" name="driver" ngModel required></ion-input>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label floating style="color:#D87C27">Password</ion-label>
+                  <ion-input type="password" name="password" ngModel required></ion-input>
+                </ion-item>
+              </ion-list>
+              <button class="mt6 w-75" type="submit" ion-button block [disabled]="!f.valid" style="background-color:#D87C27; margin: 0 auto;">Login</button>
+            </form >
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>
