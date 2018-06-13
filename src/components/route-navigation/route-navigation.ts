@@ -18,19 +18,24 @@ export class RouteNavigationComponent {
   currentLatitude: number;
   currentLongitude: number;
   error:string;
+  a = this.alertCtrl.create({
+    title: 'getCrruentPosition.then() was called' + resp.coords,
+    buttons: ['OK']
+  });
+  b = this.alertCtrl.create({
+    title: 'error caught',
+    buttons: ['OK']
+  });
 
   constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation,
               private nativePageTransitions: NativePageTransitions, private alertCtrl: AlertController) {
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      const a = this.alertCtrl.create({
-        title: 'getCrruentPosition.then() was called' + resp.coords,
-        buttons: ['OK']
-      });
       a.present();
      this.currentLatitude = resp.coords.latitude;
      this.currentLongitude = resp.coords.longitude;
     }).catch((error) => {
+      b.present();
       this.error = error.message;
       console.log('Error getting location', error);
     });
