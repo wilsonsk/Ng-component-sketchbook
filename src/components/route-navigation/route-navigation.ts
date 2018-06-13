@@ -22,10 +22,12 @@ export class RouteNavigationComponent {
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider) {
 
-    this.locationProvider.initLocation()
-      .then((loc) => {
-        this.error = 'test';
-      });
+    this.locationProvider.initLocation().then((resp) => {
+      this.location.latitude = resp.coords.latitude;
+      this.location.longitude = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   ionViewWillLeave() {

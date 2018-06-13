@@ -17,12 +17,7 @@ export class LocationProvider {
   constructor(public http: HttpClient, private geolocation: Geolocation) {}
 
   initLocation() {
-      this.geolocation.getCurrentPosition().then((resp) => {
-      this.location.latitude = resp.coords.latitude;
-      this.location.longitude = resp.coords.longitude;
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
+      return this.geolocation.getCurrentPosition();
   }
 
   getLocation() {
