@@ -12,7 +12,7 @@ import { InspectionFormComponent } from '../components/inspection-form/inspectio
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = InspectionFormComponent;
+  rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
