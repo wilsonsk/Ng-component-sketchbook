@@ -13,7 +13,7 @@
     </ion-row>
     <ion-card-content style="padding:0" text-center>
         <button ion-button (click)="openMap()">Open Map</button>
-        <div *ngIf="currentLatitude">Coords: {{ currentLongitude }}, {{ currentLongitude }} Error: {{error}}</div>
+        <div *ngIf="currentLatitude">Coords: {{ location.currentLongitude }}, {{ location.currentLongitude }} Error: {{error}}</div>
       </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
-import { Geolocation } from '@ionic-native/geolocation';
-import { AlertController } from 'ionic-angular';
+
+import { LocationModel } from '../../models/location.model';
+import { LocationProvider } from '../../providers/location/location.provider';
 
 /**
  * Generated class for the RouteNavigationComponent component.
@@ -15,30 +16,16 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'route-navigation.html',
 })
 export class RouteNavigationComponent {
-  currentLatitude: number;
-  currentLongitude: number;
+  location: Location;
   error:string;
-  a = this.alertCtrl.create({
-    title: 'getCrruentPosition.then() was called',
-    buttons: ['OK']
-  });
-  b = this.alertCtrl.create({
-    title: 'error caught',
-    buttons: ['OK']
-  });
 
-  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation,
-              private nativePageTransitions: NativePageTransitions, private alertCtrl: AlertController) {
+  constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
+              private locationProvider:LocationProvider) {
 
-    this.geolocation.getCurrentPosition().then((resp) => {
-      this.a.present();
-     this.currentLatitude = resp.coords.latitude;
-     this.currentLongitude = resp.coords.longitude;
-    }).catch((error) => {
-      this.b.present();
-      this.error = error.message;
-      console.log('Error getting location', error);
-    });
+    this.location = this.locationProvider.getLocation()
+      // .then((loc) => {
+      //   this.location = loc;
+      // });
   }
 
   ionViewWillLeave() {
@@ -58,7 +45,7 @@ export class RouteNavigationComponent {
   openMap() {
 
     let options: LaunchNavigatorOptions = {
-      start: this.currentLatitude + ', ' + this.currentLongitude,
+      start: this.location.currentLatitude + ', ' + this.location.currentLongitude,
       app: this.launchNavigator.APP.GOOGLE_MAPS,
       transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
 

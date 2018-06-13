@@ -26,6 +26,8 @@ import { DriverLoginComponent } from '../components/driver-login/driver-login';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
 
+import { LocationProvider } from '../providers/location/location.provider';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -64,6 +66,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
     NativePageTransitions,
     LaunchNavigator,
     Geolocation,
+    LocationProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
