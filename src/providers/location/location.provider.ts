@@ -12,18 +12,21 @@ import { LocationModel } from '../../models/location.model';
 */
 @Injectable()
 export class LocationProvider {
-  location: LocationModel;
+  private location: LocationModel;
 
   constructor(public http: HttpClient, private geolocation: Geolocation) {}
 
-  getLocation() {
-    this.geolocation.getCurrentPosition().then((resp) => {
+  initLocation() {
+    return this.geolocation.getCurrentPosition().then((resp) => {
      this.location.latitude = resp.coords.latitude;
      this.location.longitude = resp.coords.longitude;
-     return this.location;
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+  }
+
+  getLocation() {
+    return this.location;
   }
 
 }
