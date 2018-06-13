@@ -16,7 +16,7 @@ import { LocationProvider } from '../../providers/location/location.provider';
   templateUrl: 'route-navigation.html',
 })
 export class RouteNavigationComponent {
-  location: Location;
+  location: LocationModel;
   error:string;
 
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
