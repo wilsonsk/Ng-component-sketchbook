@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { LocationProvider } from '../../providers/location/location.provider';
   selector: 'route-navigation',
   templateUrl: 'route-navigation.html',
 })
-export class RouteNavigationComponent implements OnDestroy {
+export class RouteNavigationComponent {
   private locationChangedSubscription: Subscription;
   location: LocationModel;
   message:string;
@@ -24,6 +24,11 @@ export class RouteNavigationComponent implements OnDestroy {
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider) {
 
+
+  }
+
+  ionViewWillEnter() {
+    // locationChangedSubscription needs to be tested
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.location = this.locationProvider.getLocation();
     });
@@ -32,7 +37,6 @@ export class RouteNavigationComponent implements OnDestroy {
       this.location = this.locationProvider.getLocation();
       this.message = JSON.stringify(this.location);
     });
-    ;
   }
 
   ionViewWillLeave() {
@@ -47,6 +51,8 @@ export class RouteNavigationComponent implements OnDestroy {
      };
 
    this.nativePageTransitions.slide(options);
+
+   this.locationChangedSubscription.unsubscribe();
   }
 
   openMap() {
@@ -62,10 +68,6 @@ export class RouteNavigationComponent implements OnDestroy {
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)
       );
-  }
-
-  ngOnDestroy() {
-    this.locationChangedSubscription.unsubscribe();
   }
 
 }

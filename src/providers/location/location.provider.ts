@@ -20,17 +20,18 @@ export class LocationProvider implements OnDestroy {
   private location: LocationModel;
 
   constructor(public http: HttpClient, private geolocation: Geolocation) {
-    this.locationChangedSubscription = this.geolocation.watchPosition()
-      .filter((p) => p.coords !== undefined) //Filter Out Errors
-      .subscribe(resp => {
-        this.location = new LocationModel(resp.coords.latitude, resp.coords.longitude);
-        this.locationChanged.next();
-      });
+
   }
 
   initLocation() {
-      return this.geolocation.getCurrentPosition().then((resp) => {
+    return this.geolocation.getCurrentPosition().then((resp) => {
       this.location = new LocationModel(resp.coords.latitude, resp.coords.longitude);
+      this.locationChangedSubscription = this.geolocation.watchPosition()
+        .filter((p) => p.coords !== undefined) //Filter Out Errors
+        .subscribe(pos => {
+          this.location = new LocationModel(pos.coords.latitude, pos.coords.longitude);
+          this.locationChanged.next();
+        });
     }).catch((error) => {
       console.log('Error getting location', error);
     });
