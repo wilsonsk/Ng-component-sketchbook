@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Geolocation } from '@ionic-native/geolocation';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the RouteNavigationComponent component.
@@ -14,12 +15,19 @@ import { Geolocation } from '@ionic-native/geolocation';
   templateUrl: 'route-navigation.html',
 })
 export class RouteNavigationComponent {
-  currentLatitude: string;
-  currentLongitude: string;
+  currentLatitude: number;
+  currentLongitude: number;
   error:string;
 
-  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation, private nativePageTransitions: NativePageTransitions) {
+  constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation,
+              private nativePageTransitions: NativePageTransitions, private alertCtrl: AlertController) {
+
     this.geolocation.getCurrentPosition().then((resp) => {
+      const a = this.alertCtrl.create({
+        title: 'getCrruentPosition.then() was called' + resp.coords,
+        buttons: ['OK']
+      });
+      a.present();
      this.currentLatitude = resp.coords.latitude;
      this.currentLongitude = resp.coords.longitude;
     }).catch((error) => {
