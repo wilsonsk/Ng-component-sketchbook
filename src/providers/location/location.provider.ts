@@ -19,7 +19,7 @@ export class LocationProvider {
   }
 
   initLocation() {
-      this.geolocation.getCurrentPosition().then((resp) => {
+      return this.geolocation.getCurrentPosition().then((resp) => {
       this.location = new LocationModel(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
       console.log('Error getting location', error);

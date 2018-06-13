@@ -22,7 +22,10 @@ export class RouteNavigationComponent {
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider) {
 
-    this.location = this.locationProvider.getLocation();
+    this.locationProvider.initLocation().then(() => {
+      this.location = this.locationProvider.getLocation();
+    });
+    ;
   }
 
   ionViewWillLeave() {
@@ -40,7 +43,7 @@ export class RouteNavigationComponent {
   }
 
   openMap() {
-
+    this.error = JSON.stringify(this.location);
     let options: LaunchNavigatorOptions = {
       start: this.location.latitude + ', ' + this.location.longitude,
       app: this.launchNavigator.APP.GOOGLE_MAPS,
