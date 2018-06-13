@@ -16,12 +16,14 @@ import { Geolocation } from '@ionic-native/geolocation';
 export class RouteNavigationComponent {
   currentLatitude: number;
   currentLongitude: number;
+  error:string;
 
   constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation, private nativePageTransitions: NativePageTransitions) {
     this.geolocation.getCurrentPosition().then((resp) => {
      this.currentLatitude = resp.coords.latitude
      this.currentLongitude = resp.coords.longitude
     }).catch((error) => {
+      this.error = error;
       console.log('Error getting location', error);
     });
   }
