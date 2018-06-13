@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Subject } from 'rxjs';
 
 import { LocationModel } from '../../models/location.model';
 
@@ -12,10 +13,12 @@ import { LocationModel } from '../../models/location.model';
 */
 @Injectable()
 export class LocationProvider {
+  locationChanged = new Subject<any>();
   private location: LocationModel;
 
   constructor(public http: HttpClient, private geolocation: Geolocation) {
-    this.initLocation();
+    alert('called')
+    // this.initLocation();
   }
 
   initLocation() {

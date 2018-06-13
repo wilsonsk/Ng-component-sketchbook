@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { Subscription } from 'rxjs';
 
 import { LocationModel } from '../../models/location.model';
 import { LocationProvider } from '../../providers/location/location.provider';
@@ -15,12 +16,17 @@ import { LocationProvider } from '../../providers/location/location.provider';
   selector: 'route-navigation',
   templateUrl: 'route-navigation.html',
 })
-export class RouteNavigationComponent {
+export class RouteNavigationComponent implements OnDestroy {
+  private locationChangedSubscription: Subscription;
   location: LocationModel;
   message:string;
 
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider) {
+
+    this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
+      this.location = this.locationProvider.getLocation();
+    });
 
     this.locationProvider.initLocation().then(() => {
       this.location = this.locationProvider.getLocation();
@@ -56,6 +62,10 @@ export class RouteNavigationComponent {
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)
       );
+  }
+
+  ngOnDestroy() {
+    this.locationChangedSubscription.unsubscribe();
   }
 
 }
