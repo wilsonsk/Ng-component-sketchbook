@@ -14,10 +14,17 @@ import { LocationModel } from '../../models/location.model';
 export class LocationProvider {
   private location: LocationModel;
 
-  constructor(public http: HttpClient, private geolocation: Geolocation) {}
+  constructor(public http: HttpClient, private geolocation: Geolocation) {
+    this.initLocation();
+  }
 
   initLocation() {
-      return this.geolocation.getCurrentPosition();
+      this.geolocation.getCurrentPosition().then((resp) => {
+      this.location.latitude = resp.coords.latitude;
+      this.location.longitude = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
   }
 
   getLocation() {
