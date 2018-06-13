@@ -12,7 +12,7 @@ import { LocationModel } from '../../models/location.model';
 */
 @Injectable()
 export class LocationProvider {
-  location: Location;
+  location: LocationModel;
 
   constructor(public http: HttpClient, private geolocation: Geolocation) {}
 
