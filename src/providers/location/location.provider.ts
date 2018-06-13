@@ -22,7 +22,6 @@ export class LocationProvider {
      this.location.currentLongitude = resp.coords.longitude;
      return this.location;
     }).catch((error) => {
-      this.error = error.message;
       console.log('Error getting location', error);
     });
   }
