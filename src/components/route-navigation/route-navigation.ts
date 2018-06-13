@@ -19,7 +19,7 @@ export class RouteNavigationComponent {
   currentLongitude: number;
   error:string;
   a = this.alertCtrl.create({
-    title: 'getCrruentPosition.then() was called' + resp.coords,
+    title: 'getCrruentPosition.then() was called',
     buttons: ['OK']
   });
   b = this.alertCtrl.create({
