@@ -20,10 +20,10 @@ export class RouteNavigationComponent {
 
   constructor(private launchNavigator: LaunchNavigator, private geolocation: Geolocation, private nativePageTransitions: NativePageTransitions) {
     this.geolocation.getCurrentPosition().then((resp) => {
-     this.currentLatitude = resp.coords.latitude
-     this.currentLongitude = resp.coords.longitude
+     this.currentLatitude = 3;
+     this.currentLongitude = 3;
     }).catch((error) => {
-      this.error = error;
+      this.error = error.message;
       console.log('Error getting location', error);
     });
   }
