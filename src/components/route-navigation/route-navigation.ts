@@ -31,11 +31,11 @@ export class RouteNavigationComponent {
               private nativePageTransitions: NativePageTransitions, private alertCtrl: AlertController) {
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      a.present();
+      this.a.present();
      this.currentLatitude = resp.coords.latitude;
      this.currentLongitude = resp.coords.longitude;
     }).catch((error) => {
-      b.present();
+      this.b.present();
       this.error = error.message;
       console.log('Error getting location', error);
     });
