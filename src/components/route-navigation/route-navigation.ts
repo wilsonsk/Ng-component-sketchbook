@@ -17,13 +17,14 @@ import { LocationProvider } from '../../providers/location/location.provider';
 })
 export class RouteNavigationComponent {
   location: LocationModel;
-  error:string;
+  message:string;
 
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider) {
 
     this.locationProvider.initLocation().then(() => {
       this.location = this.locationProvider.getLocation();
+      this.message = JSON.stringify(this.location);
     });
     ;
   }
@@ -43,14 +44,13 @@ export class RouteNavigationComponent {
   }
 
   openMap() {
-    this.error = JSON.stringify(this.location);
     let options: LaunchNavigatorOptions = {
       start: this.location.latitude + ', ' + this.location.longitude,
       app: this.launchNavigator.APP.GOOGLE_MAPS,
       transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
-
     };
 
+    // get first param from Drively API
     this.launchNavigator.navigate('45.9387,	-122.6615', options)
       .then(
         success => console.log('Launched navigator'),
