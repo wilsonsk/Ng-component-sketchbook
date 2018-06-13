@@ -18,8 +18,8 @@ export class LocationProvider {
 
   getLocation() {
     this.geolocation.getCurrentPosition().then((resp) => {
-     this.location.currentLatitude = resp.coords.latitude;
-     this.location.currentLongitude = resp.coords.longitude;
+     this.location.latitude = resp.coords.latitude;
+     this.location.longitude = resp.coords.longitude;
      return this.location;
     }).catch((error) => {
       console.log('Error getting location', error);
