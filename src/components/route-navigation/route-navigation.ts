@@ -24,7 +24,7 @@ export class RouteNavigationComponent {
 
     this.locationProvider.initLocation()
       .then((loc) => {
-        this.location = this.locationProvider.getLocation();
+        this.error = 'test';
       });
   }
 
