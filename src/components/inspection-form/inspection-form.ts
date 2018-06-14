@@ -38,13 +38,21 @@ export class InspectionFormComponent {
     let driverName:string = '';
     let date:string = '';
     let cabNumber:number;
-    let idBadge:boolean;
+    let idBadge:boolean = false;
+    let paperWork:boolean = false;
+    let cleanCar:boolean = false;
+    let phoneAndCharger:boolean = false;
+    let gasCard:boolean = false;
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
       'date': new FormControl(date, Validators.required),
       'cabNumber': new FormControl(cabNumber, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'idBadge': new FormControl(idBadge),
+      'paperWork': new FormControl(paperWork),
+      'cleanCar': new FormControl(cleanCar),
+      'phoneAndCharger': new FormControl(phoneAndCharger),
+      'gasCard': new FormControl(gasCard),
     })
   }
 
@@ -114,6 +122,10 @@ export class InspectionFormComponent {
           this.inspectionForm.value['date'],
           this.inspectionForm.value['cabNumber'],
           this.inspectionForm.value['idBadge'],
+          this.inspectionForm.value['paperWork'],
+          this.inspectionForm.value['cleanCar'],
+          this.inspectionForm.value['phoneAndCharger'],
+          this.inspectionForm.value['gasCard'],
         );
 
         alert(JSON.stringify(this.formToSubmit))

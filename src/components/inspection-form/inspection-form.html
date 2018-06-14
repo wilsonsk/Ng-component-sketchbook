@@ -22,7 +22,7 @@
           <ion-col>
             <form class="mt6 pb5" [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
               <ion-list class="pl6 pr6">
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label for="driverName" floating>Driver's Name</ion-label>
                   <ion-input type="text" name="driverName" class="form-control" formControlName="driverName"></ion-input>
                 </ion-item>
@@ -36,8 +36,24 @@
                   <p *ngIf="!inspectionForm.get('cabNumber').valid && (inspectionForm.get('cabNumber').dirty || inspectionForm.get('cabNumber').touched)">Cab # INVALID</p>
                 </ion-item>
                 <ion-item class="mb5">
-                  <ion-label>ID Badge</ion-label>
-                  <ion-checkbox name="idBadge" formControlName="idBadge" color="vibrant"></ion-checkbox>
+                  <ion-label>ID Badge (daily)</ion-label>
+                  <ion-checkbox name="idBadge" formControlName="idBadge"></ion-checkbox>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label>Paperwork (daily)</ion-label>
+                  <ion-toggle name="paperWork" formControlName="paperWork"></ion-toggle>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label>Clean Car (all garbage needs to be removed daily)</ion-label>
+                  <ion-toggle name="cleanCar" formControlName="cleanCar"></ion-toggle>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label>Phone / Charger (daily)</ion-label>
+                  <ion-toggle name="phoneAndCharger" formControlName="phoneAndCharger"></ion-toggle>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label>Gar Card (daily)</ion-label>
+                  <ion-toggle name="gasCard" formControlName="gasCard"></ion-toggle>
                 </ion-item>
               </ion-list>
               <ion-grid>
