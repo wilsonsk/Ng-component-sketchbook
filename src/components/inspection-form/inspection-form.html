@@ -23,20 +23,20 @@
             <form class="mt6 pb5" [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
               <ion-list class="pl6 pr6">
                 <ion-item class="mb5">
-                  <ion-label for="driverName" fixed>Driver's Name</ion-label>
-                  <input type="text" name="driverName" class="form-control" formControlName="driverName">
+                  <ion-label for="driverName" floating>Driver's Name</ion-label>
+                  <ion-input type="text" name="driverName" class="form-control" formControlName="driverName"></ion-input>
                 </ion-item>
                 <ion-item class="mb5">
-                  <ion-label fixed>Date</ion-label>
+                  <ion-label>Date</ion-label>
                   <ion-datetime displayFormat="MM/DD/YYYY" name="date" formControlName="date"></ion-datetime>
                 </ion-item>
                 <ion-item class="mb5">
-                  <ion-label fixed>Cab #</ion-label>
-                  <input type="text" name="cabNumber" class="form-control" formControlName="cabNumber">
+                  <ion-label floating>Cab #</ion-label>
+                  <ion-input type="text" name="cabNumber" class="form-control" formControlName="cabNumber"></ion-input>
                 </ion-item>
                 <ion-item class="mb5">
                   <ion-label>ID Badge</ion-label>
-                  <ion-checkbox name="idBadge" formControlName="idBadge"></ion-checkbox>
+                  <ion-checkbox name="idBadge" formControlName="idBadge" color="vibrant"></ion-checkbox>
                 </ion-item>
               </ion-list>
               <ion-grid>

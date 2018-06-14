@@ -34,15 +34,15 @@ export class InspectionFormComponent {
   }
 
   initForm() {
-    let driverName = '';
-    let date = '';
-    let cabNumber = '';
-    let idBadge = '';
+    let driverName:string = '';
+    let date:string = '';
+    let cabNumber:number = '';
+    let idBadge:string = '';
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
       'date': new FormControl(date, Validators.required),
-      'cabNumber': new FormControl(cabNumber, Validators.required),
+      'cabNumber': new FormControl(cabNumber, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'idBadge': new FormControl(idBadge, Validators.required),
     })
   }
