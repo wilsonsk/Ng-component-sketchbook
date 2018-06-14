@@ -36,7 +36,7 @@ export class InspectionFormComponent {
   initForm() {
     let driverName:string = '';
     let date:string = '';
-    let cabNumber:number = '';
+    let cabNumber:number;
     let idBadge:string = '';
 
     this.inspectionForm = new FormGroup({
