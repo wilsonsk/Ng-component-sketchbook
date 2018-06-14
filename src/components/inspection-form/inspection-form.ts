@@ -38,7 +38,7 @@ export class InspectionFormComponent {
     let driverName:string = '';
     let date:string = '';
     let cabNumber:number;
-    let idBadge:string = '';
+    let idBadge:boolean;
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
@@ -116,7 +116,7 @@ export class InspectionFormComponent {
           this.inspectionForm.value['idBadge'],
         );
 
-        alert(this.formToSubmit)
+        alert(JSON.stringify(this.formToSubmit))
 
     }
 

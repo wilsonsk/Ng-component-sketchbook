@@ -3,6 +3,6 @@ export class VehicleInspectionFormModel {
       public driverName: string,
       public date: string,
       public cabNumber: number,
-      public idBadge: string,
+      public idBadge: boolean,
     ) {}
 }
