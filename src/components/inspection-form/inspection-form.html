@@ -18,35 +18,35 @@
             <form class="mt6 pb5" [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
               <ion-list class="pl6 pr6">
                 <ion-item class="mb5 avenir">
-                  <ion-label class="avenir" for="driverName" floating>Driver's Name</ion-label>
-                  <ion-input class="avenir" type="text" name="driverName" class="form-control" formControlName="driverName"></ion-input>
+                  <ion-label for="driverName" floating>Driver's Name</ion-label>
+                  <ion-input type="text" name="driverName" class="form-control" formControlName="driverName"></ion-input>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>Date</ion-label>
                   <ion-datetime displayFormat="MM/DD/YYYY" name="date" formControlName="date"></ion-datetime>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label floating>Cab #</ion-label>
                   <ion-input type="text" name="cabNumber" class="form-control" formControlName="cabNumber"></ion-input>
                   <p *ngIf="!inspectionForm.get('cabNumber').valid && (inspectionForm.get('cabNumber').dirty || inspectionForm.get('cabNumber').touched)">Cab # INVALID</p>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>ID Badge (daily)</ion-label>
                   <ion-checkbox name="idBadge" formControlName="idBadge"></ion-checkbox>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>Paperwork (daily)</ion-label>
                   <ion-toggle name="paperWork" formControlName="paperWork"></ion-toggle>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>Clean Car (all garbage needs to be removed daily)</ion-label>
                   <ion-toggle name="cleanCar" formControlName="cleanCar"></ion-toggle>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>Phone / Charger (daily)</ion-label>
                   <ion-toggle name="phoneAndCharger" formControlName="phoneAndCharger"></ion-toggle>
                 </ion-item>
-                <ion-item class="mb5">
+                <ion-item class="mb5 avenir">
                   <ion-label>Gar Card (daily)</ion-label>
                   <ion-toggle name="gasCard" formControlName="gasCard"></ion-toggle>
                 </ion-item>
