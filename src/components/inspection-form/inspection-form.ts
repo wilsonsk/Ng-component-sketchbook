@@ -23,6 +23,7 @@ declare var cordova: any;
 })
 export class InspectionFormComponent {
   inspectionForm: FormGroup;
+  formToSubmit: VehicleInspectionFormModel;
   imageUrl = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -108,12 +109,14 @@ export class InspectionFormComponent {
       // });
       // loading.present();
 
-      const formToSubmit = new VehicleInspectionFormModel(
-        this.inspectionForm.value['driverName'],
-        this.inspectionForm.value['date'],
-        this.inspectionForm.value['cabNumber'],
-        this.inspectionForm.value['idBadge'],
-      );
+        this.formToSubmit = new VehicleInspectionFormModel(
+          this.inspectionForm.value['driverName'],
+          this.inspectionForm.value['date'],
+          this.inspectionForm.value['cabNumber'],
+          this.inspectionForm.value['idBadge'],
+        );
+
+        alert(this.formToSubmit)
 
     }
 
