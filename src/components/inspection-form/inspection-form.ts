@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 import { NgForm } from '@angular/forms';
 
@@ -20,16 +21,33 @@ declare var cordova: any;
   templateUrl: 'inspection-form.html',
 })
 export class InspectionFormComponent {
+  inspectionForm: FormGroup;
   imageUrl = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private loadingCtrl: LoadingController, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File,
               private nativePageTransitions: NativePageTransitions) {
+
+    this.initForm();
+  }
+
+  initForm() {
+    let driverName = '';
+    let date = '';
+    let cabNumber = '';
+    let idBadge = '';
+
+    this.inspectionForm = new FormGroup({
+      'driverName': new FormControl(driverName, Validators.required),
+      'date': new FormControl(date, Validators.required),
+      'cabNumber': new FormControl(cabNumber, Validators.required),
+      'idBadge': new FormControl(idBadge, Validators.required),
+    })
   }
 
   ionViewWillLeave() {
-   let options: NativeTransitionOptions = {
+    let options: NativeTransitionOptions = {
       direction: 'left',
       duration: 500,
       slowdownfactor: 3,
@@ -39,7 +57,7 @@ export class InspectionFormComponent {
       fixedPixelsBottom: 60
      };
 
-   this.nativePageTransitions.slide(options);
+    this.nativePageTransitions.slide(options);
   }
 
   onOpenCamera() {
@@ -84,10 +102,17 @@ export class InspectionFormComponent {
     }
 
     onSubmit(form: NgForm) {
-      const loading = this.loadingCtrl.create({
-        content: 'Submitting your vehicle inspection...'
-      });
-      loading.present();
+      // const loading = this.loadingCtrl.create({
+      //   content: 'Submitting your vehicle inspection...'
+      // });
+      // loading.present();
+
+      const newRecipe = new Recipe(
+        this.inspectionForm.value['driverName'],
+        this.inspectionForm.value['date'],
+        this.inspectionForm.value['cabNumber'],
+        this.inspectionForm.value['idBadge'],
+      );
 
     }
 

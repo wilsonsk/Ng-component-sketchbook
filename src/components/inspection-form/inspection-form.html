@@ -20,15 +20,23 @@
         </ion-row>
         <ion-row >
           <ion-col>
-            <form class="mt6 pb5" #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <form class="mt6 pb5" [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
               <ion-list class="pl6 pr6">
                 <ion-item class="mb5">
-                  <ion-label fixed>Date</ion-label>
-                  <ion-datetime displayFormat="MM/DD/YYYY" name="date" ngModel></ion-datetime>
+                  <ion-label for="driverName" fixed>Driver's Name</ion-label>
+                  <input type="text" name="driverName" class="form-control" formControlName="driverName">
                 </ion-item>
                 <ion-item class="mb5">
-                  <ion-label >ID Badge</ion-label>
-                  <ion-checkbox name="idBadge" ngModel></ion-checkbox>
+                  <ion-label fixed>Date</ion-label>
+                  <ion-datetime displayFormat="MM/DD/YYYY" name="date" formControlName="date"></ion-datetime>
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label fixed>Cab #</ion-label>
+                  <input type="text" name="cabNumber" class="form-control" formControlName="cabNumber">
+                </ion-item>
+                <ion-item class="mb5">
+                  <ion-label>ID Badge</ion-label>
+                  <ion-checkbox name="idBadge" formControlName="idBadge"></ion-checkbox>
                 </ion-item>
               </ion-list>
               <ion-grid>
@@ -51,7 +59,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col>
-                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!f.valid" style="background-color:#D87C27; margin: 0 auto;">Submit Vehicle Inspection</button>
+                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!inspectionForm.valid" style="background-color:#D87C27; margin: 0 auto;">Submit Vehicle Inspection</button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
