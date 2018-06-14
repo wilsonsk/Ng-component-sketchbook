@@ -3,7 +3,8 @@ import { NavController, NavParams, LoadingController, ToastController, AlertCont
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
-import { NgForm } from '@angular/forms';
+import { VehicleInspectionFormModel } from '../../models/vehicle-inspection-form.model';
+
 
 import { Camera } from '@ionic-native/camera';
 import { File, Entry, FileError } from '@ionic-native/file';
@@ -107,7 +108,7 @@ export class InspectionFormComponent {
       // });
       // loading.present();
 
-      const newRecipe = new Recipe(
+      const formToSubmit = new VehicleInspectionFormModel(
         this.inspectionForm.value['driverName'],
         this.inspectionForm.value['date'],
         this.inspectionForm.value['cabNumber'],
