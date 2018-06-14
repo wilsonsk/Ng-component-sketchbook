@@ -102,7 +102,7 @@ export class InspectionFormComponent {
         });
     }
 
-    onSubmit(form: NgForm) {
+    onSubmit() {
       // const loading = this.loadingCtrl.create({
       //   content: 'Submitting your vehicle inspection...'
       // });
