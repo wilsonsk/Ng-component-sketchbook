@@ -26,6 +26,7 @@ export class InspectionFormComponent {
   formToSubmit: VehicleInspectionFormModel;
   oilChangeDueFlag: boolean = false;
   firstAidKitFlag: boolean = false;
+  bioHazardKitFlag: boolean = false;
   imageUrl = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -55,6 +56,8 @@ export class InspectionFormComponent {
     let accidentReports:boolean = false;
     let firstAidKit:boolean = false;
     let firstAidKitItemsToReplace = new FormArray([]);
+    let bioHazardKit:boolean = false;
+    let bioHazardKitItemsToReplace = new FormArray([]);
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
@@ -75,6 +78,8 @@ export class InspectionFormComponent {
       'accidentReports': new FormControl(accidentReports),
       'firstAidKit': new FormControl(firstAidKit),
       'firstAidKitItemsToReplace': firstAidKitItemsToReplace,
+      'bioHazardKit': new FormControl(bioHazardKit),
+      'bioHazardKitItemsToReplace': bioHazardKitItemsToReplace,
     })
   }
 
@@ -85,7 +90,10 @@ export class InspectionFormComponent {
     // loading.present();
 
       if(!this.firstAidKitFlag) {
-        this.inspectionForm.value['firstAidKitItemsToReplace'] = {};
+        this.inspectionForm.value['firstAidKitItemsToReplace'] = null;
+      }
+      if(!this.bioHazardKitFlag) {
+        this.inspectionForm.value['bioHazardKitItemsToReplace'] = null;
       }
 
       this.formToSubmit = new VehicleInspectionFormModel(
@@ -107,6 +115,8 @@ export class InspectionFormComponent {
         this.inspectionForm.value['accidentReports'],
         this.inspectionForm.value['firstAidKit'],
         this.inspectionForm.value['firstAidKitItemsToReplace'],
+        this.inspectionForm.value['bioHazardKit'],
+        this.inspectionForm.value['bioHazardKitItemsToReplace'],
       );
       alert(JSON.stringify(this.formToSubmit))
   }
@@ -177,12 +187,6 @@ export class InspectionFormComponent {
     }
 
     onFirstAidKit() {
-      // If these form values are NULL then oil change is NOT due
-      if(this.firstAidKitFlag) {
-        // this.inspectionForm.value['firstAidKitItemsToReplace'] = null;
-        // this.inspectionForm.value['oilChangeMileage'] = null;
-        // this.inspectionForm.value['currentMileage'] = null;
-      }
       this.firstAidKitFlag = !this.firstAidKitFlag;
     }
 
@@ -195,6 +199,21 @@ export class InspectionFormComponent {
 
     onDeleteFirstAidKitItem(index:number) {
       (<FormArray>this.inspectionForm.get('firstAidKitItemsToReplace')).removeAt(index);
+    }
+
+    onBioHazardKit() {
+      this.bioHazardKitFlag = !this.bioHazardKitFlag;
+    }
+
+    onAddBioHazardKitItem() {
+      (<FormArray>this.inspectionForm.get('bioHazardKitItemsToReplace')).push(new FormGroup({
+        'itemName': new FormControl(null, Validators.required),
+        'itemQuantity': new FormControl(null, [Validators.required])
+      }));
+    }
+
+    onDeleteBioHazardKitItem(index:number) {
+      (<FormArray>this.inspectionForm.get('bioHazardKitItemsToReplace')).removeAt(index);
     }
 
 }

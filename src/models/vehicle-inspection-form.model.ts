@@ -1,4 +1,5 @@
 import { FirstAidKitItemModel } from './first-aid-kit-item.model';
+import { BioHazardKitItemModel } from './bio-hazard-kit-item.model';
 
 export class VehicleInspectionFormModel {
     constructor(
@@ -20,5 +21,7 @@ export class VehicleInspectionFormModel {
       public accidentReports: boolean,
       public firstAidKit: boolean,
       public firstAidKitItemsToReplace: FirstAidKitItemModel[],
+      public bioHazardKit: boolean,
+      public bioHazardKitItemsToReplace: BioHazardKitItemModel[],
     ) {}
 }

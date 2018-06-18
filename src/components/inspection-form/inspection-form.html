@@ -105,6 +105,29 @@
                     </ion-col>
                   </ion-row>
                 </div>
+                <ion-item class="avenir mb5">
+                  <ion-label>BIO Hazard Kit (when entering a new car)</ion-label>
+                  <ion-checkbox name="bioHazardKit" formControlName="bioHazardKit" (ionChange)="onBioHazardKit()"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="bioHazardKitFlag">
+                  <ion-label>Items to be Replaced</ion-label>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="bioHazardKitFlag">
+                  <button ion-button type="button" (click)="onAddBioHazardKitItem()">Add BIO Hazard Kit Item</button>
+                </ion-item>
+                <div class="avenir mb5 ml5" formArrayName="bioHazardKitItemsToReplace" *ngIf="bioHazardKitFlag">
+                  <ion-row *ngFor="let item of inspectionForm.get('bioHazardKitItemsToReplace').controls; let i = index;" [formGroupName]="i">
+                    <ion-col col-6>
+                      <ion-input type="text" formControlName="itemName" placeholder="Item Name"></ion-input>
+                    </ion-col>
+                    <ion-col col-4>
+                      <ion-input type="text" formControlName="itemQuantity" placeholder="Item Quantity"></ion-input>
+                    </ion-col>
+                    <ion-col col-2>
+                      <button ion-button type="button" (click)="onDeleteBioHazardKitItem(i)">X</button>
+                    </ion-col>
+                  </ion-row>
+                </div>
               </ion-list>
               <ion-grid>
                 <ion-row>
