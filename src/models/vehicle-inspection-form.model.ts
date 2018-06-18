@@ -23,5 +23,9 @@ export class VehicleInspectionFormModel {
       public firstAidKitItemsToReplace: FirstAidKitItemModel[],
       public bioHazardKit: boolean,
       public bioHazardKitItemsToReplace: BioHazardKitItemModel[],
+      public seatBeltExt: boolean,
+      public beltCutter: boolean,
+      public businessNameAndPhoneNumber: boolean,
+
     ) {}
 }

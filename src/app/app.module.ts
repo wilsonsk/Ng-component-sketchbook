@@ -26,6 +26,7 @@ import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { DriverLoginComponent } from '../components/driver-login/driver-login';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
+import { RoutesListComponent } from '../components/routes-list/routes-list';
 
 import { LocationProvider } from '../providers/location/location.provider';
 
@@ -39,6 +40,7 @@ import { LocationProvider } from '../providers/location/location.provider';
     DriverLoginComponent,
     InspectionFormComponent,
     RouteNavigationComponent,
+    RoutesListComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { LocationProvider } from '../providers/location/location.provider';
     DriverLoginComponent,
     DrivelyLogoComponent,
     InspectionFormComponent,
-    RouteNavigationComponent
+    RouteNavigationComponent,
+    RoutesListComponent
   ],
   providers: [
     StatusBar,

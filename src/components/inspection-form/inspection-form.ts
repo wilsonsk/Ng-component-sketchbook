@@ -58,6 +58,10 @@ export class InspectionFormComponent {
     let firstAidKitItemsToReplace = new FormArray([]);
     let bioHazardKit:boolean = false;
     let bioHazardKitItemsToReplace = new FormArray([]);
+    let seatBeltExt:boolean = false;
+    let beltCutter:boolean = false;
+    let businessNameAndPhoneNumber:boolean = false;
+
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
@@ -80,6 +84,10 @@ export class InspectionFormComponent {
       'firstAidKitItemsToReplace': firstAidKitItemsToReplace,
       'bioHazardKit': new FormControl(bioHazardKit),
       'bioHazardKitItemsToReplace': bioHazardKitItemsToReplace,
+      'seatBeltExt': new FormControl(seatBeltExt),
+      'beltCutter': new FormControl(beltCutter),
+      'businessNameAndPhoneNumber': new FormControl(businessNameAndPhoneNumber),
+
     })
   }
 
@@ -117,6 +125,10 @@ export class InspectionFormComponent {
         this.inspectionForm.value['firstAidKitItemsToReplace'],
         this.inspectionForm.value['bioHazardKit'],
         this.inspectionForm.value['bioHazardKitItemsToReplace'],
+        this.inspectionForm.value['seatBeltExt'],
+        this.inspectionForm.value['beltCutter'],
+        this.inspectionForm.value['businessNameAndPhoneNumber'],
+
       );
       alert(JSON.stringify(this.formToSubmit))
   }
