@@ -1,3 +1,5 @@
+import { FirstAidKitItemModel } from './first-aid-kit-item.model';
+
 export class VehicleInspectionFormModel {
     constructor(
       public driverName: string,
@@ -8,5 +10,15 @@ export class VehicleInspectionFormModel {
       public cleanCar: boolean,
       public phoneAndCharger: boolean,
       public gasCard: boolean,
+      public oilChangeDue: boolean,
+      public oilChangeDate: string,
+      public oilChangeMileage: number,
+      public currentMileage: number,
+      public breakLights: boolean,
+      public headLights: boolean,
+      public tires: boolean,
+      public accidentReports: boolean,
+      public firstAidKit: boolean,
+      public firstAidKitItemsToReplace: FirstAidKitItemModel[],
     ) {}
 }

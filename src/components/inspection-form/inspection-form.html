@@ -17,39 +17,90 @@
           <ion-col>
             <form class="mt6 pb5" [formGroup]="inspectionForm" (ngSubmit)="onSubmit()">
               <ion-list class="pl6 pr6">
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir f2 mb5">
                   <ion-label for="driverName" floating>Driver's Name</ion-label>
-                  <ion-input type="text" name="driverName" class="form-control" formControlName="driverName"></ion-input>
+                  <ion-input type="text" name="driverName" formControlName="driverName"></ion-input>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir f2 mb5">
                   <ion-label>Date</ion-label>
                   <ion-datetime displayFormat="MM/DD/YYYY" name="date" formControlName="date"></ion-datetime>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir f2 mb5">
                   <ion-label floating>Cab #</ion-label>
-                  <ion-input type="text" name="cabNumber" class="form-control" formControlName="cabNumber"></ion-input>
+                  <ion-input type="text" name="cabNumber" formControlName="cabNumber"></ion-input>
                   <p *ngIf="!inspectionForm.get('cabNumber').valid && (inspectionForm.get('cabNumber').dirty || inspectionForm.get('cabNumber').touched)">Cab # INVALID</p>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir mb5">
                   <ion-label>ID Badge (daily)</ion-label>
                   <ion-checkbox name="idBadge" formControlName="idBadge"></ion-checkbox>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir mb5">
                   <ion-label>Paperwork (daily)</ion-label>
-                  <ion-toggle name="paperWork" formControlName="paperWork"></ion-toggle>
+                  <ion-checkbox name="paperWork" formControlName="paperWork"></ion-checkbox>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir mb5">
                   <ion-label>Clean Car (all garbage needs to be removed daily)</ion-label>
-                  <ion-toggle name="cleanCar" formControlName="cleanCar"></ion-toggle>
+                  <ion-checkbox name="cleanCar" formControlName="cleanCar"></ion-checkbox>
                 </ion-item>
-                <ion-item class="mb5 avenir">
+                <ion-item class="avenir mb5">
                   <ion-label>Phone / Charger (daily)</ion-label>
-                  <ion-toggle name="phoneAndCharger" formControlName="phoneAndCharger"></ion-toggle>
+                  <ion-checkbox name="phoneAndCharger" formControlName="phoneAndCharger"></ion-checkbox>
                 </ion-item>
-                <ion-item class="mb5 avenir">
-                  <ion-label>Gar Card (daily)</ion-label>
-                  <ion-toggle name="gasCard" formControlName="gasCard"></ion-toggle>
+                <ion-item class="avenir mb5">
+                  <ion-label>Gas Card (daily)</ion-label>
+                  <ion-checkbox name="gasCard" formControlName="gasCard"></ion-checkbox>
                 </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>Oil Change Due</ion-label>
+                  <ion-checkbox name="oilChangeDue" formControlName="oilChangeDue" (ionChange)="onOilChangeDue()"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="oilChangeDueFlag">
+                  <ion-label>Due Date:</ion-label>
+                  <ion-datetime displayFormat="MM/DD/YYYY" name="oilChangeDate" formControlName="oilChangeDate"></ion-datetime>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="oilChangeDueFlag">
+                  <ion-label>Mileage:</ion-label>
+                  <ion-input type="text" name="oilChangeMileage" formControlName="oilChangeMileage"></ion-input>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="oilChangeDueFlag">
+                  <ion-label>Current Mileage:</ion-label>
+                  <ion-input type="text" name="currentMileage" formControlName="currentMileage"></ion-input>
+                </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>Brake Lights (daily)</ion-label>
+                  <ion-checkbox name="breakLights" formControlName="breakLights"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>Head Lights HIGH / LOW (daily)</ion-label>
+                  <ion-checkbox name="headLights" formControlName="headLights"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>Tires</ion-label>
+                  <ion-checkbox name="tires" formControlName="tires"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>Accident / Incident Reports</ion-label>
+                  <ion-checkbox name="accidentReports" formControlName="accidentReports"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5">
+                  <ion-label>First Aid Kit (when entering a new car)</ion-label>
+                  <ion-checkbox name="firstAidKit" formControlName="firstAidKit" (ionChange)="onFirstAidKit()"></ion-checkbox>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="firstAidKitFlag">
+                  <ion-label>Items to be Replaced</ion-label>
+                </ion-item>
+                <ion-item class="avenir mb5 ml5" *ngIf="firstAidKitFlag">
+                  <button ion-button type="button" (click)="onAddFirstAidKitItem()">Add First Aid Kit Item</button>
+                </ion-item>
+                <div class="avenir mb5 ml5" formArrayName="firstAidKitItemsToReplace" *ngIf="firstAidKitFlag">
+                  <ion-item *ngFor="let item of inspectionForm.get('firstAidKitItemsToReplace').controls; let i = index;" [formGroupName]="i">
+                    <ion-label for="itemName" floating>Item Name</ion-label>
+                    <ion-input type="text" formControlName="itemName"></ion-input>
+                    <ion-label for="itemQuantity" floating>Item Quantity</ion-label>
+                    <ion-input type="text" formControlName="itemQuantity"></ion-input>
+                    <button ion-button (click)="onDeleteFirstAidKitItem(i)">X</button>
+                  </ion-item>
+                </div>
               </ion-list>
               <ion-grid>
                 <ion-row>

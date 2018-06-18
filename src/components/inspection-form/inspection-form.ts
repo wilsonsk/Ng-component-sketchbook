@@ -24,6 +24,8 @@ declare var cordova: any;
 export class InspectionFormComponent {
   inspectionForm: FormGroup;
   formToSubmit: VehicleInspectionFormModel;
+  oilChangeDueFlag: boolean = false;
+  firstAidKitFlag: boolean = false;
   imageUrl = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -43,6 +45,16 @@ export class InspectionFormComponent {
     let cleanCar:boolean = false;
     let phoneAndCharger:boolean = false;
     let gasCard:boolean = false;
+    let oilChangeDue:boolean = false;
+    let oilChangeDate:string = null;
+    let oilChangeMileage:string = null;
+    let currentMileage:string = null;
+    let breakLights:boolean = false;
+    let headLights:boolean = false;
+    let tires:boolean = false;
+    let accidentReports:boolean = false;
+    let firstAidKit:boolean = false;
+    let firstAidKitItemsToReplace = new FormArray([]);
 
     this.inspectionForm = new FormGroup({
       'driverName': new FormControl(driverName, Validators.required),
@@ -53,7 +65,46 @@ export class InspectionFormComponent {
       'cleanCar': new FormControl(cleanCar),
       'phoneAndCharger': new FormControl(phoneAndCharger),
       'gasCard': new FormControl(gasCard),
+      'oilChangeDue': new FormControl(oilChangeDue),
+      'oilChangeDate': new FormControl(oilChangeDate),
+      'oilChangeMileage': new FormControl(oilChangeMileage, Validators.pattern(/^[1-9]+[0-9]*$/)),
+      'currentMileage': new FormControl(currentMileage, Validators.pattern(/^[1-9]+[0-9]*$/)),
+      'breakLights': new FormControl(breakLights),
+      'headLights': new FormControl(headLights),
+      'tires': new FormControl(tires),
+      'accidentReports': new FormControl(accidentReports),
+      'firstAidKit': new FormControl(firstAidKit),
+      'firstAidKitItemsToReplace': firstAidKitItemsToReplace,
     })
+  }
+
+  onSubmit() {
+    // const loading = this.loadingCtrl.create({
+    //   content: 'Submitting your vehicle inspection...'
+    // });
+    // loading.present();
+
+      this.formToSubmit = new VehicleInspectionFormModel(
+        this.inspectionForm.value['driverName'],
+        this.inspectionForm.value['date'],
+        this.inspectionForm.value['cabNumber'],
+        this.inspectionForm.value['idBadge'],
+        this.inspectionForm.value['paperWork'],
+        this.inspectionForm.value['cleanCar'],
+        this.inspectionForm.value['phoneAndCharger'],
+        this.inspectionForm.value['gasCard'],
+        this.inspectionForm.value['oilChangeDue'],
+        this.inspectionForm.value['oilChangeDate'],
+        this.inspectionForm.value['oilChangeMileage'],
+        this.inspectionForm.value['currentMileage'],
+        this.inspectionForm.value['breakLights'],
+        this.inspectionForm.value['headLights'],
+        this.inspectionForm.value['tires'],
+        this.inspectionForm.value['accidentReports'],
+        this.inspectionForm.value['firstAidKit'],
+        this.inspectionForm.value['firstAidKitItemsToReplace'],
+      );
+      alert(JSON.stringify(this.formToSubmit))
   }
 
   ionViewWillLeave() {
@@ -111,25 +162,35 @@ export class InspectionFormComponent {
         });
     }
 
-    onSubmit() {
-      // const loading = this.loadingCtrl.create({
-      //   content: 'Submitting your vehicle inspection...'
-      // });
-      // loading.present();
+    onOilChangeDue() {
+      // If these form values are NULL then oil change is NOT due
+      if(this.oilChangeDueFlag) {
+        this.inspectionForm.value['oilChangeDate'] = null;
+        this.inspectionForm.value['oilChangeMileage'] = null;
+        this.inspectionForm.value['currentMileage'] = null;
+      }
+      this.oilChangeDueFlag = !this.oilChangeDueFlag;
+    }
 
-        this.formToSubmit = new VehicleInspectionFormModel(
-          this.inspectionForm.value['driverName'],
-          this.inspectionForm.value['date'],
-          this.inspectionForm.value['cabNumber'],
-          this.inspectionForm.value['idBadge'],
-          this.inspectionForm.value['paperWork'],
-          this.inspectionForm.value['cleanCar'],
-          this.inspectionForm.value['phoneAndCharger'],
-          this.inspectionForm.value['gasCard'],
-        );
+    onFirstAidKit() {
+      // If these form values are NULL then oil change is NOT due
+      if(this.firstAidKitFlag) {
+        // this.inspectionForm.value['firstAidKitItemsToReplace'] = null;
+        // this.inspectionForm.value['oilChangeMileage'] = null;
+        // this.inspectionForm.value['currentMileage'] = null;
+      }
+      this.firstAidKitFlag = !this.firstAidKitFlag;
+    }
 
-        alert(JSON.stringify(this.formToSubmit))
+    onAddFirstAidKitItem() {
+      (<FormArray>this.inspectionForm.get('firstAidKitItemsToReplace')).push(new FormGroup({
+        'itemName': new FormControl(null, Validators.required),
+        'itemQuanity': new FormControl(null, [Validators.required])
+      }));
+    }
 
+    onDeleteFirstAidKitItem(index:number) {
+      (<FormArray>this.inspectionForm.get('firstAidKitItemsToReplace')).removeAt(index);
     }
 
 }
