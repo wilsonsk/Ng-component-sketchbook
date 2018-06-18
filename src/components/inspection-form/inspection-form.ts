@@ -185,7 +185,7 @@ export class InspectionFormComponent {
     onAddFirstAidKitItem() {
       (<FormArray>this.inspectionForm.get('firstAidKitItemsToReplace')).push(new FormGroup({
         'itemName': new FormControl(null, Validators.required),
-        'itemQuanity': new FormControl(null, [Validators.required])
+        'itemQuantity': new FormControl(null, [Validators.required])
       }));
     }
 
