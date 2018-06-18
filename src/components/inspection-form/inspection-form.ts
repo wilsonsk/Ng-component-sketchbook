@@ -84,6 +84,10 @@ export class InspectionFormComponent {
     // });
     // loading.present();
 
+      if(!this.firstAidKitFlag) {
+        this.inspectionForm.value['firstAidKitItemsToReplace'] = {};
+      }
+
       this.formToSubmit = new VehicleInspectionFormModel(
         this.inspectionForm.value['driverName'],
         this.inspectionForm.value['date'],
