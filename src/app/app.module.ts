@@ -31,6 +31,8 @@ import { RoutesListComponent } from '../components/routes-list/routes-list';
 import { LocationProvider } from '../providers/location/location.provider';
 import { CurrentRouteProvider } from '../providers/current-route/current-route';
 
+import { DottedBorderDirective } from '../directives/dotted-border/dotted-border';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -42,6 +44,7 @@ import { CurrentRouteProvider } from '../providers/current-route/current-route';
     InspectionFormComponent,
     RouteNavigationComponent,
     RoutesListComponent,
+    DottedBorderDirective,
   ],
   imports: [
     BrowserModule,
