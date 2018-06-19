@@ -8,7 +8,8 @@
   <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
     <ion-col col-9>
       <span class="avenir f1 fw6 tracked white db">Routes remaining</span>
-      <span class="avenir f3 fw6 tracked white db mt2">Swipe a route to begin a trip</span>
+      <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end a trip</span>
+      <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
     </ion-col>
     <ion-col col-3 align-items-center>
       <span class="avenir f-headline fw6 tracked white">{{ numRoutes }}</span>
@@ -22,7 +23,11 @@
           <ion-card-content no-padding>
             <ion-row class="pa4">
               <ion-col col-3 class="br b--silver">
-                <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route: {{ i }}</h1>
+                <ion-row>
+                  <ion-col col-12>
+                    <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route: {{ i }}</h1>
+                  </ion-col>
+                </ion-row>
                 <ion-row class="mt5">
                   <ion-col col-12>
                     <span class="avenir f4 fw6" style="color:#D87C27">Pick Up Time:</span>
@@ -61,22 +66,22 @@
                   <ion-col col-3 push-1>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6 silver">Ambulatory:</span>
+                        <span class="avenir f4 fw6" style="color:#D87C27">Ambulatory:</span>
                       </ion-col>
                       <ion-col col-12>
-                        <span class="avenir f2 fw8" style="color:#D87C27" *ngIf="route.ambulatory;else notAmbulatory">Y</span>
-                        <ng-template #notAmbulatory><span class="avenir f2 fw8" style="color:#D87C27">N</span></ng-template>
+                        <span class="avenir f2 fw8"*ngIf="route.ambulatory;else notAmbulatory">Y</span>
+                        <ng-template #notAmbulatory><span class="avenir f2 fw8">N</span></ng-template>
                       </ion-col>
                     </ion-row>
                   </ion-col>
                   <ion-col col-3 push-1>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6 silver">Shared Ride:</span>
+                        <span class="avenir f4 fw6" style="color:#D87C27">Shared Ride:</span>
                       </ion-col>
                       <ion-col col-12>
-                        <span class="avenir f2 fw8" style="color:#D87C27" *ngIf="route.shared;else notShared">Y</span>
-                        <ng-template #notShared><span class="avenir f2 fw8" style="color:#D87C27">N</span></ng-template>
+                        <span class="avenir f2 fw8" *ngIf="route.shared;else notShared">Y</span>
+                        <ng-template #notShared><span class="avenir f2 fw8">N</span></ng-template>
                       </ion-col>
                     </ion-row>
                   </ion-col>
@@ -86,15 +91,15 @@
           </ion-card-content>
         </ion-card>
       </ion-item>
-      <ion-item-options>
+      <ion-item-options side="right">
         <ion-row *ngIf="currentLocation;else spinner">
           <ion-col col-12>
-            <button ion-button class="bg-green" (click)="openMap(route)">
-              <ion-icon name="map"></ion-icon>
+            <button ion-button class="bg-blue" (click)="openMap(route)">
+              <ion-icon name="send"></ion-icon>
               Start Trip
             </button>
             <button ion-button class="bg-red" (click)="onRouteComplete(route)">
-              <ion-icon name="trash"></ion-icon>
+              <ion-icon name="checkmark"></ion-icon>
               Trip Complete
             </button>
           </ion-col>
@@ -109,6 +114,16 @@
             </ion-col>
           </ion-row>
         </ng-template>
+      </ion-item-options>
+      <ion-item-options side="left">
+        <ion-row>
+          <ion-col col-12>
+            <button ion-button style="background-color:#D87C27" (click)="openMap(route)">
+              <ion-icon name="document"></ion-icon>
+              Access Trip Notes
+            </button>
+          </ion-col>
+        </ion-row>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
