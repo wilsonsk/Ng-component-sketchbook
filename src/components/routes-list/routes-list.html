@@ -18,8 +18,8 @@
 
   <ion-list no-lines *ngIf="routes">
     <ion-item-sliding *ngFor="let route of routes;let i = index;">
-      <ion-item>
-        <ion-card class="br3 bl b--orange bw3">
+      <ion-item >
+        <ion-card class="br3 bl b--orange bw3 shadow-5">
           <ion-card-content no-padding>
             <ion-row class="pa4">
               <ion-col col-3 class="br b--silver">
@@ -93,7 +93,7 @@
       </ion-item>
       <ion-item-options side="right">
         <ion-row *ngIf="currentLocation;else spinner">
-          <ion-col col-12>
+          <ion-col col-12 no-padding>
             <button ion-button class="bg-blue" (click)="openMap(route)">
               <ion-icon name="send"></ion-icon>
               Start Trip
@@ -117,7 +117,7 @@
       </ion-item-options>
       <ion-item-options side="left">
         <ion-row>
-          <ion-col col-12>
+          <ion-col col-12 no-padding>
             <button ion-button style="background-color:#D87C27" (click)="openMap(route)">
               <ion-icon name="document"></ion-icon>
               Access Trip Notes
