@@ -11,9 +11,21 @@
         <div class="avenir f-headline fw6 tracked mt6 pl5" style="color:#D87C27">Nav Test</div>
       </ion-col>
     </ion-row>
-    <ion-card-content style="padding:0" text-center>
-        <button ion-button (click)="openMap()">Start Trip</button>
-        <div > Coords: {{message}}</div>
-      </ion-card-content>
+    <ion-card-content *ngIf="curLoc;else noLoc" style="padding:0" text-center>
+      <button ion-button (click)="openMap()">Start Trip</button>
+      <div> Current Location: {{ curLoc }}</div>
+      <div> Destination: {{ currentRoute.destination }}</div>
+    </ion-card-content>
+    <ng-template #noLoc>
+      <ion-row>
+        <ion-col col-8>
+          <h1 class="avenir f-headline fw6 tracked mt6 pl5">Location data is loading...</h1>
+        </ion-col>
+        <ion-col col-4>
+          <!-- <span class="pl5"><ion-spinner></ion-spinner></span> -->
+          <ion-spinner></ion-spinner>
+        </ion-col>
+      </ion-row>
+    </ng-template>
   </ion-card>
 </ion-content>

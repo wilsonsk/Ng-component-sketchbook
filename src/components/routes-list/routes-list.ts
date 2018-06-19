@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+
+import { RouteNavigationComponent } from '../route-navigation/route-navigation';
+import { CurrentRouteProvider } from '../../providers/current-route/current-route';
 
 import { RouteModel } from '../../models/route.model';
 
-/**
- * Generated class for the RoutesListComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'routes-list',
   templateUrl: 'routes-list.html'
 })
 export class RoutesListComponent {
   routes: RouteModel[] = [
-    new RouteModel('pickupTime1', 1, 'source1', 'destination1', 'appointmentTime1', true, false),
-    new RouteModel('pickupTime2', 2, 'source2', 'destination2', 'appointmentTime2', true, false),
-    new RouteModel('pickupTime3', 3, 'source3', 'destination3', 'appointmentTime3', true, false),
-    new RouteModel('pickupTime4', 4, 'source4', 'destination4', 'appointmentTime4', true, false),
-    new RouteModel('pickupTime5', 5, 'source5', 'destination5', 'appointmentTime5', true, false),
+    new RouteModel('05:50AM', 1, 'source1', '45.9387,	-122.6615', 'appointmentTime1', true, false),
+    new RouteModel('07:20AM', 2, 'source2', '46.9387,	-122.6615', 'appointmentTime2', true, false),
+    new RouteModel('01:15PM', 3, 'source3', '47.9387,	-122.6615', 'appointmentTime3', true, false),
+    new RouteModel('03:25PM', 4, 'source4', '48.9387,	-122.6615', 'appointmentTime4', true, false),
+    new RouteModel('05:50PM', 5, 'source5', '49.9387,	-122.6615', 'appointmentTime5', true, false),
   ];
+  numRoutes: number;
 
-  constructor() {
+  constructor(public navCtrl: NavController, private currentRouteProvider: CurrentRouteProvider) {
+    this.numRoutes = this.routes.length;
+  }
 
+  onGetRoute(route: RouteModel) {
+    this.currentRouteProvider.setCurrentRoute(route);
+    this.navCtrl.setRoot(RouteNavigationComponent);
   }
 
 }

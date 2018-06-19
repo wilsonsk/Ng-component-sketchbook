@@ -21,7 +21,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { DrivelyLogoComponent } from '../components/drively-logo/drively-logo';
+import { DrivelyLogoComponent } from '../components/common/drively-logo/drively-logo';
 import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { DriverLoginComponent } from '../components/driver-login/driver-login';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
@@ -29,6 +29,7 @@ import { RouteNavigationComponent } from '../components/route-navigation/route-n
 import { RoutesListComponent } from '../components/routes-list/routes-list';
 
 import { LocationProvider } from '../providers/location/location.provider';
+import { CurrentRouteProvider } from '../providers/current-route/current-route';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,6 @@ import { LocationProvider } from '../providers/location/location.provider';
     TabsPage,
     CompanyAuthComponent,
     DriverLoginComponent,
-    DrivelyLogoComponent,
     InspectionFormComponent,
     RouteNavigationComponent,
     RoutesListComponent
@@ -73,7 +73,8 @@ import { LocationProvider } from '../providers/location/location.provider';
     LaunchNavigator,
     Geolocation,
     LocationProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CurrentRouteProvider
   ]
 })
 export class AppModule {}
