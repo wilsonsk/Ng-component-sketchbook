@@ -15,8 +15,8 @@ export class DottedBorderDirective implements OnInit{
   }
 
   ngOnInit() {
-    this.bg = 'url(' + this.svgPath + ') no-repeat';
-    this.bgSize = '100% 100%';
+    this.bg = 'url(' + this.svgPath + ')';
+    this.bgSize = 'contain';
   }
 
 }
