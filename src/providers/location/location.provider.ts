@@ -19,7 +19,7 @@ export class LocationProvider implements OnDestroy {
   private locationChangedSubscription: Subscription;
   private location: LocationModel;
 
-  constructor(public http: HttpClient, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
+  constructor(public http: HttpClient, private geolocation: Geolocation) {
 
   }
 
