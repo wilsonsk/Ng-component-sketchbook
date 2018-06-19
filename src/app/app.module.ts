@@ -26,6 +26,7 @@ import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { DriverLoginComponent } from '../components/driver-login/driver-login';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RoutesListComponent } from '../components/routes-list/routes-list';
+import { RouteNotesComponent } from '../components/route-notes/route-notes';
 
 import { LocationProvider } from '../providers/location/location.provider';
 import { RoutesProvider } from '../providers/routes/routes';
@@ -43,6 +44,7 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     InspectionFormComponent,
     RoutesListComponent,
     DottedBorderDirective,
+    RouteNotesComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     CompanyAuthComponent,
     DriverLoginComponent,
     InspectionFormComponent,
-    RoutesListComponent
+    RoutesListComponent,
+    RouteNotesComponent,
   ],
   providers: [
     StatusBar,

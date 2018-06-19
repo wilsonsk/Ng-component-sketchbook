@@ -4,7 +4,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Subscription } from 'rxjs';
 
-import { RouteNavigationComponent } from '../route-navigation/route-navigation';
+import { RouteNotesComponent } from '../route-notes/route-notes';
 
 import { LocationProvider } from '../../providers/location/location.provider';
 import { RoutesProvider } from '../../providers/routes/routes';
@@ -79,8 +79,13 @@ export class RoutesListComponent {
   }
 
   onRouteComplete(route: RouteModel) {
-      this.routesProvider.setCurrentRoute(route);
-      this.navCtrl.setRoot(RouteNavigationComponent);
+    // this.routesProvider.setCurrentRoute(route);
+    // this.navCtrl.setRoot(RouteNotesComponent);
+  }
+
+  onOpenRouteNotes(route: RouteModel) {
+    this.routesProvider.setCurrentRoute(route);
+    this.navCtrl.push(RouteNotesComponent);
   }
 
 }

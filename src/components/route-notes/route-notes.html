@@ -1,0 +1,43 @@
+<button ion-button style="background-color:#D87C27" (click)="onPopView()">
+  <ion-icon name="document"></ion-icon>
+  Back to Routes List
+</button>
+<ion-header>
+  <ion-navbar class="h4 pl4">
+    <drively-logo></drively-logo>
+  </ion-navbar>
+</ion-header>
+
+<ion-content >
+  <ion-grid>
+    <ion-card class="br3">
+      <ion-row >
+        <ion-col>
+          <div class="avenir f-headline fw6 tracked mt6 pl5" style="color:#D87C27">Route Notes</div>
+        </ion-col>
+      </ion-row>
+      <ion-card-content style="padding:0">
+        <ion-row >
+          <ion-col>
+              <div class="avenir f2 mt5 pl5">Provide any route notes here.</div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <form class="mt6 pb5" [formGroup]="routeNotesForm" (ngSubmit)="onPopView()">
+              <ion-list class="pl6 pr6">
+                <ion-item class="avenir f2 mb5">
+                  <ion-label for="notes" floating>Notes</ion-label>
+                  <ion-textarea type="textarea" name="notes" rows="5" formControlName="notes"></ion-textarea>
+                </ion-item>
+              </ion-list>
+              <button ion-button block class="w-75" style="background-color:#D87C27;margin: 0 auto;">
+                Done
+              </button>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

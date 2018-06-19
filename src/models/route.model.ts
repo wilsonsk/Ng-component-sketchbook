@@ -11,5 +11,6 @@ export class RouteModel {
       public appointmentTime: string,
       public ambulatory: boolean,
       public shared: boolean,
+      public notes: string,
     ) {}
 }
