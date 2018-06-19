@@ -20,7 +20,7 @@
     <ion-item-sliding *ngFor="let route of routes;let i = index;">
       <ion-item >
         <ion-card class="br3 bl bw3 shadow-3" style="border-color:#D87C27">
-          <ion-card-content no-padding class="unfold-parent">
+          <ion-card-content no-padding class="unfold-parent" (click)="onUnFold(route)" [ngClass]="{'isActive': route===currentRoute && isActive}">
             <ion-row class="pa4 relative unfold-first-child">
               <ion-col col-3 class="br b--silver">
                 <ion-row>

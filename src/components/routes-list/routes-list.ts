@@ -17,10 +17,13 @@ import { LocationModel } from '../../models/location.model';
   templateUrl: 'routes-list.html'
 })
 export class RoutesListComponent {
+  isActive:boolean;
   private locationChangedSubscription: Subscription;
   currentLocation: LocationModel;
   routes: RouteModel[] = [];
   numRoutes: number;
+  folded: boolean = true;
+  currentRoute: RouteModel;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider) {
@@ -62,6 +65,7 @@ export class RoutesListComponent {
   // }
 
   openMap(route: RouteModel) {
+    this.currentRoute = route;
     this.routesProvider.setCurrentRoute(route);
 
     let options: LaunchNavigatorOptions = {
@@ -84,8 +88,21 @@ export class RoutesListComponent {
   }
 
   onOpenRouteNotes(route: RouteModel) {
+    this.currentRoute = route;
     this.routesProvider.setCurrentRoute(route);
     this.navCtrl.push(RouteNotesComponent);
+  }
+
+  onUnFold(route: RouteModel) {
+    this.currentRoute = route;
+    this.routesProvider.setCurrentRoute(route);
+
+    if(this.folded) {
+      this.isActive = true;
+    } else {
+      this.isActive = false;
+    }
+    this.folded = !this.folded;
   }
 
 }
