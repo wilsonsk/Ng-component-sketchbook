@@ -69,7 +69,7 @@ export class RouteNavigationComponent {
     };
 
     // get first param from Drively API
-    this.launchNavigator.navigate(this.currentRoute.destination, options)
+    this.launchNavigator.navigate(this.currentRoute.destinationAddr, options)
       .then(
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)

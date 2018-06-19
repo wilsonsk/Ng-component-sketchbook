@@ -14,7 +14,7 @@
     <ion-card-content *ngIf="curLoc;else noLoc" style="padding:0" text-center>
       <button ion-button (click)="openMap()">Start Trip</button>
       <div> Current Location: {{ curLoc }}</div>
-      <div> Destination: {{ currentRoute.destination }}</div>
+      <div> Destination: {{ currentRoute.destinationAddr }}</div>
     </ion-card-content>
     <ng-template #noLoc>
       <ion-row>
