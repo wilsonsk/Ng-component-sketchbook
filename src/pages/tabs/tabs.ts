@@ -14,7 +14,6 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = InspectionFormComponent;
-  tab3Root = RouteNavigationComponent;
   tab4Root = CompanyAuthComponent;
   tab5Root = DriverLoginComponent;
   tab6Root = RoutesListComponent;

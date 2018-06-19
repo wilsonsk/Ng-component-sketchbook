@@ -5,47 +5,113 @@
 </ion-header>
 
 <ion-content>
-  <ion-row class="bg-black pa5">
+  <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
     <ion-col col-9>
       <span class="avenir f1 fw6 tracked white db">Routes remaining</span>
-      <span class="avenir f3 fw6 tracked white db mt2">Select a route to begin a trip</span>
+      <span class="avenir f3 fw6 tracked white db mt2">Swipe a route to begin a trip</span>
     </ion-col>
     <ion-col col-3 align-items-center>
       <span class="avenir f-headline fw6 tracked white">{{ numRoutes }}</span>
     </ion-col>
   </ion-row>
 
-  <ion-card class="br3 bl b--orange bw3" *ngFor="let route of routes;let i = index;" (click)="onGetRoute(route)">
-    <ion-card-content no-padding>
-      <ion-row class="pa4">
-        <ion-col col-3 class="br b--silver">
-          <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route: {{ i }}</h1>
-          <ion-row class="mt5">
-            <ion-col col-12>
-              <span class="avenir f4 fw6 silver">Pick Up Time:</span>
-            </ion-col>
-            <ion-col col-12>
-              <span class="avenir f2 fw8">{{ route.pickUpTime }}</span>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col col-9 class="pl4">
+  <ion-list no-lines *ngIf="routes">
+    <ion-item-sliding *ngFor="let route of routes;let i = index;">
+      <ion-item>
+        <ion-card class="br3 bl b--orange bw3">
+          <ion-card-content no-padding>
+            <ion-row class="pa4">
+              <ion-col col-3 class="br b--silver">
+                <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route: {{ i }}</h1>
+                <ion-row class="mt5">
+                  <ion-col col-12>
+                    <span class="avenir f4 fw6" style="color:#D87C27">Pick Up Time:</span>
+                  </ion-col>
+                  <ion-col col-12>
+                    <span class="avenir f2 fw8">{{ route.pickUpTime }}</span>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col col-9 class="pl4">
+                <ion-row>
+                  <ion-col col-1 dotted-border>
+                  </ion-col>
+                  <ion-col col-11 class="pl3">
+                    <ion-row>
+                      <ion-col col-12 class="bb bw6 tc">
+                        <span class="avenir f3 fw3">{{ route.sourceAddr }}</span>
+                      </ion-col>
+                      <ion-col col-12 class="tc">
+                        <span class="avenir f3 fw3">{{ route.destinationAddr }}</span>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="mt5">
+                  <ion-col col-3>
+                    <ion-row>
+                      <ion-col col-12>
+                        <span class="avenir f4 fw6" style="color:#D87C27">Appointment Time:</span>
+                      </ion-col>
+                      <ion-col col-12>
+                        <span class="avenir f2 fw8">{{ route.appointmentTime }}</span>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col col-3 push-1>
+                    <ion-row>
+                      <ion-col col-12>
+                        <span class="avenir f4 fw6 silver">Ambulatory:</span>
+                      </ion-col>
+                      <ion-col col-12>
+                        <span class="avenir f2 fw8" style="color:#D87C27" *ngIf="route.ambulatory;else notAmbulatory">Y</span>
+                        <ng-template #notAmbulatory><span class="avenir f2 fw8" style="color:#D87C27">N</span></ng-template>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col col-3 push-1>
+                    <ion-row>
+                      <ion-col col-12>
+                        <span class="avenir f4 fw6 silver">Shared Ride:</span>
+                      </ion-col>
+                      <ion-col col-12>
+                        <span class="avenir f2 fw8" style="color:#D87C27" *ngIf="route.shared;else notShared">Y</span>
+                        <ng-template #notShared><span class="avenir f2 fw8" style="color:#D87C27">N</span></ng-template>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item-options>
+        <ion-row *ngIf="currentLocation;else spinner">
+          <ion-col col-12>
+            <button ion-button class="bg-green" (click)="openMap(route)">
+              <ion-icon name="map"></ion-icon>
+              Start Trip
+            </button>
+            <button ion-button class="bg-red" (click)="onRouteComplete(route)">
+              <ion-icon name="trash"></ion-icon>
+              Trip Complete
+            </button>
+          </ion-col>
+        </ion-row>
+        <ng-template #spinner>
           <ion-row>
-            <ion-col col-1 dotted-border>
+            <ion-col col-8>
+              <h1 class="avenir f3 fw6">Location data is loading...</h1>
             </ion-col>
-            <ion-col col-11 class="pl3">
-              <ion-row>
-                <ion-col col-12 class="bb bw6">
-                  <span class="avenir f2 fw3">{{ route.sourceAddr }}</span>
-                </ion-col>
-                <ion-col col-12>
-                  <span class="avenir f2 fw3">{{ route.destinationAddr }}</span>
-                </ion-col>
-              </ion-row>
+            <ion-col col-4>
+              <ion-spinner></ion-spinner>
             </ion-col>
           </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
+        </ng-template>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+
 </ion-content>

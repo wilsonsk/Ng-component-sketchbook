@@ -1,32 +1,86 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { Subscription } from 'rxjs';
 
 import { RouteNavigationComponent } from '../route-navigation/route-navigation';
-import { CurrentRouteProvider } from '../../providers/current-route/current-route';
+
+import { LocationProvider } from '../../providers/location/location.provider';
+import { RoutesProvider } from '../../providers/routes/routes';
 
 import { RouteModel } from '../../models/route.model';
+import { LocationModel } from '../../models/location.model';
 
 @Component({
   selector: 'routes-list',
   templateUrl: 'routes-list.html'
 })
 export class RoutesListComponent {
-  routes: RouteModel[] = [
-    new RouteModel('05:50AM', 1, 'source1', '1800 NE Alberta St, Portland, OR 97211', 'appointmentTime1', true, false),
-    new RouteModel('07:20AM', 2, 'source2', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', 'appointmentTime2', true, false),
-    new RouteModel('01:15PM', 3, 'source3', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', 'appointmentTime3', true, false),
-    new RouteModel('03:25PM', 4, 'source4', '2211 NE 139th St, Vancouver, WA 98686', 'appointmentTime4', true, false),
-    new RouteModel('05:50PM', 5, 'source5', '700 NE 87th Ave, Vancouver, WA 98664', 'appointmentTime5', true, false),
-  ];
+  private locationChangedSubscription: Subscription;
+  currentLocation: LocationModel;
+  routes: RouteModel[] = [];
   numRoutes: number;
 
-  constructor(public navCtrl: NavController, private currentRouteProvider: CurrentRouteProvider) {
+  constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
+              private locationProvider:LocationProvider, private routesProvider: RoutesProvider) {
+
+    this.routes = this.routesProvider.getRoutes();
     this.numRoutes = this.routes.length;
   }
 
-  onGetRoute(route: RouteModel) {
-    this.currentRouteProvider.setCurrentRoute(route);
-    this.navCtrl.setRoot(RouteNavigationComponent);
+  ionViewWillEnter() {
+    // locationChangedSubscription needs to be tested
+    this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
+      this.currentLocation = this.locationProvider.getLocation();
+    });
+
+    this.locationProvider.initLocation().then(() => {
+      this.currentLocation = this.locationProvider.getLocation();
+    });
+  }
+
+  ionViewWillLeave() {
+   let options: NativeTransitionOptions = {
+      direction: 'left',
+      duration: 500,
+      slowdownfactor: 3,
+      slidePixels: 20,
+      androiddelay: 150,
+      fixedPixelsTop: 0,
+      fixedPixelsBottom: 60
+     };
+
+   this.nativePageTransitions.slide(options);
+
+   this.locationChangedSubscription.unsubscribe();
+  }
+
+  // onGetRoute(route: RouteModel) {
+  //   this.currentRouteProvider.setCurrentRoute(route);
+  //   this.navCtrl.setRoot(RouteNavigationComponent);
+  // }
+
+  openMap(route: RouteModel) {
+    this.routesProvider.setCurrentRoute(route);
+
+    let options: LaunchNavigatorOptions = {
+      start: this.currentLocation.latitude + ', ' + this.currentLocation.longitude,
+      app: this.launchNavigator.APP.GOOGLE_MAPS,
+      transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
+    };
+
+    // get first param from Drively API
+    this.launchNavigator.navigate(route.destinationAddr, options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+  }
+
+  onRouteComplete(route: RouteModel) {
+      this.routesProvider.setCurrentRoute(route);
+      this.navCtrl.setRoot(RouteNavigationComponent);
   }
 
 }

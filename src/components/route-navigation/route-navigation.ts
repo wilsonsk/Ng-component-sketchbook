@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { LocationModel } from '../../models/location.model';
 import { LocationProvider } from '../../providers/location/location.provider';
-import { CurrentRouteProvider } from '../../providers/current-route/current-route';
+import { RoutesProvider } from '../../providers/routes/routes';
 
 import { RouteModel } from '../../models/route.model';
 
@@ -27,7 +27,7 @@ export class RouteNavigationComponent {
   currentRoute: RouteModel;
 
   constructor(private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
-              private locationProvider:LocationProvider, private navParams: NavParams, private currentRouteProvider: CurrentRouteProvider) {
+              private locationProvider:LocationProvider, private navParams: NavParams, private routesProvider: RoutesProvider) {
 
   }
 
@@ -39,10 +39,9 @@ export class RouteNavigationComponent {
 
     this.locationProvider.initLocation().then(() => {
       this.currentLocation = this.locationProvider.getLocation();
-      this.currentRoute = this.currentRouteProvider.getCurrentRoute();
+      this.currentRoute = this.routesProvider.getCurrentRoute();
       this.curLoc = JSON.stringify(this.currentLocation);
     });
-
   }
 
   ionViewWillLeave() {

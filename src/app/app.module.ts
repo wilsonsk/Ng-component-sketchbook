@@ -25,11 +25,10 @@ import { DrivelyLogoComponent } from '../components/common/drively-logo/drively-
 import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { DriverLoginComponent } from '../components/driver-login/driver-login';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
-import { RouteNavigationComponent } from '../components/route-navigation/route-navigation';
 import { RoutesListComponent } from '../components/routes-list/routes-list';
 
 import { LocationProvider } from '../providers/location/location.provider';
-import { CurrentRouteProvider } from '../providers/current-route/current-route';
+import { RoutesProvider } from '../providers/routes/routes';
 
 import { DottedBorderDirective } from '../directives/dotted-border/dotted-border';
 
@@ -42,7 +41,6 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     CompanyAuthComponent,
     DriverLoginComponent,
     InspectionFormComponent,
-    RouteNavigationComponent,
     RoutesListComponent,
     DottedBorderDirective,
   ],
@@ -63,7 +61,6 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     CompanyAuthComponent,
     DriverLoginComponent,
     InspectionFormComponent,
-    RouteNavigationComponent,
     RoutesListComponent
   ],
   providers: [
@@ -77,7 +74,7 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     Geolocation,
     LocationProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CurrentRouteProvider
+    RoutesProvider,
   ]
 })
 export class AppModule {}
