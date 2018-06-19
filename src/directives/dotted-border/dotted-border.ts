@@ -1,4 +1,3 @@
-import { Directive } from '@angular/core';
 import { OnInit, Directive, HostBinding } from '@angular/core';
 
 
@@ -14,7 +13,7 @@ export class DottedBorderDirective implements OnInit{
   }
 
   ngOnInit() {
-    this.bg = "url(../../../assets/svg/dotted-border.svg)";
+    this.bg = "url(../../../assets/svg/dotted_border.svg)";
   }
 
 }
