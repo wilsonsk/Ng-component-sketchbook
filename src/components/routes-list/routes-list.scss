@@ -1,3 +1,58 @@
-routes-list {
+.unfold-parent {
+  position: relative;
 
+  overflow: hidden;
+  cursor: pointer;
+
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+.unfold-first-child,
+.unfold-second-child {
+  $bg: rgba(white, 1);
+  width: 100%;
+  padding: 15px 30px;
+  position: relative;
+  background: $bg;
+
+  .unfold-parent:hover & {
+    background: darken($bg, 2%);
+  }
+}
+
+.unfold-first-child {
+  //z-index: 10;
+  transition: .3s ease all;
+}
+
+.unfold-second-child {
+  max-height: 0;
+  padding: 0;
+
+  overflow: hidden;
+  visibility: hidden;
+
+  transform: rotateX(-180deg);
+  transform-origin: top center;
+  backface-visibility: hidden;
+  transition: .3s transform ease;
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: grey;
+  }
+
+  .unfold-parent:active  {
+    max-height: none;
+    overflow: visible;
+    visibility: visible;
+    transform: rotateX(0deg);
+  }
 }

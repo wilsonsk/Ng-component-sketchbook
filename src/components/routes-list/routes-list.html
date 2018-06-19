@@ -20,8 +20,8 @@
     <ion-item-sliding *ngFor="let route of routes;let i = index;">
       <ion-item >
         <ion-card class="br3 bl bw3 shadow-3" style="border-color:#D87C27">
-          <ion-card-content no-padding>
-            <ion-row class="pa4">
+          <ion-card-content no-padding class="unfold-parent">
+            <ion-row class="pa4 relative unfold-first-child">
               <ion-col col-3 class="br b--silver">
                 <ion-row>
                   <ion-col col-12>
@@ -86,6 +86,11 @@
                     </ion-row>
                   </ion-col>
                 </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row class="unfold-second-child">
+              <ion-col>
+                <h1>test unfolding</h1>
               </ion-col>
             </ion-row>
           </ion-card-content>
