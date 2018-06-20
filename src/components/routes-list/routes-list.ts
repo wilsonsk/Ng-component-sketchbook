@@ -25,6 +25,8 @@ export class RoutesListComponent {
   numRoutes: number;
   folded: boolean = true;
   currentRoute: RouteModel;
+  arrivedAtPickup: boolean = false;
+  arrivedAtDropoff: boolean = false;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
@@ -73,7 +75,7 @@ export class RoutesListComponent {
   //   this.navCtrl.setRoot(RouteNavigationComponent);
   // }
 
-  openMap() {
+  onStartPickup() {
     this.routesProvider.setCurrentRoute(this.currentRoute);
 
     let options: LaunchNavigatorOptions = {
@@ -90,10 +92,8 @@ export class RoutesListComponent {
       );
   }
 
-  onRouteComplete(index: number) {
-    this.confirmRouteComplete(index).present();
-    // this.routesProvider.setCurrentRoute(route);
-    // this.navCtrl.setRoot(RouteNotesComponent);
+  onArrivedAtPickup() {
+    this.confirmPickUpComplete().present();
   }
 
   onOpenRouteNotes() {
@@ -112,9 +112,9 @@ export class RoutesListComponent {
     this.folded = !this.folded;
   }
 
-  private confirmRouteComplete(index: number) {
-    const routeComplete = this.alertCtrl.create({
-      title: 'Is your route really complete?',
+  private confirmPickUpComplete() {
+    const pickUpCompleteAlert = this.alertCtrl.create({
+      title: 'Is your pickup really complete?',
       buttons: [
         {
           text: 'Cancel',
@@ -123,12 +123,13 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.routesProvider.removeRoute(index);
+            // this.routesProvider.removeRoute();
+            this.arrivedAtPickup = true;
           }
         }
       ]
     });
-    return routeComplete;
+    return pickUpCompleteAlert;
   }
 
 }

@@ -32,8 +32,8 @@ export class RoutesProvider {
     return this.routes.slice();
   }
 
-  removeRoute(index: number) {
-    this.routes.splice(index,1);
+  removeRoute() {
+    this.routes.splice(0,1);
     this.routesChanged.next(this.routes.slice());
   }
 

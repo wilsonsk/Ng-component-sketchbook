@@ -211,9 +211,23 @@
             <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes">
               <ion-col col-1 push-1 dotted-border>
               </ion-col>
-              <ion-col col-5 push-1>
+              <ion-col col-8 push-1 text-wrap>
                 <h1 class="avenir f2 fw4">Trip Notes: </h1>
                 <span class="avenir f3 fw3">{{ currentRoute.tripNotes }}</span>
+              </ion-col>
+            </ion-row>
+            <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;">
+              <ion-col>
+                <ion-card>
+                  <ion-row>
+                    <ion-col col-1 push-1 dotted-border>
+                    </ion-col>
+                    <ion-col col-5 push-1>
+                      <h1 class="avenir f2 fw4">Pick Up Notes: </h1>
+                      <span class="avenir f3 fw3">Test</span>
+                    </ion-col>
+                  </ion-row>
+                </ion-card>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -222,11 +236,11 @@
       <ion-item-options side="right">
         <ion-row *ngIf="currentLocation;else spinner">
           <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else dropOff">
-            <button ion-button class="bg-blue" (click)="openMap()">
+            <button ion-button class="bg-blue" (click)="onStartPickup()">
               <ion-icon name="send"></ion-icon>
-              Start Trip to Pickup
+              Start Pickup Trip
             </button>
-            <button ion-button class="bg-red" (click)="onRouteComplete()">
+            <button ion-button class="bg-red" (click)="onArrivedAtPickup()">
               <ion-icon name="checkmark"></ion-icon>
               Pickup Complete
             </button>
@@ -235,7 +249,7 @@
             <ion-col col-12 no-padding>
               <button ion-button class="bg-blue" (click)="openMap()">
                 <ion-icon name="send"></ion-icon>
-                Start Trip to Dropoff
+                Start Dropoff Trip
               </button>
               <button ion-button class="bg-red" (click)="onRouteComplete()">
                 <ion-icon name="checkmark"></ion-icon>
