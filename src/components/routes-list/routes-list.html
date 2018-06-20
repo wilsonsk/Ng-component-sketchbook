@@ -221,7 +221,7 @@
       </ion-item>
       <ion-item-options side="right">
         <ion-row *ngIf="currentLocation;else spinner">
-          <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else #dropOff">
+          <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else dropOff">
             <button ion-button class="bg-blue" (click)="openMap()">
               <ion-icon name="send"></ion-icon>
               Start Trip to Pickup
