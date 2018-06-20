@@ -22,7 +22,7 @@ export class RouteNotesComponent {
   }
 
   ionViewWillLeave() {
-    this.routesProvider.currentRoute.notes = this.routeNotesForm.value['notes'];
+    this.routesProvider.currentRoute.tripNotes = this.routeNotesForm.value['tripNotes'];
 
     let options: NativeTransitionOptions = {
       direction: 'left',
@@ -44,11 +44,11 @@ export class RouteNotesComponent {
     let notes:string = '';
 
     if(this.routesProvider.currentRoute.notes) {
-        notes = this.routesProvider.currentRoute.notes;
+        tripNotes = this.routesProvider.currentRoute.tripNotes;
     }
 
     this.routeNotesForm = new FormGroup({
-      'notes': new FormControl(notes),
+      'tripNotes': new FormControl(notes),
     })
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,7 @@ import { LocationModel } from '../../models/location.model';
 export class RoutesListComponent {
   isActive:boolean;
   private locationChangedSubscription: Subscription;
+  private routesChangedSubscription: Subscription;
   currentLocation: LocationModel;
   routes: RouteModel[] = [];
   numRoutes: number;
@@ -26,13 +27,21 @@ export class RoutesListComponent {
   currentRoute: RouteModel;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
-              private locationProvider:LocationProvider, private routesProvider: RoutesProvider) {
-
-    this.routes = this.routesProvider.getRoutes();
-    this.numRoutes = this.routes.length;
-  }
+              private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
+              private toastCtrl: ToastController) {
+                  this.routes = this.routesProvider.getRoutes();
+                  this.currentRoute = this.routes[0];
+                  this.numRoutes = this.routes.length;
+              }
 
   ionViewWillEnter() {
+    this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
+      this.routes = routes;
+      this.currentRoute = this.routes[0];
+      this.numRoutes = this.routes.length;
+    });
+
+
     // locationChangedSubscription needs to be tested
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.currentLocation = this.locationProvider.getLocation();
@@ -64,9 +73,8 @@ export class RoutesListComponent {
   //   this.navCtrl.setRoot(RouteNavigationComponent);
   // }
 
-  openMap(route: RouteModel) {
-    this.currentRoute = route;
-    this.routesProvider.setCurrentRoute(route);
+  openMap() {
+    this.routesProvider.setCurrentRoute(this.currentRoute);
 
     let options: LaunchNavigatorOptions = {
       start: this.currentLocation.latitude + ', ' + this.currentLocation.longitude,
@@ -75,27 +83,26 @@ export class RoutesListComponent {
     };
 
     // get first param from Drively API
-    this.launchNavigator.navigate(route.destinationAddr, options)
+    this.launchNavigator.navigate(this.currentRoute.destinationAddr, options)
       .then(
         success => console.log('Launched navigator'),
         error => console.log('Error launching navigator', error)
       );
   }
 
-  onRouteComplete(route: RouteModel) {
+  onRouteComplete(index: number) {
+    this.confirmRouteComplete(index).present();
     // this.routesProvider.setCurrentRoute(route);
     // this.navCtrl.setRoot(RouteNotesComponent);
   }
 
-  onOpenRouteNotes(route: RouteModel) {
-    this.currentRoute = route;
-    this.routesProvider.setCurrentRoute(route);
+  onOpenRouteNotes() {
+    this.routesProvider.setCurrentRoute(this.currentRoute);
     this.navCtrl.push(RouteNotesComponent);
   }
 
-  onUnFold(route: RouteModel) {
-    this.currentRoute = route;
-    this.routesProvider.setCurrentRoute(route);
+  onUnFold() {
+    this.routesProvider.setCurrentRoute(this.currentRoute);
 
     if(this.folded) {
       this.isActive = true;
@@ -103,6 +110,25 @@ export class RoutesListComponent {
       this.isActive = false;
     }
     this.folded = !this.folded;
+  }
+
+  private confirmRouteComplete(index: number) {
+    const routeComplete = this.alertCtrl.create({
+      title: 'Is your route really complete?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.routesProvider.removeRoute(index);
+          }
+        }
+      ]
+    });
+    return routeComplete;
   }
 
 }

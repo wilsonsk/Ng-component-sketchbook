@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RouteModel } from '../../models/route.model';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class RoutesProvider {
@@ -12,6 +13,7 @@ export class RoutesProvider {
     new RouteModel('05:50PM', 5, 'source address 5', '700 NE 87th Ave, Vancouver, WA 98664', '07:00PM', true, true, null),
   ];
   currentRoute: RouteModel;
+  routesChanged = new Subject<RouteModel[]>();
 
   constructor(public http: HttpClient) {
 
@@ -27,6 +29,11 @@ export class RoutesProvider {
 
   getRoutes() {
     return this.routes.slice();
+  }
+
+  removeRoute(index: number) {
+    this.routes.splice(index,1);
+    this.routesChanged.next(this.routes.slice());
   }
 
 }

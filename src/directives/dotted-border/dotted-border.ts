@@ -10,7 +10,7 @@ export class DottedBorderDirective implements OnInit{
   @HostBinding('style.backgroundSize') bgSize: string;
   @HostBinding('style.backgroundRepeat') bgRepeat: string;
   @HostBinding('style.backgroundPosition') bgPos: string;
-  svgPath = '../../../assets/svg/dotted_border.svg';
+  svgPath = 'assets/svg/dotted_border.svg';
 
   constructor() {
 
