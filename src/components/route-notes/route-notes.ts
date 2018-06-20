@@ -48,7 +48,7 @@ export class RouteNotesComponent {
     }
 
     this.routeNotesForm = new FormGroup({
-      'tripNotes': new FormControl(notes),
+      'tripNotes': new FormControl(tripNotes),
     })
   }
 
