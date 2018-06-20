@@ -43,7 +43,7 @@ export class RouteNotesComponent {
   initForm() {
     let notes:string = '';
 
-    if(this.routesProvider.currentRoute.notes) {
+    if(this.routesProvider.currentRoute.tripNotes) {
         tripNotes = this.routesProvider.currentRoute.tripNotes;
     }
 
