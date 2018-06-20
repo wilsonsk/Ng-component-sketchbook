@@ -10,6 +10,7 @@
       <span class="avenir f1 fw6 tracked white db">Routes remaining</span>
       <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end a trip</span>
       <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
+      <span class="avenir f3 fw4 tracked white db mt2">Tap to expand route card</span>
     </ion-col>
     <ion-col col-3 align-items-center>
       <span class="avenir f-headline fw6 tracked white">{{ numRoutes }}</span>
@@ -213,28 +214,86 @@
               </ion-col>
               <ion-col col-8 push-1 text-wrap>
                 <h1 class="avenir f2 fw4">Trip Notes: </h1>
-                <span class="avenir f3 fw3">{{ currentRoute.tripNotes }}</span>
+                <span class="db avenir f3 fw3 mt4">{{ currentRoute.tripNotes }}</span>
               </ion-col>
             </ion-row>
             <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;">
               <ion-col>
-                <ion-card>
-                  <ion-row>
-                    <ion-col col-1 push-1 dotted-border>
-                    </ion-col>
-                    <ion-col col-5 push-1>
-                      <h1 class="avenir f2 fw4">Pick Up Notes: </h1>
-                      <span class="avenir f3 fw3">Test</span>
-                    </ion-col>
-                  </ion-row>
+                <ion-card class="pa4 bg-moon-gray" *ngIf="!pickupNotesFormSubmitted;else mileageForm" [@loadPickupNotesForm]>
+                  <ion-card-content>
+                    <ion-row>
+                      <ion-col>
+                        <span class="avenir f1 fw8">Pickup Notes: </span>
+                        <span class="db avenir f3 fw6">Complete this form to end this trip.</span>
+                        <form class="db mt4" [formGroup]="pickupNotesForm" (ngSubmit)="onSubmitPickupNotes()">
+                          <ion-list>
+                            <ion-item class="avenir f2 mb4 bg-moon-gray">
+                              <ion-label for="additionalPassengers">
+                                Additional Passengers
+                              </ion-label>
+                              <ion-checkbox name="additionalPassengers" formControlName="additionalPassengers"></ion-checkbox>
+                            </ion-item>
+                            <ion-item class="avenir f2 mb4 bg-moon-gray">
+                              <ion-label for="noShow">
+                                No Show
+                              </ion-label>
+                              <ion-checkbox name="noShow" formControlName="noShow"></ion-checkbox>
+                            </ion-item>
+                            <ion-item class="avenir f2 mb4 bg-moon-gray">
+                              <ion-label for="cancellation">
+                                Cancellation
+                              </ion-label>
+                              <ion-checkbox name="cancellation" formControlName="cancellation"></ion-checkbox>
+                            </ion-item>
+                          </ion-list>
+                          <ion-grid>
+                          <ion-row>
+                            <ion-col>
+                              <h5 class="avenir f-subheadline fw4 tracked" text-center>Take photo of facesheet</h5>
+                            </ion-col>
+                          </ion-row>
+                          <ion-row>
+                            <ion-col>
+                              <button class="w-75" ion-button icon-left block outline type="button" (click)="onOpenCamera()" style="color: #D87C27; border-color: #D87C27; margin: 0 auto;">
+                                <ion-icon name="camera"></ion-icon>Open Camera
+                              </button>
+                            </ion-col>
+                          </ion-row>
+                          <ion-row *ngIf="imageUrl !=''">
+                            <ion-col>
+                              <img [src]="imageUrl">
+                            </ion-col>
+                          </ion-row>
+                          <ion-row>
+                            <ion-col>
+                              <button class="w-75" ion-button color="secondary" block type="submit" style="background-color:#D87C27; margin: 0 auto;">Submit Pickup Notes</button>
+                            </ion-col>
+                          </ion-row>
+                        </ion-grid>
+                        </form>
+                      </ion-col>
+                    </ion-row>
+                  </ion-card-content>
                 </ion-card>
+                <ng-template #mileageForm>
+                  <ion-card class="pa4 bg-moon-gray" [@loadStartingMileageForm]>
+                    <ion-row>
+                      <ion-col>
+                        <span class="avenir f1 fw8">Enter Starting Mileage: </span>
+                        <span class="db avenir f3 fw6">Complete this form to end this trip.</span>
+
+                      </ion-col>
+                    </ion-row>
+                  </ion-card>
+                </ng-template>
               </ion-col>
             </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-item>
       <ion-item-options side="right">
-        <ion-row *ngIf="currentLocation;else spinner">
+        <!-- <ion-row *ngIf="currentLocation;else spinner"> -->
+        <ion-row>
           <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else dropOff">
             <button ion-button class="bg-blue" (click)="onStartPickup()">
               <ion-icon name="send"></ion-icon>

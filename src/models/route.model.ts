@@ -13,6 +13,10 @@ export class RouteModel {
       public shared: boolean,
       public tripNotes: string,
       public type: string,
-
+      public additionalPassengers: boolean,
+      public noShow: boolean,
+      public cancellation: boolean,
+      // public facesheet: string,
+      // public signature: string,
     ) {}
 }
