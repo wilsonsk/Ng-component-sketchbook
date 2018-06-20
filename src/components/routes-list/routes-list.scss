@@ -48,5 +48,10 @@
     overflow: visible;
     visibility: visible;
     transform: rotateX(0deg);
+
+    &.unfold-second-child {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
   }
 }
