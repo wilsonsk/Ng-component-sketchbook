@@ -88,9 +88,12 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-            <ion-row class="unfold-second-child">
-              <ion-col>
-                <h1>test unfolding</h1>
+            <ion-row class="unfold-second-child pt4 pb4" *ngIf="route.notes">
+              <ion-col col-1 push-1 dotted-border>
+              </ion-col>
+              <ion-col col-5 push-1>
+                <h1 class="avenir f2 fw4">Route Notes: </h1>
+                <span class="avenir f3 fw3">{{ route.notes }}</span>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -132,6 +135,4 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-
-
 </ion-content>

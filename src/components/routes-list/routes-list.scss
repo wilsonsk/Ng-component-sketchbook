@@ -16,24 +16,18 @@
   position: relative;
   background: $bg;
 
-  .unfold-parent:hover & {
-    background: darken($bg, 2%);
-  }
 }
 
 .unfold-first-child {
-  //z-index: 10;
   transition: .6s ease all;
 }
 
 .unfold-second-child {
   max-height: 0;
   padding: 0;
-
   overflow: hidden;
   visibility: hidden;
-
-  transform: rotateX(-180deg);
+  transform: rotateX(180deg);
   transform-origin: top center;
   backface-visibility: hidden;
   transition: .6s transform ease;
