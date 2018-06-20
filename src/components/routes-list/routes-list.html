@@ -221,16 +221,28 @@
       </ion-item>
       <ion-item-options side="right">
         <ion-row *ngIf="currentLocation;else spinner">
-          <ion-col col-12 no-padding>
+          <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else #dropOff">
             <button ion-button class="bg-blue" (click)="openMap()">
               <ion-icon name="send"></ion-icon>
-              Start Trip
+              Start Trip to Pickup
             </button>
             <button ion-button class="bg-red" (click)="onRouteComplete()">
               <ion-icon name="checkmark"></ion-icon>
-              Trip Complete
+              Pickup Complete
             </button>
           </ion-col>
+          <ng-template #dropOff>
+            <ion-col col-12 no-padding>
+              <button ion-button class="bg-blue" (click)="openMap()">
+                <ion-icon name="send"></ion-icon>
+                Start Trip to Dropoff
+              </button>
+              <button ion-button class="bg-red" (click)="onRouteComplete()">
+                <ion-icon name="checkmark"></ion-icon>
+                Dropoff Complete
+              </button>
+            </ion-col>
+          </ng-template>
         </ion-row>
         <ng-template #spinner>
           <ion-row>

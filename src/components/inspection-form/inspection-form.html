@@ -92,9 +92,6 @@
                   <ion-checkbox name="firstAidKit" formControlName="firstAidKit" (ionChange)="onFirstAidKit()"></ion-checkbox>
                 </ion-item>
                 <ion-item class="avenir mb5 ml5" *ngIf="firstAidKitFlag">
-                  <ion-label>Items to be Replaced</ion-label>
-                </ion-item>
-                <ion-item class="avenir mb5 ml5" *ngIf="firstAidKitFlag">
                   <button ion-button type="button" (click)="onAddFirstAidKitItem()">Add First Aid Kit Item</button>
                 </ion-item>
                 <div class="avenir mb5 ml5" formArrayName="firstAidKitItemsToReplace" *ngIf="firstAidKitFlag">
@@ -113,9 +110,6 @@
                 <ion-item class="avenir mb5">
                   <ion-label>BIO Hazard Kit (when entering a new car)</ion-label>
                   <ion-checkbox name="bioHazardKit" formControlName="bioHazardKit" (ionChange)="onBioHazardKit()"></ion-checkbox>
-                </ion-item>
-                <ion-item class="avenir mb5 ml5" *ngIf="bioHazardKitFlag">
-                  <ion-label>Items to be Replaced</ion-label>
                 </ion-item>
                 <ion-item class="avenir mb5 ml5" *ngIf="bioHazardKitFlag">
                   <button ion-button type="button" (click)="onAddBioHazardKitItem()">Add BIO Hazard Kit Item</button>

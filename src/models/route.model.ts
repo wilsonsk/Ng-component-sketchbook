@@ -12,5 +12,7 @@ export class RouteModel {
       public ambulatory: boolean,
       public shared: boolean,
       public tripNotes: string,
+      public type: string,
+
     ) {}
 }
