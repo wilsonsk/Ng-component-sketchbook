@@ -26,58 +26,40 @@ declare var cordova: any;
     trigger('loadPickupNotesForm', [
       transition('void => *', [
         style({
-          'transform': 'translateY(-15%)',
+          'transform': 'translateY(-25%)',
           'opacity': '0'
         }),
-        animate(1000)
+        animate('.3s')
       ]),
       transition('* => void', [
-        animate(1000, style({
+        animate('.3s', style({
           'transform': 'translateY(-15%)',
           'opacity': '0'
         }))
-      ])
-      // transition('void => *', [
-      //   animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-      //     style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
-      //     style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
-      //   ]))
-      // ]),
-      // transition('* => void', [
-      //   animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-      //     style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
-      //     style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
-      //   ]))
-      // ]),
-    ]),
+      ]),
+    //   transition('void => *', [
+    //     animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
+    //       style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
+    //       style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
+    //     ]))
+    //   ]),
+    //   transition('* => void', [
+    //     animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
+    //       style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
+    //       style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
+    //     ]))
+    //   ]),
+    // ]),
     trigger('fade', [
       transition('void => *', [
         style({ 'opacity': '0' }),
-        animate('1s 1s')
+        animate('0.3s 0.3s')
       ]),
       transition('* => void', [
-        animate(1000, style({
+        animate('0.3s', style({
           'opacity': '0'
         }))
       ])
-    ]),
-    trigger('pickupChangeColor', [
-      state('pickup', style({
-          'color': '1',
-      })),
-      state('dropOff', style({
-          'color': '0',
-      })),
-      transition('pickup => void', animate('5s')),
-    ]),
-    trigger('dropOffChangeColor', [
-      state('pickup', style({
-          'color': '0',
-      })),
-      state('dropOff', style({
-          'color': '1',
-      })),
-      transition('pickup => dropOff', animate('5s')),
     ]),
   ]
 })
