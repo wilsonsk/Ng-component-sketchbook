@@ -10,7 +10,7 @@ export class DottedBorderDirective implements OnInit {
   @HostBinding('style.backgroundSize') bgSize: string;
   @HostBinding('style.backgroundRepeat') bgRepeat: string;
   @HostBinding('style.backgroundPosition') bgPos: string;
-  svgPath = 'assets/svg/dotted_border.svg';
+  svgPath:string = '';
 
   @Input() set svgType(type: string) {
     if(type==='dropOff') {
@@ -18,6 +18,7 @@ export class DottedBorderDirective implements OnInit {
     } else {
       this.svgPath = 'assets/svg/dotted_border.svg';
     }
+    this.initStyles();
   }
 
   constructor() {
@@ -25,6 +26,10 @@ export class DottedBorderDirective implements OnInit {
   }
 
   ngOnInit() {
+    this.initStyles();
+  }
+
+  initStyles() {
     this.bg = 'url(' + this.svgPath + ')';
     this.bgSize = '75% 75%';
     this.bgRepeat = 'no-repeat';

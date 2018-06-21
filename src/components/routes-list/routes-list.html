@@ -161,11 +161,12 @@
               </ion-col>
               <ion-col col-9 class="pl4">
                 <ion-row>
+                  <!-- <ion-col col-1 dotted-border [svgType]="routeTypeState"> -->
                   <ion-col col-1 dotted-border [svgType]="routeTypeState">
                   </ion-col>
                   <ion-col col-11 class="pl3">
                     <ion-row>
-                      <ion-col col-12 class="bb bw6 tc">
+                      <ion-col col-12 class="bb bw6 tc" [ngStyle]="{'border-color': routeTypeState=='pickup' ? '#D87C27' : 'white'}">
                         <span class="avenir f3 fw3">{{ currentRoute.sourceAddr }}</span>
                       </ion-col>
                       <ion-col col-12 class="tc">
