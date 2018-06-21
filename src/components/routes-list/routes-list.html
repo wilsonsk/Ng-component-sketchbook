@@ -139,14 +139,15 @@
 
   <ion-list no-lines class="mt4" *ngIf="routes">
     <ion-item-sliding>
-      <ion-item >
-        <ion-card class="br3 bl bw3 shadow-3" style="border-color:#D87C27">
+      <ion-item>
+        <ion-card class="br3 bl bw3 shadow-3" style="border-color:#D87C27;">
           <ion-card-content no-padding class="unfold-parent" (click)="onUnFold()" [ngClass]="{'isActive': isActive}">
             <ion-row class="pa4 relative unfold-first-child">
               <ion-col col-3 class="br b--silver">
                 <ion-row>
                   <ion-col col-12>
-                    <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route:</h1>
+                    <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27" *ngIf="routeTypeState=='pickup'" [@fade]>Pickup</h1>
+                    <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27" *ngIf="routeTypeState=='dropOff'" [@fade]>Drop Off</h1>
                   </ion-col>
                 </ion-row>
                 <ion-row class="mt5">
@@ -187,7 +188,7 @@
                   <ion-col col-2 push-2>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6" style="color:#D87C27">Ambulatory:</span>
+                        <span class="avenir f4 fw6" style="color:#D87C27">Ambulatory</span>
                       </ion-col>
                       <ion-col col-12>
                         <span class="avenir f2 fw8"*ngIf="currentRoute.ambulatory;else notAmbulatory">Y</span>
@@ -217,9 +218,9 @@
                 <span class="db avenir f3 fw3 mt4">{{ currentRoute.tripNotes }}</span>
               </ion-col>
             </ion-row>
-            <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;">
+            <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;" [@loadPickupNotesForm]>
               <ion-col>
-                <ion-card class="pa4 bg-moon-gray" *ngIf="!pickupNotesFormSubmitted;else mileageForm" [@loadPickupNotesForm]>
+                <ion-card class="pa4 bg-moon-gray">
                   <ion-card-content>
                     <ion-row>
                       <ion-col>
@@ -275,19 +276,6 @@
                     </ion-row>
                   </ion-card-content>
                 </ion-card>
-                <ng-template #mileageForm>
-                  <ion-card class="pa4 bg-moon-gray" [@loadStartingMileageForm]>
-                    <ion-card-content>
-                      <ion-row>
-                        <ion-col>
-                          <span class="avenir f1 fw8">Enter Starting Mileage: </span>
-                          <span class="db avenir f3 fw6">Complete this form to end this trip.</span>
-
-                        </ion-col>
-                      </ion-row>
-                    </ion-card-content>
-                  </ion-card>
-                </ng-template>
               </ion-col>
             </ion-row>
           </ion-card-content>

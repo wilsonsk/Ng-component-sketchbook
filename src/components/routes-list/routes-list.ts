@@ -4,7 +4,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
-import { state, trigger, transition, style, query, animate, keyframes, group, animateChild } from '@angular/animations';
+import { state, trigger, transition, style, animate, keyframes } from '@angular/animations';
 
 import { Camera } from '@ionic-native/camera';
 import { File, Entry, FileError } from '@ionic-native/file';
@@ -25,31 +25,59 @@ declare var cordova: any;
   animations: [
     trigger('loadPickupNotesForm', [
       transition('void => *', [
-        animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
-          style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
-        ]))
+        style({
+          'transform': 'translateY(-15%)',
+          'opacity': '0'
+        }),
+        animate(1000)
       ]),
       transition('* => void', [
-        animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
-          style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
-        ]))
-      ]),
+        animate(1000, style({
+          'transform': 'translateY(-15%)',
+          'opacity': '0'
+        }))
+      ])
+      // transition('void => *', [
+      //   animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
+      //     style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
+      //     style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
+      //   ]))
+      // ]),
+      // transition('* => void', [
+      //   animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
+      //     style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
+      //     style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
+      //   ]))
+      // ]),
     ]),
-    trigger('loadStartingMileageForm', [
+    trigger('fade', [
       transition('void => *', [
-        animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(150px) rotateX(90deg)', offset: 0}),
-          style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
-        ]))
+        style({ 'opacity': '0' }),
+        animate('1s 1s')
       ]),
       transition('* => void', [
-        animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(0) rotateX(0)', offset: 0}),
-          style({transform: 'translateY(150px) rotateX(90deg)',  offset: 1.0}),
-        ]))
-      ]),
+        animate(1000, style({
+          'opacity': '0'
+        }))
+      ])
+    ]),
+    trigger('pickupChangeColor', [
+      state('pickup', style({
+          'color': '1',
+      })),
+      state('dropOff', style({
+          'color': '0',
+      })),
+      transition('pickup => void', animate('5s')),
+    ]),
+    trigger('dropOffChangeColor', [
+      state('pickup', style({
+          'color': '0',
+      })),
+      state('dropOff', style({
+          'color': '1',
+      })),
+      transition('pickup => dropOff', animate('5s')),
     ]),
   ]
 })
@@ -66,21 +94,17 @@ export class RoutesListComponent {
   arrivedAtDropoff: boolean = false;
   pickupNotesForm: FormGroup;
   imageUrl = '';
-  pickupNotesFormSubmitted: boolean = false;
+  routeTypeState: string = '';
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
-                  this.routes = this.routesProvider.getRoutes();
-                  this.currentRoute = this.routes[0];
-                  this.numRoutes = this.routes.length;
+                this.updateRoutes();
               }
 
   ionViewWillEnter() {
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-      this.routes = routes;
-      this.currentRoute = this.routes[0];
-      this.numRoutes = this.routes.length;
+      this.updateRoutes();
     });
 
     // locationChangedSubscription needs to be tested
@@ -116,6 +140,17 @@ export class RoutesListComponent {
   //   this.currentRouteProvider.setCurrentRoute(route);
   //   this.navCtrl.setRoot(RouteNavigationComponent);
   // }
+
+  private updateRoutes() {
+    this.routes = this.routesProvider.getRoutes();
+    this.currentRoute = this.routes[0];
+    this.numRoutes = this.routes.length;
+    if(this.currentRoute.type === 'p') {
+      this.routeTypeState = 'pickup';
+    } else if(this.currentRoute.type === 'd') {
+      this.routeTypeState = 'dropOff';
+    }
+  }
 
   onStartPickup() {
     this.routesProvider.setCurrentRoute(this.currentRoute);
@@ -231,9 +266,10 @@ export class RoutesListComponent {
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
     this.currentRoute.cancellation = this.pickupNotesForm.value['cancellation'];
 
-    this.pickupNotesFormSubmitted = true;
+    this.arrivedAtPickup = false;
 
     alert(JSON.stringify(this.currentRoute));
+    this.routesProvider.removeRoute();
   }
 
 }
