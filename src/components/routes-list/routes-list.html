@@ -14,7 +14,7 @@
         <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this pickup card</span>
       </div>
       <ng-template #dropOffHeader>
-        <h1 class="avenir f-headline fw8 tracked white" @fade]>Drop Off</h1>
+        <h1 class="avenir f-headline fw8 tracked white" [@fade]>Drop Off</h1>
         <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
         <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
         <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
@@ -25,126 +25,6 @@
       <span class="db avenir f-headline fw6 tr">{{ numRoutes }}</span>
     </ion-col>
   </ion-row>
-
-  <!-- <ion-list no-lines class="mt4" *ngIf="routes">
-    <ion-item-sliding *ngFor="let route of routes;let i = index;">
-      <ion-item >
-        <ion-card class="br3 bl bw3 shadow-3" style="border-color:#D87C27">
-          <ion-card-content no-padding class="unfold-parent" (click)="onUnFold(route)" [ngClass]="{'isActive': route===currentRoute && isActive}">
-            <ion-row class="pa4 relative unfold-first-child">
-              <ion-col col-3 class="br b--silver">
-                <ion-row>
-                  <ion-col col-12>
-                    <h1 class="avenir f-headline fw6 tracked" style="color:#D87C27">Route:</h1>
-                  </ion-col>
-                </ion-row>
-                <ion-row class="mt5">
-                  <ion-col col-12>
-                    <span class="avenir f4 fw6" style="color:#D87C27">Pick Up Time:</span>
-                  </ion-col>
-                  <ion-col col-12>
-                    <span class="avenir f2 fw7">{{ route.pickUpTime }}</span>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-              <ion-col col-9 class="pl4">
-                <ion-row>
-                  <ion-col col-1 dotted-border>
-                  </ion-col>
-                  <ion-col col-11 class="pl3">
-                    <ion-row>
-                      <ion-col col-12 class="bb bw6 tc">
-                        <span class="avenir f3 fw3">{{ route.sourceAddr }}</span>
-                      </ion-col>
-                      <ion-col col-12 class="tc">
-                        <span class="avenir f3 fw3">{{ route.destinationAddr }}</span>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-                <ion-row class="mt5">
-                  <ion-col col-3 push-1>
-                    <ion-row>
-                      <ion-col col-12>
-                        <span class="avenir f4 fw6" style="color:#D87C27">Appointment Time:</span>
-                      </ion-col>
-                      <ion-col col-12>
-                        <span class="avenir f2 fw7">{{ route.appointmentTime }}</span>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                  <ion-col col-2 push-2>
-                    <ion-row>
-                      <ion-col col-12>
-                        <span class="avenir f4 fw6" style="color:#D87C27">Ambulatory:</span>
-                      </ion-col>
-                      <ion-col col-12>
-                        <span class="avenir f2 fw8"*ngIf="route.ambulatory;else notAmbulatory">Y</span>
-                        <ng-template #notAmbulatory><span class="avenir f2 fw8">N</span></ng-template>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                  <ion-col col-2 push-3>
-                    <ion-row>
-                      <ion-col col-12>
-                        <span class="avenir f4 fw6" style="color:#D87C27">Shared Ride:</span>
-                      </ion-col>
-                      <ion-col col-12>
-                        <span class="avenir f2 fw8" *ngIf="route.shared;else notShared">Y</span>
-                        <ng-template #notShared><span class="avenir f2 fw8">N</span></ng-template>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row class="unfold-second-child" *ngIf="route.notes">
-              <ion-col col-1 push-1 dotted-border>
-              </ion-col>
-              <ion-col col-5 push-1>
-                <h1 class="avenir f2 fw4">Route Notes: </h1>
-                <span class="avenir f3 fw3">{{ route.notes }}</span>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-      <ion-item-options side="right">
-        <ion-row *ngIf="currentLocation;else spinner">
-          <ion-col col-12 no-padding>
-            <button ion-button class="bg-blue" (click)="openMap(route)">
-              <ion-icon name="send"></ion-icon>
-              Start Trip
-            </button>
-            <button ion-button class="bg-red" (click)="onRouteComplete(route)">
-              <ion-icon name="checkmark"></ion-icon>
-              Trip Complete
-            </button>
-          </ion-col>
-        </ion-row>
-        <ng-template #spinner>
-          <ion-row>
-            <ion-col col-8>
-              <h1 class="avenir f3 fw6">Location data is loading...</h1>
-            </ion-col>
-            <ion-col col-4>
-              <ion-spinner></ion-spinner>
-            </ion-col>
-          </ion-row>
-        </ng-template>
-      </ion-item-options>
-      <ion-item-options side="left">
-        <ion-row>
-          <ion-col col-12 no-padding>
-            <button ion-button style="background-color:#D87C27" (click)="onOpenRouteNotes(route)">
-              <ion-icon name="document"></ion-icon>
-              Access Trip Notes
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list> -->
 
   <ion-list no-lines class="mt4" *ngIf="routes">
     <ion-item-sliding>
@@ -223,7 +103,7 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-            <ion-row class="unfold-second-child transition-animated" *ngIf="currentRoute.tripNotes" [ngStyle]="{'background-color': routeTypeState=='pickup' ? '' : '#D87C27'}">
+            <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes" [ngStyle]="{'background-color': routeTypeState=='pickup' ? '' : '#D87C27'}">
               <ion-col col-1 push-1 dotted-border [svgType]="routeTypeState">
               </ion-col>
               <ion-col col-8 push-1 text-wrap>

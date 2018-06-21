@@ -27,10 +27,11 @@
   padding: 0;
   overflow: hidden;
   visibility: hidden;
-  transform: rotateX(180deg);
+  // transform: rotateX(180deg);
+  transform: translateY(-100%);
   transform-origin: top center;
   backface-visibility: hidden;
-  transition: .6s transform ease;
+  transition: 0 transform ease;
 
   &:before {
     content: '';
@@ -47,7 +48,8 @@
     max-height: none;
     overflow: visible;
     visibility: visible;
-    transform: rotateX(0deg);
+    // transform: rotateX(0deg);
+    transform: translateY(0%);
 
     &.unfold-second-child {
       padding-top: 2rem;
