@@ -17,6 +17,8 @@ import { RoutesProvider } from '../../providers/routes/routes';
 import { RouteModel } from '../../models/route.model';
 import { LocationModel } from '../../models/location.model';
 
+declare var cordova: any;
+
 @Component({
   selector: 'routes-list',
   templateUrl: 'routes-list.html',
