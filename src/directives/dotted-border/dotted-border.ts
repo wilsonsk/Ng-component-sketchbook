@@ -7,22 +7,29 @@ import { Directive, HostBinding, Input } from '@angular/core';
 export class DottedBorderDirective {
   // Even EASIER than Renderer2 - binds a variable to any property of the DOM element the directive is sitting on
   @HostBinding('style.background') bg: string;
-  @HostBinding('style.backgroundSize') bgSize: string;
-  @HostBinding('style.backgroundRepeat') bgRepeat: string;
-  @HostBinding('style.backgroundPosition') bgPos: string;
+  @HostBinding('style.backgroundSize') bgSize: string = '75% 75%';
+  @HostBinding('style.backgroundRepeat') bgRepeat: string = 'no-repeat';
+  @HostBinding('style.backgroundPosition') bgPos: string = 'center';
   svgPath:string = '';
 
   @Input() set svgType(type: string) {
+    this.initSize();
     if(type==='dropOff') {
       this.svgPath = 'assets/svg/dotted_border_alt.svg';
-      this.bg = 'url(' + this.svgPath + ') 75% 75% no-repeat center';
+      this.bg = 'url(' + this.svgPath + ')';
     } else {
       this.svgPath = 'assets/svg/dotted_border.svg';
-      this.bg = 'url(' + this.svgPath + ') 75% 75% no-repeat center';
+      this.bg = 'url(' + this.svgPath + ')';
     }
   }
 
   constructor() {
 
+  }
+
+  initSize() {
+    this.bgSize= '75% 75%';
+    this.bgRepeat = 'no-repeat';
+    this.bgPos = 'center';
   }
 }

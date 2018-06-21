@@ -147,7 +147,7 @@
                 <ion-row>
                   <ion-col col-12>
                     <h1 class="avenir f-headline fw6 tracked" [ngStyle]="{'color': routeTypeState=='pickup' ? '#D87C27' : 'black'}" *ngIf="routeTypeState=='pickup'" [@fade]>Pickup</h1>
-                    <h1 class="avenir f-headline fw6 tracked" [ngStyle]="{'color': routeTypeState=='pickup' ? '#D87C27' : 'black'}"  *ngIf="routeTypeState=='dropOff'" [@fade]>Drop Off</h1>
+                    <h1 class="avenir f-headline fw6 tracked" [ngStyle]="{'color': routeTypeState=='pickup' ? '#D87C27' : 'black'}" *ngIf="routeTypeState=='dropOff'" [@fade]>Drop Off</h1>
                   </ion-col>
                 </ion-row>
                 <ion-row class="mt5">
@@ -161,9 +161,12 @@
               </ion-col>
               <ion-col col-9 class="pl4">
                 <ion-row>
-                  <!-- <ion-col col-1 dotted-border [svgType]="routeTypeState"> -->
-                  <ion-col col-1 dotted-border [svgType]="routeTypeState">
+                  <ion-col col-1 dotted-border [svgType]="routeTypeState" *ngIf="routeTypeState==='pickup';else altBorder">
                   </ion-col>
+                  <ng-template #altBorder>
+                    <ion-col col-1 dotted-border [svgType]="routeTypeState">
+                    </ion-col>
+                  </ng-template>
                   <ion-col col-11 class="pl3">
                     <ion-row>
                       <ion-col col-12 class="bb bw6 tc" [ngStyle]="{'border-color': routeTypeState=='pickup' ? '#D87C27' : 'white'}">
@@ -211,12 +214,12 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-            <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes">
+            <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes" [ngStyle]="{'background-color': routeTypeState=='pickup' ? '' : '#D87C27'}">
               <ion-col col-1 push-1 dotted-border [svgType]="routeTypeState">
               </ion-col>
               <ion-col col-8 push-1 text-wrap>
                 <h1 class="avenir f2 fw4">Trip Notes: </h1>
-                <span class="db avenir f3 fw3 mt4">{{ currentRoute.tripNotes }}</span>
+                <span class="db avenir f3 fw3 mt4" [ngStyle]="{'color': routeTypeState=='pickup' ? 'black' : 'white'}">{{ currentRoute.tripNotes }}</span>
               </ion-col>
             </ion-row>
             <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;" [@loadPickupNotesForm]>
