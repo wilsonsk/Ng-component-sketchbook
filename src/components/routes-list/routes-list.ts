@@ -49,7 +49,7 @@ declare var cordova: any;
     //       style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
     //     ]))
     //   ]),
-    // ]),
+    ]),
     trigger('fade', [
       transition('void => *', [
         style({ 'opacity': '0' }),
