@@ -1,4 +1,4 @@
-import { OnInit, Directive, HostBinding } from '@angular/core';
+import { OnInit, Directive, HostBinding, Input } from '@angular/core';
 
 
 @Directive({
@@ -11,6 +11,14 @@ export class DottedBorderDirective implements OnInit {
   @HostBinding('style.backgroundRepeat') bgRepeat: string;
   @HostBinding('style.backgroundPosition') bgPos: string;
   svgPath = 'assets/svg/dotted_border.svg';
+
+  @Input() set svgType(type: string) {
+    if(type==='dropOff') {
+      this.svgPath = 'assets/svg/dotted_border_alt.svg';
+    } else {
+      this.svgPath = 'assets/svg/dotted_border.svg';
+    }
+  }
 
   constructor() {
 
