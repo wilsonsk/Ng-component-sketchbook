@@ -40,14 +40,14 @@ declare var cordova: any;
     trigger('loadStartingMileageForm', [
       transition('void => *', [
         animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
-          style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
+          style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
+          style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
         ]))
       ]),
       transition('* => void', [
         animate('0.5s 0s cubic-bezier(0.250, 0.460, 0.450, 0.940)', keyframes([
-          style({transform: 'translateY(0) rotateX(0deg)', offset: 0}),
-          style({transform: 'translateY(-150px) rotateX(-90deg)',  offset: 1.0}),
+          style({transform: 'translateY(-150px) rotateX(-90deg)', offset: 0}),
+          style({transform: 'translateY(0) rotateX(0deg)',  offset: 1.0}),
         ]))
       ]),
     ]),
