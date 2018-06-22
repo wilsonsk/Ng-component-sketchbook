@@ -72,7 +72,9 @@ export class RoutesListComponent {
   isActive:boolean;
   routeTypeState: string = '';
 
-  pickupCanStart: boolean = true;
+  pickupPrerequisite: boolean = false;
+
+  pickupCanStart: boolean = false;
   pickupDidStart: boolean = false;
   pickupStartMileageFormDidComplete: boolean = false;
   pickupCanCompleteForm: boolean = false;
@@ -96,6 +98,9 @@ export class RoutesListComponent {
 
   // Reactive form vars
   pickupNotesForm: FormGroup;
+  startingMileagePickupForm: FormGroup;
+  endingMileagePickupForm: FormGroup;
+
   startingMileageDropOffForm: FormGroup;
   endingMileageDropOffForm: FormGroup;
 
@@ -103,6 +108,7 @@ export class RoutesListComponent {
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
                 this.updateRoutes();
+                this.initStartingMileagePickupForm();
               }
 
   ionViewWillEnter() {
@@ -120,6 +126,8 @@ export class RoutesListComponent {
     });
 
     this.initPickupNotesForm();
+    this.initEndingMileagePickupForm();
+
     this.initStartingMileageDropOffForm();
     this.initEndingMileageDropOffForm();
   }
@@ -153,7 +161,6 @@ export class RoutesListComponent {
     this.numRoutes = this.routes.length;
     if(this.currentRoute.type === 'p') {
       this.routeTypeState = 'pickup';
-      this.pickupCanStart = true;
       this.dropOffComplete = false;
     } else if(this.currentRoute.type === 'd') {
       this.routeTypeState = 'dropOff';
@@ -267,23 +274,35 @@ export class RoutesListComponent {
     });
   }
 
+  initStartingMileagePickupForm() {
+    let startingMileage: string = null;
+
+    this.startingMileagePickupForm = new FormGroup({
+      'startingMileage': new FormControl(startingMileage, Validators.required),
+    });
+  }
+
+  initEndingMileagePickupForm() {
+    let endingMileage: string = null;
+
+    this.endingMileagePickupForm = new FormGroup({
+      'endingMileage': new FormControl(endingMileage, Validators.required),
+    });
+  }
+
   initStartingMileageDropOffForm() {
     let startingMileage: string = null;
-    // let endingMileage: string = null;
 
     this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
-      // 'endingMileage': new FormControl(endingMileage),
     });
   }
 
   initEndingMileageDropOffForm() {
     let endingMileage: string = null;
-    // let endingMileage: string = null;
 
     this.endingMileageDropOffForm = new FormGroup({
       'endingMileage': new FormControl(endingMileage, Validators.required),
-      // 'endingMileage': new FormControl(endingMileage),
     });
   }
 
@@ -340,7 +359,18 @@ export class RoutesListComponent {
     this.routesProvider.removeRoute();
   }
 
-  onSubmitDropOffStartMileageForm() {
+  onSubmitStartingMileagePickupForm() {
+    this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
+    this.pickupPrerequisite = true;
+    this.pickupCanStart = true;
+  }
+
+  onSubmitEndingMileagePickupForm() {
+    this.currentRoute.endingMileage = this.endingMileagePickupForm.value['startingMileage'];
+
+  }
+
+  onSubmitStartMileageDropOffForm() {
     this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
     this.startingMileageDropOffForm.reset();
 
@@ -352,7 +382,7 @@ export class RoutesListComponent {
     this.dropOffCanStart = true;
   }
 
-  onSubmitDropOffEndingMileageForm() {
+  onSubmitEndingMileageDropOffForm() {
     this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
     this.endingMileageDropOffForm.reset();
 
