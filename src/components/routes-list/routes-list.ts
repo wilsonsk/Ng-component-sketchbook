@@ -252,18 +252,6 @@ export class RoutesListComponent {
     });
   }
 
-  initPickupNotesForm() {
-    let additionalPassengers: boolean = false;
-    let noShow: boolean = false;
-    let cancellation: boolean = false;
-
-    this.pickupNotesForm = new FormGroup({
-      'additionalPassengers': new FormControl(additionalPassengers),
-      'noShow': new FormControl(noShow),
-      'cancellation': new FormControl(cancellation),
-    });
-  }
-
   initMileageForm() {
     let startingMileage: string = null;
     // let endingMileage: string = null;
@@ -329,7 +317,7 @@ export class RoutesListComponent {
     this.currentRoute.startingMileage = this.mileageForm.value['startingMileage'];
 
     this.routesProvider.setCurrentRoute(this.currentRoute);
-    
+
     alert(JSON.stringify(this.currentRoute));
     this.pickupComplete = false;
     this.dropOffCanStart = true;
