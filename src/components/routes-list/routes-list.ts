@@ -53,7 +53,7 @@ declare var cordova: any;
     trigger('fade', [
       transition('void => *', [
         style({ 'opacity': '0' }),
-        animate('0.5s 0.8s')
+        animate('0.5s 1s')
       ]),
       transition('* => void', [
         animate('0.5s', style({
