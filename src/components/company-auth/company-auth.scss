@@ -1,3 +1,8 @@
 company-auth {
 
 }
+ion-content {
+  &::after {
+    filter: blur(3px);
+  }
+}

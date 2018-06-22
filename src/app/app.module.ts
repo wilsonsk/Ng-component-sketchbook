@@ -21,9 +21,12 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+// Common components
+import { HeaderComponent } from '../components/common/header/header';
 import { DrivelyLogoComponent } from '../components/common/drively-logo/drively-logo';
-import { CompanyAuthComponent } from '../components/company-auth/company-auth';
+
 import { DriverLoginComponent } from '../components/driver-login/driver-login';
+import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RoutesListComponent } from '../components/routes-list/routes-list';
 import { RouteNotesComponent } from '../components/route-notes/route-notes';
@@ -41,6 +44,7 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     DrivelyLogoComponent,
     CompanyAuthComponent,
     DriverLoginComponent,
+    HeaderComponent,
     InspectionFormComponent,
     RoutesListComponent,
     DottedBorderDirective,
@@ -62,6 +66,7 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     TabsPage,
     CompanyAuthComponent,
     DriverLoginComponent,
+    HeaderComponent,
     InspectionFormComponent,
     RoutesListComponent,
     RouteNotesComponent,

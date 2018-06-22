@@ -29,10 +29,10 @@ declare var cordova: any;
           'transform': 'translateY(-25%)',
           'opacity': '0'
         }),
-        animate('.3s')
+        animate('.1s')
       ]),
       transition('* => void', [
-        animate('.3s', style({
+        animate('.1s', style({
           'transform': 'translateY(-15%)',
           'opacity': '0'
         }))
@@ -53,10 +53,10 @@ declare var cordova: any;
     trigger('fade', [
       transition('void => *', [
         style({ 'opacity': '0' }),
-        animate('0.5s 1s')
+        animate('0.1s 0.4s')
       ]),
       transition('* => void', [
-        animate('0.5s', style({
+        animate('0.1s', style({
           'opacity': '0'
         }))
       ])
@@ -71,11 +71,14 @@ export class RoutesListComponent {
   // Component States
   isActive:boolean;
   routeTypeState: string = '';
+
   pickupCanStart: boolean = true;
   pickupDidStart: boolean = false;
+  pickupStartMileageFormDidComplete: boolean = false;
   pickupCanCompleteForm: boolean = false;
   pickupCanEnd: boolean = false;
   pickupComplete: boolean = false;
+
   dropOffCanStart: boolean = false;
   dropOffDidStart: boolean = false;
   dropOffCanEnd: boolean = false;
@@ -93,7 +96,8 @@ export class RoutesListComponent {
 
   // Reactive form vars
   pickupNotesForm: FormGroup;
-  mileageForm: FormGroup;
+  startingMileageDropOffForm: FormGroup;
+  endingMileageDropOffForm: FormGroup;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
@@ -116,7 +120,8 @@ export class RoutesListComponent {
     });
 
     this.initPickupNotesForm();
-    this.initMileageForm();
+    this.initStartingMileageDropOffForm();
+    this.initEndingMileageDropOffForm();
   }
 
   ionViewWillLeave() {
@@ -149,6 +154,7 @@ export class RoutesListComponent {
     if(this.currentRoute.type === 'p') {
       this.routeTypeState = 'pickup';
       this.pickupCanStart = true;
+      this.dropOffComplete = false;
     } else if(this.currentRoute.type === 'd') {
       this.routeTypeState = 'dropOff';
       setTimeout(() => {
@@ -162,9 +168,11 @@ export class RoutesListComponent {
       if(!reOpen) {
         this.pickupDidStart = true;
       }
-
       this.pickupCanEnd = true;
     } else {
+      if(!reOpen) {
+        this.dropOffDidStart = true;
+      }
       this.dropOffCanEnd = true;
     }
 
@@ -214,7 +222,7 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            // this.pickupDidStart = false;
+            this.pickupDidStart = false;
             this.pickupCanCompleteForm = true;
             this.pickupCanStart = false;
             this.pickupCanEnd = false;
@@ -236,10 +244,10 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.dropOffComplete = true;
             this.dropOffCanStart = false;
+            this.dropOffDidStart = false;
+            this.dropOffComplete = true;
             this.dropOffCanEnd = false;
-            this.routesProvider.removeRoute();
           }
         }
       ]
@@ -259,12 +267,22 @@ export class RoutesListComponent {
     });
   }
 
-  initMileageForm() {
+  initStartingMileageDropOffForm() {
     let startingMileage: string = null;
     // let endingMileage: string = null;
 
-    this.mileageForm = new FormGroup({
+    this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
+      // 'endingMileage': new FormControl(endingMileage),
+    });
+  }
+
+  initEndingMileageDropOffForm() {
+    let endingMileage: string = null;
+    // let endingMileage: string = null;
+
+    this.endingMileageDropOffForm = new FormGroup({
+      'endingMileage': new FormControl(endingMileage, Validators.required),
       // 'endingMileage': new FormControl(endingMileage),
     });
   }
@@ -314,20 +332,32 @@ export class RoutesListComponent {
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
     this.currentRoute.cancellation = this.pickupNotesForm.value['cancellation'];
 
+    this.pickupNotesForm.reset();
+
     this.pickupCanCompleteForm = false;
 
     alert(JSON.stringify(this.currentRoute));
     this.routesProvider.removeRoute();
   }
 
-  onSubmitMileageForm() {
-    this.currentRoute.startingMileage = this.mileageForm.value['startingMileage'];
+  onSubmitDropOffStartMileageForm() {
+    this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
+    this.startingMileageDropOffForm.reset();
 
     this.routesProvider.setCurrentRoute(this.currentRoute);
 
     alert(JSON.stringify(this.currentRoute));
+    this.pickupStartMileageFormDidComplete = true;
     this.pickupComplete = false;
     this.dropOffCanStart = true;
+  }
+
+  onSubmitDropOffEndingMileageForm() {
+    this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
+    this.endingMileageDropOffForm.reset();
+
+    this.dropOffCanEnd = true;
+    this.routesProvider.removeRoute();
   }
 
 }
