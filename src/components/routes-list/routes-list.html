@@ -74,7 +74,7 @@
                         <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': routeTypeState=='pickup' ? '#D87C27' : 'white'}">Appointment Time:</span>
                       </ion-col>
                       <ion-col col-12>
-                        <span class="avenir f2 fw7">{{ currentRoute.appointmentTime }}</span>
+                        <span class="avenir f2 fw7 transition-animated">{{ currentRoute.appointmentTime }}</span>
                       </ion-col>
                     </ion-row>
                   </ion-col>
@@ -193,7 +193,7 @@
                               <ion-grid>
                                 <ion-row>
                                   <ion-col>
-                                    <button class="w-75" ion-button color="secondary" block type="submit" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
+                                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!mileageForm.valid" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
                                   </ion-col>
                                 </ion-row>
                               </ion-grid>
@@ -213,10 +213,16 @@
         <!-- <ion-row *ngIf="currentLocation;else spinner"> -->
         <ion-row>
           <ion-col col-12 no-padding *ngIf="routeTypeState==='pickup';else dropOff">
-            <button ion-button (click)="onStartRoute()" style="background-color:#6EFFA3;color:black;" [disabled]="!pickupCanStart">
+            <button ion-button *ngIf="!pickupDidStart;else pickupDidStart" (click)="onStartRoute()" style="background-color:#6EFFA3;color:black;" [disabled]="!pickupCanStart">
               <ion-icon name="send"></ion-icon>
               Start Pickup Trip
             </button>
+            <ng-template #pickupDidStart>
+              <button ion-button (click)="onStartRoute(true)" style="background-color:#6EFFA3;color:black;" [disabled]="!pickupCanStart">
+                <ion-icon name="send"></ion-icon>
+                Back to Map
+              </button>
+            </ng-template>
             <button ion-button (click)="onPickupComplete()" style="background-color:#FF552E;" [disabled]="!pickupCanEnd">
               <ion-icon name="checkmark"></ion-icon>
               Pickup Complete
@@ -224,10 +230,16 @@
           </ion-col>
           <ng-template #dropOff>
             <ion-col col-12 no-padding>
-              <button ion-button (click)="onStartRoute()" style="background-color:#6EFFA3;color:black" [disabled]="!dropOffCanStart">
+              <button ion-button *ngIf="!dropOffDidStart;else dDidStart" (click)="onStartRoute()" style="background-color:#6EFFA3;color:black" [disabled]="!dropOffCanStart">
                 <ion-icon name="send"></ion-icon>
                 Start Dropoff Trip
               </button>
+              <ng-template #dDidStart>
+                <button ion-button (click)="onStartRoute(true)" style="background-color:#6EFFA3;color:black" [disabled]="!dropOffCanStart">
+                  <ion-icon name="send"></ion-icon>
+                  Back to Map
+                </button>
+              </ng-template>
               <button ion-button (click)="onDropOffComplete()" style="background-color:#FF552E;" [disabled]="!dropOffCanEnd">
                 <ion-icon name="checkmark"></ion-icon>
                 Dropoff Complete

@@ -72,10 +72,12 @@ export class RoutesListComponent {
   isActive:boolean;
   routeTypeState: string = '';
   pickupCanStart: boolean = true;
+  pickupDidStart: boolean = false;
   pickupCanCompleteForm: boolean = false;
   pickupCanEnd: boolean = false;
   pickupComplete: boolean = false;
   dropOffCanStart: boolean = false;
+  dropOffDidStart: boolean = false;
   dropOffCanEnd: boolean = false;
   dropOffComplete: boolean = false;
 
@@ -155,8 +157,12 @@ export class RoutesListComponent {
     }
   }
 
-  onStartRoute() {
+  onStartRoute(reOpen:boolean) {
     if(this.routeTypeState==='pickup') {
+      if(!reOpen) {
+        this.pickupDidStart = true;
+      }
+
       this.pickupCanEnd = true;
     } else {
       this.dropOffCanEnd = true;
@@ -208,6 +214,7 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
+            // this.pickupDidStart = false;
             this.pickupCanCompleteForm = true;
             this.pickupCanStart = false;
             this.pickupCanEnd = false;
