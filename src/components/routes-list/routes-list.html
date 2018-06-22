@@ -111,14 +111,14 @@
                 <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': routeTypeState=='pickup' ? 'black' : 'white'}">{{ currentRoute.tripNotes }}</span>
               </ion-col>
             </ion-row>
-            <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="arrivedAtPickup" style="margin: 0 auto;" [@loadPickupNotesForm]>
+            <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="pickupCanCompleteForm" style="margin: 0 auto;" [@expandCard]>
               <ion-col>
                 <ion-card class="pa4 bg-moon-gray">
                   <ion-card-content>
                     <ion-row>
                       <ion-col>
                         <span class="avenir f1 fw8">Pickup Notes: </span>
-                        <span class="db avenir f3 fw6">Complete this form to end this trip.</span>
+                        <span class="db avenir f3 fw6">Complete this form to end this pickup.</span>
                         <form class="db mt4" [formGroup]="pickupNotesForm" (ngSubmit)="onSubmitPickupNotes()">
                           <ion-list>
                             <ion-item class="avenir f2 mb4 bg-moon-gray">
@@ -141,34 +141,69 @@
                             </ion-item>
                           </ion-list>
                           <ion-grid>
-                          <ion-row>
-                            <ion-col>
-                              <h5 class="avenir f-subheadline fw4 tracked" text-center>Take photo of facesheet</h5>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col>
-                              <button class="w-75" ion-button icon-left block outline type="button" (click)="onOpenCamera()" style="color: #D87C27; border-color: #D87C27; margin: 0 auto;">
-                                <ion-icon name="camera"></ion-icon>Open Camera
-                              </button>
-                            </ion-col>
-                          </ion-row>
-                          <ion-row *ngIf="imageUrl !=''">
-                            <ion-col>
-                              <img [src]="imageUrl">
-                            </ion-col>
-                          </ion-row>
-                          <ion-row>
-                            <ion-col>
-                              <button class="w-75" ion-button color="secondary" block type="submit" style="background-color:#D87C27; margin: 0 auto;">Submit Pickup Notes</button>
-                            </ion-col>
-                          </ion-row>
-                        </ion-grid>
+                            <ion-row>
+                              <ion-col>
+                                <h5 class="avenir f-subheadline fw4 tracked" text-center>Take photo of facesheet</h5>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <button class="w-75" ion-button icon-left block outline type="button" (click)="onOpenCamera()" style="color: #D87C27; border-color: #D87C27; margin: 0 auto;">
+                                  <ion-icon name="camera"></ion-icon>Open Camera
+                                </button>
+                              </ion-col>
+                            </ion-row>
+                            <ion-row *ngIf="imageUrl !=''">
+                              <ion-col>
+                                <img [src]="imageUrl">
+                              </ion-col>
+                            </ion-row>
+                            <ion-row>
+                              <ion-col>
+                                <button class="w-75" ion-button color="secondary" block type="submit" style="background-color:#D87C27; margin: 0 auto;">Submit Pickup Notes</button>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
                         </form>
                       </ion-col>
                     </ion-row>
                   </ion-card-content>
                 </ion-card>
+              </ion-col>
+            </ion-row>
+            <ion-row style="background-color:#D87C27" *ngIf="pickupComplete" [@expandCard]>
+              <ion-col>
+                <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
+                  <ion-col>
+                    <ion-card class="pa4 bg-moon-gray">
+                      <ion-card-content>
+                        <ion-row>
+                          <ion-col>
+                            <span class="avenir f1 fw8">Starting Mileage: </span>
+                            <span class="db avenir f3 fw6">Complete this form to start this dropoff.</span>
+                            <form class="db mt4" [formGroup]="mileageForm" (ngSubmit)="onSubmitMileageForm()">
+                              <ion-list>
+                                <ion-item class="avenir f2 mb4 bg-moon-gray">
+                                  <ion-label for="startingMileage" floating>
+                                    Starting Mileage
+                                  </ion-label>
+                                  <ion-input name="startingMileage" formControlName="startingMileage"></ion-input>
+                                </ion-item>
+                              </ion-list>
+                              <ion-grid>
+                                <ion-row>
+                                  <ion-col>
+                                    <button class="w-75" ion-button color="secondary" block type="submit" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
+                                  </ion-col>
+                                </ion-row>
+                              </ion-grid>
+                            </form>
+                          </ion-col>
+                        </ion-row>
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -177,23 +212,23 @@
       <ion-item-options side="right">
         <!-- <ion-row *ngIf="currentLocation;else spinner"> -->
         <ion-row>
-          <ion-col col-12 no-padding *ngIf="currentRoute.type === 'p';else dropOff">
-            <button ion-button class="bg-blue" (click)="onStartPickup()">
+          <ion-col col-12 no-padding *ngIf="routeTypeState==='pickup';else dropOff">
+            <button ion-button (click)="onStartRoute()" style="background-color:#6EFFA3;color:black;" [disabled]="!pickupCanStart">
               <ion-icon name="send"></ion-icon>
               Start Pickup Trip
             </button>
-            <button ion-button class="bg-red" (click)="onArrivedAtPickup()">
+            <button ion-button (click)="onPickupComplete()" style="background-color:#FF552E;" [disabled]="!pickupCanEnd">
               <ion-icon name="checkmark"></ion-icon>
               Pickup Complete
             </button>
           </ion-col>
           <ng-template #dropOff>
             <ion-col col-12 no-padding>
-              <button ion-button class="bg-blue" (click)="openMap()">
+              <button ion-button (click)="onStartRoute()" style="background-color:#6EFFA3;color:black" [disabled]="!dropOffCanStart">
                 <ion-icon name="send"></ion-icon>
                 Start Dropoff Trip
               </button>
-              <button ion-button class="bg-red" (click)="onRouteComplete()">
+              <button ion-button (click)="onDropOffComplete()" style="background-color:#FF552E;" [disabled]="!dropOffCanEnd">
                 <ion-icon name="checkmark"></ion-icon>
                 Dropoff Complete
               </button>
@@ -214,7 +249,7 @@
       <ion-item-options side="left">
         <ion-row>
           <ion-col col-12 no-padding>
-            <button ion-button style="background-color:#D87C27" (click)="onOpenRouteNotes()">
+            <button ion-button style="background-color:#A8A8A8;" (click)="onOpenRouteNotes()">
               <ion-icon name="document"></ion-icon>
               Trip Notes
             </button>

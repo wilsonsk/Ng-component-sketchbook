@@ -3,7 +3,7 @@ import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { state, trigger, transition, style, animate, keyframes } from '@angular/animations';
 
 import { Camera } from '@ionic-native/camera';
@@ -23,7 +23,7 @@ declare var cordova: any;
   selector: 'routes-list',
   templateUrl: 'routes-list.html',
   animations: [
-    trigger('loadPickupNotesForm', [
+    trigger('expandCard', [
       transition('void => *', [
         style({
           'transform': 'translateY(-25%)',
@@ -64,19 +64,34 @@ declare var cordova: any;
   ]
 })
 export class RoutesListComponent {
-  isActive:boolean;
+  // Subscriptions
   private locationChangedSubscription: Subscription;
   private routesChangedSubscription: Subscription;
+
+  // Component States
+  isActive:boolean;
+  routeTypeState: string = '';
+  pickupCanStart: boolean = true;
+  pickupCanCompleteForm: boolean = false;
+  pickupCanEnd: boolean = false;
+  pickupComplete: boolean = false;
+  dropOffCanStart: boolean = false;
+  dropOffCanEnd: boolean = false;
+  dropOffComplete: boolean = false;
+
+  // Route vars
+  currentRoute: RouteModel;
   currentLocation: LocationModel;
   routes: RouteModel[] = [];
   numRoutes: number;
-  folded: boolean = true;
-  currentRoute: RouteModel;
-  arrivedAtPickup: boolean = false;
-  arrivedAtDropoff: boolean = false;
-  pickupNotesForm: FormGroup;
   imageUrl = '';
-  routeTypeState: string = '';
+
+  // Animation only States
+  folded: boolean = true;
+
+  // Reactive form vars
+  pickupNotesForm: FormGroup;
+  mileageForm: FormGroup;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
@@ -99,6 +114,7 @@ export class RoutesListComponent {
     });
 
     this.initPickupNotesForm();
+    this.initMileageForm();
   }
 
   ionViewWillLeave() {
@@ -126,16 +142,25 @@ export class RoutesListComponent {
   private updateRoutes() {
     this.routes = this.routesProvider.getRoutes();
     this.currentRoute = this.routes[0];
+    this.routesProvider.setCurrentRoute(this.currentRoute);
     this.numRoutes = this.routes.length;
     if(this.currentRoute.type === 'p') {
       this.routeTypeState = 'pickup';
+      this.pickupCanStart = true;
     } else if(this.currentRoute.type === 'd') {
       this.routeTypeState = 'dropOff';
+      setTimeout(() => {
+        this.pickupComplete = true;
+      }, 1000);
     }
   }
 
-  onStartPickup() {
-    this.routesProvider.setCurrentRoute(this.currentRoute);
+  onStartRoute() {
+    if(this.routeTypeState==='pickup') {
+      this.pickupCanEnd = true;
+    } else {
+      this.dropOffCanEnd = true;
+    }
 
     let options: LaunchNavigatorOptions = {
       start: this.currentLocation.latitude + ', ' + this.currentLocation.longitude,
@@ -151,18 +176,19 @@ export class RoutesListComponent {
       );
   }
 
-  onArrivedAtPickup() {
-    this.confirmPickUpComplete().present();
+  onPickupComplete() {
+    this.confirmPickupComplete().present();
+  }
+
+  onDropOffComplete() {
+    this.confirmDropOffComplete().present();
   }
 
   onOpenRouteNotes() {
-    this.routesProvider.setCurrentRoute(this.currentRoute);
     this.navCtrl.push(RouteNotesComponent);
   }
 
   onUnFold() {
-    this.routesProvider.setCurrentRoute(this.currentRoute);
-
     if(this.folded) {
       this.isActive = true;
     } else {
@@ -171,8 +197,8 @@ export class RoutesListComponent {
     this.folded = !this.folded;
   }
 
-  private confirmPickUpComplete() {
-    const pickUpCompleteAlert = this.alertCtrl.create({
+  private confirmPickupComplete() {
+    const pickupCompleteAlert = this.alertCtrl.create({
       title: 'Is your pickup really complete?',
       buttons: [
         {
@@ -182,13 +208,36 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            // this.routesProvider.removeRoute();
-            this.arrivedAtPickup = true;
+            this.pickupCanCompleteForm = true;
+            this.pickupCanStart = false;
+            this.pickupCanEnd = false;
           }
         }
       ]
     });
-    return pickUpCompleteAlert;
+    return pickupCompleteAlert;
+  }
+
+  private confirmDropOffComplete() {
+    const dropOffCompleteAlert = this.alertCtrl.create({
+      title: 'Is your drop off really complete?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.dropOffComplete = true;
+            this.dropOffCanStart = false;
+            this.dropOffCanEnd = false;
+            this.routesProvider.removeRoute();
+          }
+        }
+      ]
+    });
+    return dropOffCompleteAlert;
   }
 
   initPickupNotesForm() {
@@ -200,6 +249,28 @@ export class RoutesListComponent {
       'additionalPassengers': new FormControl(additionalPassengers),
       'noShow': new FormControl(noShow),
       'cancellation': new FormControl(cancellation),
+    });
+  }
+
+  initPickupNotesForm() {
+    let additionalPassengers: boolean = false;
+    let noShow: boolean = false;
+    let cancellation: boolean = false;
+
+    this.pickupNotesForm = new FormGroup({
+      'additionalPassengers': new FormControl(additionalPassengers),
+      'noShow': new FormControl(noShow),
+      'cancellation': new FormControl(cancellation),
+    });
+  }
+
+  initMileageForm() {
+    let startingMileage: string = null;
+    // let endingMileage: string = null;
+
+    this.mileageForm = new FormGroup({
+      'startingMileage': new FormControl(startingMileage, Validators.required),
+      // 'endingMileage': new FormControl(endingMileage),
     });
   }
 
@@ -248,10 +319,20 @@ export class RoutesListComponent {
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
     this.currentRoute.cancellation = this.pickupNotesForm.value['cancellation'];
 
-    this.arrivedAtPickup = false;
+    this.pickupCanCompleteForm = false;
 
     alert(JSON.stringify(this.currentRoute));
     this.routesProvider.removeRoute();
+  }
+
+  onSubmitMileageForm() {
+    this.currentRoute.startingMileage = this.mileageForm.value['startingMileage'];
+
+    this.routesProvider.setCurrentRoute(this.currentRoute);
+    
+    alert(JSON.stringify(this.currentRoute));
+    this.pickupComplete = false;
+    this.dropOffCanStart = true;
   }
 
 }
