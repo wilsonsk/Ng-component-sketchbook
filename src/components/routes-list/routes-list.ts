@@ -73,6 +73,7 @@ export class RoutesListComponent {
   routeTypeState: string = '';
 
   startingMileagePickUpFormReady: boolean = false;
+  endingMileagePickUpFormReady: boolean = false;
 
   pickupCanStart: boolean = false;
   pickupDidStart: boolean = false;
@@ -108,7 +109,6 @@ export class RoutesListComponent {
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
                 this.updateRoutes();
-                this.initStartingMileagePickupForm();
               }
 
   ionViewWillEnter() {
@@ -126,6 +126,7 @@ export class RoutesListComponent {
     });
 
     this.initPickupNotesForm();
+    this.initStartingMileagePickupForm();
     this.initEndingMileagePickupForm();
 
     this.initStartingMileageDropOffForm();
@@ -161,6 +162,9 @@ export class RoutesListComponent {
     this.numRoutes = this.routes.length;
     if(this.currentRoute.type === 'p') {
       this.routeTypeState = 'pickup';
+      this.pickupCanEnd = false;
+      this.pickupStartMileageFormDidComplete = false;
+      this.pickupCanCompleteForm = false;
       this.dropOffComplete = false;
     } else if(this.currentRoute.type === 'd') {
       this.routeTypeState = 'dropOff';
@@ -229,8 +233,7 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.pickupDidStart = false;
-            this.pickupCanCompleteForm = true;
+            this.endingMileagePickUpFormReady = true;
             this.pickupCanStart = false;
             this.pickupCanEnd = false;
           }
@@ -297,7 +300,7 @@ export class RoutesListComponent {
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
     this.startingMileagePickUpFormReady = true;
-    
+
   }
 
   initEndingMileageDropOffForm() {
@@ -356,6 +359,7 @@ export class RoutesListComponent {
     this.pickupNotesForm.reset();
 
     this.pickupCanCompleteForm = false;
+    this.pickupCanEnd = true;
 
     alert(JSON.stringify(this.currentRoute));
     this.routesProvider.removeRoute();
@@ -369,7 +373,10 @@ export class RoutesListComponent {
 
   onSubmitEndingMileagePickupForm() {
     this.currentRoute.endingMileage = this.endingMileagePickupForm.value['startingMileage'];
-
+    this.endingMileagePickUpFormReady = false;
+    this.pickupDidStart = false;
+    this.pickupCanCompleteForm = true;
+    this.pickupCanStart = false;
   }
 
   onSubmitStartMileageDropOffForm() {
