@@ -72,7 +72,7 @@ export class RoutesListComponent {
   isActive:boolean;
   routeTypeState: string = '';
 
-  pickupPrerequisite: boolean = false;
+  startingMileagePickUpFormReady: boolean = false;
 
   pickupCanStart: boolean = false;
   pickupDidStart: boolean = false;
@@ -296,6 +296,8 @@ export class RoutesListComponent {
     this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
+    this.startingMileagePickUpFormReady = true;
+    
   }
 
   initEndingMileageDropOffForm() {
@@ -361,7 +363,7 @@ export class RoutesListComponent {
 
   onSubmitStartingMileagePickupForm() {
     this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-    this.pickupPrerequisite = true;
+    this.startingMileagePickUpFormReady = false;
     this.pickupCanStart = true;
   }
 

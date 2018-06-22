@@ -171,7 +171,7 @@
                 </ion-card>
               </ion-col>
             </ion-row>
-            <ion-row style="background-color:#D87C27" *ngIf="!pickupPrerequisite" [@expandCard]>
+            <ion-row *ngIf="startingMileagePickUpFormReady" [@expandCard]>
               <ion-col>
                 <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
                   <ion-col>
@@ -206,7 +206,7 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-            <ion-row style="background-color:#D87C27" *ngIf="dropOffComplete" [@expandCard]>
+            <ion-row *ngIf="dropOffComplete" [@expandCard]>
               <ion-col>
                 <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
                   <ion-col>
