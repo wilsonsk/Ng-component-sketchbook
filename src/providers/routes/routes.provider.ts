@@ -75,8 +75,7 @@ export class RoutesProvider {
   }
 
   public getState() {
-    let stateCopy: RouteState = Object.assign({}, this.state);
-    this.stateChanged.next(stateCopy);
+    this.stateChanged.next(this.state);
   }
 
   public setState(prop:string, val:any) {
@@ -99,8 +98,7 @@ export class RoutesProvider {
         this.state.pickupDidEnd = true;
       }, 1000);
     }
-    let stateCopy: RouteState = Object.assign({}, this.state);
-    this.stateChanged.next(stateCopy);
+    this.stateChanged.next(this.state);
   }
 
   public startRoute(reOpen:boolean) {
@@ -115,8 +113,7 @@ export class RoutesProvider {
       }
       this.state.dropOffCanEnd = true;
     }
-    let stateCopy: RouteState = Object.assign({}, this.state);
-    this.stateChanged.next(stateCopy);
+    this.stateChanged.next(this.state);
   }
 
 }
