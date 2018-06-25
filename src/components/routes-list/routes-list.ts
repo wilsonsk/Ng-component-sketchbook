@@ -97,8 +97,7 @@ export class RoutesListComponent {
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
                 this.routes = this.routesProvider.getRoutes();
-                this.currentRoute = this.routes[0];
-                this.routesProvider.setCurrentRoute(this.currentRoute);
+                this.currentRoute = this.routesProvider.getCurrentRoute();
 
                 this.state = this.routesProvider.getState();
               }
@@ -106,8 +105,7 @@ export class RoutesListComponent {
   ionViewWillEnter() {
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
       this.routes = this.routesProvider.getRoutes();
-      this.currentRoute = this.routes[0];
-      this.routesProvider.setCurrentRoute(this.currentRoute);
+      this.currentRoute = this.routesProvider.getCurrentRoute();
 
       this.routesProvider.updateState();
     });
@@ -131,6 +129,12 @@ export class RoutesListComponent {
 
     this.initStartingMileageDropOffForm();
     this.initEndingMileageDropOffForm();
+
+    // NEED TO FIX WHERE THIS IS CALLED BECAUSE CURRENTLY IT IS CALLED EVERY RENDER - WHICH IS NOT CORRECT
+    // NEED TO BE CALLED ONLY ON FIRST STAGE OF TRIP CYCLE (ie initRouteState)
+    if(!this.routesProvider.startingMileagePickupFormHasBeenSubmitted) {
+      this.routesProvider.setState('startingMileagePickUpAccessible', true);
+    }
   }
 
   ionViewWillLeave() {
@@ -150,14 +154,6 @@ export class RoutesListComponent {
    this.routesChangedSubscription.unsubscribe();
    this.stateChangedSubscription.unsubscribe();
   }
-
-  // private updateRoutes() {
-  //   this.routes = this.routesProvider.getRoutes();
-  //   this.currentRoute = this.routes[0];
-  //
-  //   this.state = this.routesProvider.updateState();
-  //   // alert(JSON.stringify(this.state))
-  // }
 
   onStartRoute(reOpen:boolean) {
     // if(this.routesProvider.canStartRoute()) {
@@ -224,9 +220,9 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.state.endingMileagePickUpFormReady = true;
-            this.state.pickupCanStart = false;
-            this.state.pickupCanEnd = false;
+            this.routesProvider.setState('endingMileagePickUpFormReady', true);
+            this.routesProvider.setState('pickupCanStart', false);
+            this.routesProvider.setState('pickupCanEnd', false);
           }
         }
       ]
@@ -245,10 +241,10 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.state.dropOffCanStart = false;
-            this.state.dropOffDidStart = false;
-            this.state.dropOffDidEnd = true;
-            this.state.dropOffCanEnd = false;
+            this.routesProvider.setState('dropOffCanStart', false);
+            this.routesProvider.setState('dropOffDidStart', false);
+            this.routesProvider.setState('dropOffCanEnd', false);
+            this.routesProvider.setState('dropOffDidEnd', true);
           }
         }
       ]
@@ -290,11 +286,6 @@ export class RoutesListComponent {
     this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
-
-    // NEED TO FIX WHERE THIS IS CALLED BECAUSE CURRENTLY IT IS CALLED EVERY RENDER - WHICH IS NOT CORRECT
-    // NEED TO BE CALLED ONLY ON FIRST STAGE OF TRIP CYCLE (ie initRouteState)
-    this.routesProvider.setState('startingMileagePickUpFormReady', true);
-
   }
 
   initEndingMileageDropOffForm() {
@@ -345,6 +336,22 @@ export class RoutesListComponent {
       });
   }
 
+  onSubmitStartingMileagePickupForm() {
+    this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
+
+    this.routesProvider.setState('startingMileagePickUpAccessible', false);
+    this.routesProvider.setState('pickupCanStart', true);
+  }
+
+  onSubmitEndingMileagePickupForm() {
+    this.currentRoute.endingMileage = this.endingMileagePickupForm.value['endingMileage'];
+
+    this.routesProvider.setState('endingMileagePickUpFormReady', false);
+    this.routesProvider.setState('pickupDidStart', false);
+    this.routesProvider.setState('pickupCanCompleteForm', true);
+    this.routesProvider.setState('pickupCanStart', false);
+  }
+
   onSubmitPickupNotes() {
     this.currentRoute.additionalPassengers = this.pickupNotesForm.value['additionalPassengers'];
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
@@ -352,25 +359,13 @@ export class RoutesListComponent {
 
     this.pickupNotesForm.reset();
 
-    this.state.pickupCanCompleteForm = false;
-    this.state.pickupCanEnd = true;
+    this.routesProvider.setState('pickupCanCompleteForm', false);
+    this.routesProvider.setState('pickupCanEnd', true);
 
-    alert(JSON.stringify(this.currentRoute));
     this.routesProvider.removeRoute();
-  }
-
-  onSubmitStartingMileagePickupForm() {
-    this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-    this.routesProvider.setState('startingMileagePickUpFormReady', false);
-    this.routesProvider.setState('pickupCanStart', true);
-  }
-
-  onSubmitEndingMileagePickupForm() {
-    this.currentRoute.endingMileage = this.endingMileagePickupForm.value['startingMileage'];
-    this.state.endingMileagePickUpFormReady = false;
-    this.state.pickupDidStart = false;
-    this.state.pickupCanCompleteForm = true;
-    this.state.pickupCanStart = false;
+    setTimeout(() => {
+      this.routesProvider.setState('pickupDidEnd', true);
+    }, 1000);
   }
 
   onSubmitStartMileageDropOffForm() {
@@ -378,18 +373,15 @@ export class RoutesListComponent {
     this.startingMileageDropOffForm.reset();
 
     // this.routesProvider.setCurrentRoute(this.currentRoute);
-
-    alert(JSON.stringify(this.currentRoute));
-    this.state.pickupStartMileageFormDidComplete = true;
-    this.state.pickupDidEnd = false;
-    this.state.dropOffCanStart = true;
+    this.routesProvider.setState('pickupStartMileageFormDidComplete', true);
+    this.routesProvider.setState('pickupDidEnd', false);
+    this.routesProvider.setState('dropOffCanStart', true);
   }
 
   onSubmitEndingMileageDropOffForm() {
     this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
     this.endingMileageDropOffForm.reset();
 
-    this.state.dropOffCanEnd = true;
     this.routesProvider.removeRoute();
   }
 

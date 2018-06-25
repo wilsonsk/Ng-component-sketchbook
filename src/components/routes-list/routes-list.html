@@ -171,7 +171,7 @@
                 </ion-card>
               </ion-col>
             </ion-row>
-            <ion-row *ngIf="state.startingMileagePickUpFormReady" [@expandCard]>
+            <ion-row *ngIf="state.startingMileagePickUpAccessible" [@expandCard]>
               <ion-col>
                 <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
                   <ion-col>
@@ -215,7 +215,7 @@
                         <ion-row>
                           <ion-col>
                             <span class="avenir f1 fw8">Ending Mileage: </span>
-                            <span class="db avenir f3 fw6">Enter your ending mileage for this Drop Off.</span>
+                            <span class="db avenir f3 fw6">Enter your ending mileage for this Pickup.</span>
                             <form class="db mt4" [formGroup]="endingMileagePickupForm" (ngSubmit)="onSubmitEndingMileagePickupForm()">
                               <ion-list>
                                 <ion-item class="avenir f2 mb4 bg-moon-gray">

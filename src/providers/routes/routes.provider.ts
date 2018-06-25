@@ -25,6 +25,7 @@ export class RoutesProvider {
   // Route Component State 'checker'
   canChangeState: boolean;
   canStartRoute: boolean;
+  public startingMileagePickupFormHasBeenSubmitted: boolean;
 
   // Route Component States - NOTE this is not immutable state (ie can be mutated by components)
   public state: RouteState;
@@ -54,6 +55,7 @@ export class RoutesProvider {
 
   // Restarting the trip cycle - Starting at pickup - so assumes tourType = 'pickup'
   initRouteState() {
+    this.startingMileagePickupFormHasBeenSubmitted = false;
     this.currentRoute = this.routes[0];
 
     this.state = new RouteState(
@@ -80,6 +82,12 @@ export class RoutesProvider {
   }
 
   public setState(prop:string, val:any) {
+    if(prop === 'startingMileagePickUpAccessible' && val === true) {
+      this.startingMileagePickupFormHasBeenSubmitted = true;
+    } else if(prop === 'dropOffDidEnd' && val === true) {
+      this.startingMileagePickupFormHasBeenSubmitted = false;
+    }
+
     this.state[prop] = val;
     let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
@@ -87,16 +95,10 @@ export class RoutesProvider {
 
   public updateState() {
     if(this.currentRoute.type === 'p') {
-      // RESET STATE
-      this.state.routeTypeState = 'pickup';
-      this.state.pickupCanEnd = false;
-      this.state.pickupStartMileageFormDidComplete = false;
-      this.state.pickupDidEnd = false;
-      this.state.pickupCanCompleteForm = false;
-      this.state.dropOffDidEnd = false;
+      this.initRouteState();
     } else if(this.currentRoute.type === 'd') {
-      // ALTER STATE
-      this.state.routeTypeState = 'dropOff';
+      this.state.numRoutes = this.routes.length;
+      this.state.routeTypeState = this.currentRoute.type;
       setTimeout(() => {
         this.state.pickupDidEnd = true;
       }, 1000);

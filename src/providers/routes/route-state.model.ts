@@ -3,7 +3,7 @@ export class RouteState {
     public numRoutes: number,
     public routeTypeState: string,
 
-    public startingMileagePickUpFormReady: boolean,
+    public startingMileagePickUpAccessible: boolean,
     public endingMileagePickUpFormReady: boolean ,
 
     public pickupCanStart: boolean,
