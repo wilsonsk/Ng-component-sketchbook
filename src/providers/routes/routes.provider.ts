@@ -76,13 +76,13 @@ export class RoutesProvider {
 
   public getState() {
     let stateCopy: RouteState = Object.assign({}, this.state);
-    this.stateChanged.next(stateCopy);
+    return stateCopy;
   }
 
   public setState(prop:string, val:any) {
     this.state[prop] = val;
-    // let stateCopy: RouteState = Object.assign({}, this.state);
-    // this.stateChanged.next(stateCopy);
+    let stateCopy: RouteState = Object.assign({}, this.state);
+    this.stateChanged.next(stateCopy);
   }
 
   public updateState() {

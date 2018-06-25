@@ -98,16 +98,16 @@ export class RoutesListComponent {
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
                 this.routes = this.routesProvider.getRoutes();
                 this.currentRoute = this.routes[0];
-                // this.routesProvider.setCurrentRoute(this.currentRoute);
+                this.routesProvider.setCurrentRoute(this.currentRoute);
 
-                this.routesProvider.getState();
+                this.state = this.routesProvider.getState();
               }
 
   ionViewWillEnter() {
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
       this.routes = this.routesProvider.getRoutes();
       this.currentRoute = this.routes[0];
-      // this.routesProvider.setCurrentRoute(this.currentRoute);
+      this.routesProvider.setCurrentRoute(this.currentRoute);
 
       this.routesProvider.updateState();
     });
@@ -290,7 +290,10 @@ export class RoutesListComponent {
     this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
-    this.routesProvider.setState('startingMileagePickupForm', true);
+
+    // NEED TO FIX WHERE THIS IS CALLED BECAUSE CURRENTLY IT IS CALLED EVERY RENDER - WHICH IS NOT CORRECT
+    // NEED TO BE CALLED ONLY ON FIRST STAGE OF TRIP CYCLE (ie initRouteState)
+    this.routesProvider.setState('startingMileagePickUpFormReady', true);
 
   }
 
@@ -358,10 +361,8 @@ export class RoutesListComponent {
 
   onSubmitStartingMileagePickupForm() {
     this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-  alert(JSON.stringify(this.state))
     this.routesProvider.setState('startingMileagePickUpFormReady', false);
     this.routesProvider.setState('pickupCanStart', true);
-      alert(JSON.stringify(this.state))
   }
 
   onSubmitEndingMileagePickupForm() {
