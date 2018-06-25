@@ -115,7 +115,7 @@ export class RoutesProvider {
       }
       this.state.dropOffCanEnd = true;
     }
-    let stateCopy = Object.assign({}, this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }
 
