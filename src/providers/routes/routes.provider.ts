@@ -75,7 +75,7 @@ export class RoutesProvider {
   }
 
   public getState() {
-    let stateCopy = Object.assign({}, this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }
 
@@ -99,7 +99,7 @@ export class RoutesProvider {
         this.state.pickupDidEnd = true;
       }, 1000);
     }
-    let stateCopy = Object.assign({}, this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }
 

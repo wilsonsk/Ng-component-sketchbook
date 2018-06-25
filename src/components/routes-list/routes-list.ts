@@ -112,7 +112,7 @@ export class RoutesListComponent {
       this.routesProvider.updateState();
     });
 
-    this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy) => {
+    this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;
     });
 
