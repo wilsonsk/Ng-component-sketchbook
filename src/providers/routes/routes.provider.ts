@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 import { RouteModel } from '../../models/route.model';
 import { Subject } from 'rxjs';
 
+import { RouteState } from './route-state.model';
+
 @Injectable()
 export class RoutesProvider {
+  // Test Route Data
   routes: RouteModel[] = [
     new RouteModel('05:50AM', 1, 'source address 1', '1800 NE Alberta St, Portland, OR 97211', '06:40AM', true, false, null, 'p', null, null, null, null, null),
     new RouteModel('07:20AM', 2, 'source address 2', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '10:20AM', true, true, null, 'd', null, null, null, null, null),
@@ -13,11 +16,20 @@ export class RoutesProvider {
     new RouteModel('05:50PM', 5, 'source address 5', '700 NE 87th Ave, Vancouver, WA 98664', '07:00PM', true, true, null, 'p', null, null, null, null, null),
     new RouteModel('07:50PM', 5, 'source address 5', '700 NE 87th Ave, Vancouver, WA 98664', '08:30PM', true, true, null, 'd', null, null, null, null, null),
   ];
+
+  // Publically Accessible Vars
   currentRoute: RouteModel;
   routesChanged = new Subject<RouteModel[]>();
 
-  constructor(public http: HttpClient) {
+  // Route Component State 'checker'
+  canChangeState: boolean;
+  canStartRoute: boolean;
 
+  // Route Component States - NOTE this is not immutable state (ie can be mutated by components)
+  public state: RouteState;
+
+  constructor(public http: HttpClient) {
+    this.initRouteState();
   }
 
   setCurrentRoute(route: RouteModel) {
@@ -35,6 +47,52 @@ export class RoutesProvider {
   removeRoute() {
     this.routes.splice(0,1);
     this.routesChanged.next(this.routes.slice());
+  }
+
+  // Restarting the trip cycle - Starting at pickup - so assumes tourType = 'pickup'
+  initRouteState() {
+    this.currentRoute = this.routes[0];
+
+    this.state = new RouteState(
+      this.routes.length,
+      this.currentRoute.type,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    );
+  }
+
+  public getState() {
+    alert(JSON.stringify(this.state))
+    return this.state;
+  }
+
+  public updateState() {
+    if(this.currentRoute.type === 'p') {
+      // RESET STATE
+      this.state.routeTypeState = 'pickup';
+      this.state.pickupCanEnd = false;
+      this.state.pickupStartMileageFormDidComplete = false;
+      this.state.pickupDidEnd = false;
+      this.state.pickupCanCompleteForm = false;
+      this.state.dropOffDidEnd = false;
+    } else if(this.currentRoute.type === 'd') {
+      // ALTER STATE
+      this.state.routeTypeState = 'dropOff';
+      setTimeout(() => {
+        this.state.pickupDidEnd = true;
+      }, 1000);
+    }
+    return this.state;
   }
 
 }

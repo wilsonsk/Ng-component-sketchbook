@@ -4,7 +4,7 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 import { LocationProvider } from '../../providers/location/location.provider';
-import { RoutesProvider } from '../../providers/routes/routes';
+import { RoutesProvider } from '../../providers/routes/routes.provider';
 
 import { RouteModel } from '../../models/route.model';
 import { LocationModel } from '../../models/location.model';

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { LocationModel } from '../../models/location.model';
 import { LocationProvider } from '../../providers/location/location.provider';
-import { RoutesProvider } from '../../providers/routes/routes';
+import { RoutesProvider } from '../../providers/routes/routes.provider';
 
 import { RouteModel } from '../../models/route.model';
 

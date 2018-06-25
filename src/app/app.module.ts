@@ -32,7 +32,7 @@ import { RoutesListComponent } from '../components/routes-list/routes-list';
 import { RouteNotesComponent } from '../components/route-notes/route-notes';
 
 import { LocationProvider } from '../providers/location/location.provider';
-import { RoutesProvider } from '../providers/routes/routes';
+import { RoutesProvider } from '../providers/routes/routes.provider';
 
 import { DottedBorderDirective } from '../directives/dotted-border/dotted-border';
 
