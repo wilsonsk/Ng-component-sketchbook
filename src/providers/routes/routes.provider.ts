@@ -20,7 +20,7 @@ export class RoutesProvider {
   // Publically Accessible Vars
   currentRoute: RouteModel;
   routesChanged = new Subject<RouteModel[]>();
-  stateChanged = new Subject<RouteState[]>();
+  stateChanged = new Subject<RouteState>();
 
   // Route Component State 'checker'
   canChangeState: boolean;
@@ -75,11 +75,14 @@ export class RoutesProvider {
   }
 
   public getState() {
-    this.stateChanged.next(this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
+    this.stateChanged.next(stateCopy);
   }
 
   public setState(prop:string, val:any) {
     this.state[prop] = val;
+    // let stateCopy: RouteState = Object.assign({}, this.state);
+    // this.stateChanged.next(stateCopy);
   }
 
   public updateState() {
@@ -98,7 +101,8 @@ export class RoutesProvider {
         this.state.pickupDidEnd = true;
       }, 1000);
     }
-    this.stateChanged.next(this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
+    this.stateChanged.next(stateCopy);
   }
 
   public startRoute(reOpen:boolean) {
@@ -113,7 +117,8 @@ export class RoutesProvider {
       }
       this.state.dropOffCanEnd = true;
     }
-    this.stateChanged.next(this.state);
+    let stateCopy: RouteState = Object.assign({}, this.state);
+    this.stateChanged.next(stateCopy);
   }
 
 }
