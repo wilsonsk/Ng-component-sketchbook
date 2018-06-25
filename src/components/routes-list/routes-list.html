@@ -7,7 +7,7 @@
 <ion-content *ngIf="currentRoute">
   <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
     <ion-col col-9>
-      <div class="transition-animated" *ngIf="state.routeTypeState==='pickup';else dropOffHeader">
+      <div class="transition-animated" *ngIf="state.routeTypeState==='p';else dropOffHeader">
         <h1 class="avenir f-headline fw8 tracked white">Pickup</h1>
         <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to start/end this pickup</span>
         <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
@@ -29,19 +29,19 @@
   <ion-list no-lines class="mt4" *ngIf="routes">
     <ion-item-sliding>
       <ion-item>
-        <ion-card class="br3 bl bw3 shadow-3 transition-animated" [ngStyle]="{'border-color': state.routeTypeState=='pickup' ? '#D87C27' : '#A8A8A8'}">
+        <ion-card class="br3 bl bw3 shadow-3 transition-animated" [ngStyle]="{'border-color': state.routeTypeState=='p' ? '#D87C27' : '#A8A8A8'}">
           <ion-card-content no-padding class="unfold-parent" (click)="onUnFold()" [ngClass]="{'isActive': isActive}">
-            <ion-row class="pa4 relative unfold-first-child transition-animated" [ngStyle]="{'background-color': state.routeTypeState=='pickup' ? '' : '#D87C27'}">
-              <ion-col col-3 class="br b--silver" [ngStyle]="{'border-color': state.routeTypeState==='pickup' ? '' : 'white'}">
+            <ion-row class="pa4 relative unfold-first-child transition-animated" [ngStyle]="{'background-color': state.routeTypeState=='p' ? '' : '#D87C27'}">
+              <ion-col col-3 class="br b--silver" [ngStyle]="{'border-color': state.routeTypeState==='p' ? '' : 'white'}">
                 <ion-row>
                   <ion-col col-12>
-                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'black'}" *ngIf="state.routeTypeState=='pickup'"  [@fade]>Pickup</h1>
-                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'black'}" *ngIf="state.routeTypeState=='dropOff'" [@fade]>Drop Off</h1>
+                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'black'}" *ngIf="state.routeTypeState=='p'"  [@fade]>Pickup</h1>
+                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'black'}" *ngIf="state.routeTypeState=='d'" [@fade]>Drop Off</h1>
                   </ion-col>
                 </ion-row>
                 <ion-row class="mt5">
                   <ion-col col-12>
-                    <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'white'}">Pick Up Time:</span>
+                    <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'white'}">Pick Up Time:</span>
                   </ion-col>
                   <ion-col col-12>
                     <span class="avenir f2 fw7">{{ currentRoute.pickUpTime }}</span>
@@ -50,7 +50,7 @@
               </ion-col>
               <ion-col col-9 class="pl4">
                 <ion-row>
-                  <ion-col col-1 dotted-border [svgType]="state.routeTypeState" *ngIf="state.routeTypeState==='pickup';else altBorder">
+                  <ion-col col-1 dotted-border [svgType]="state.routeTypeState" *ngIf="state.routeTypeState==='p';else altBorder">
                   </ion-col>
                   <ng-template #altBorder>
                     <ion-col col-1 dotted-border [svgType]="state.routeTypeState">
@@ -58,7 +58,7 @@
                   </ng-template>
                   <ion-col col-11 class="pl3">
                     <ion-row>
-                      <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': state.routeTypeState=='pickup' ? '#D87C27' : 'white'}">
+                      <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': state.routeTypeState=='p' ? '#D87C27' : 'white'}">
                         <span class="avenir f3 fw3">{{ currentRoute.sourceAddr }}</span>
                       </ion-col>
                       <ion-col col-12 class="tc">
@@ -71,7 +71,7 @@
                   <ion-col col-3 push-1>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'white'}">Appointment Time:</span>
+                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'white'}">Appointment Time:</span>
                       </ion-col>
                       <ion-col col-12>
                         <span class="avenir f2 fw7 transition-animated">{{ currentRoute.appointmentTime }}</span>
@@ -81,7 +81,7 @@
                   <ion-col col-2 push-2>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'white'}">Ambulatory</span>
+                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'white'}">Ambulatory</span>
                       </ion-col>
                       <ion-col col-12>
                         <span class="avenir f2 fw8" *ngIf="currentRoute.ambulatory;else notAmbulatory" [@fade]>Y</span>
@@ -92,7 +92,7 @@
                   <ion-col col-2 push-3>
                     <ion-row>
                       <ion-col col-12>
-                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='pickup' ? '#D87C27' : 'white'}">Shared Ride:</span>
+                        <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': state.routeTypeState=='p' ? '#D87C27' : 'white'}">Shared Ride:</span>
                       </ion-col>
                       <ion-col col-12>
                         <span class="avenir f2 fw8" *ngIf="currentRoute.shared;else notShared" [@fade]>Y</span>
@@ -103,12 +103,12 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-            <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes" [ngStyle]="{'background-color': state.routeTypeState=='pickup' ? '' : '#D87C27'}">
+            <ion-row class="unfold-second-child" *ngIf="currentRoute.tripNotes" [ngStyle]="{'background-color': state.routeTypeState=='p' ? '' : '#D87C27'}">
               <ion-col col-1 push-1 dotted-border [svgType]="state.routeTypeState">
               </ion-col>
               <ion-col col-8 push-1 text-wrap>
                 <h1 class="avenir f2 fw4">Trip Notes: </h1>
-                <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': state.routeTypeState=='pickup' ? 'black' : 'white'}">{{ currentRoute.tripNotes }}</span>
+                <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': state.routeTypeState=='p' ? 'black' : 'white'}">{{ currentRoute.tripNotes }}</span>
               </ion-col>
             </ion-row>
             <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="state.pickupCanCompleteForm" style="margin: 0 auto;" [@expandCard]>
@@ -317,7 +317,7 @@
       <ion-item-options side="right">
         <!-- <ion-row *ngIf="currentLocation;else spinner"> -->
         <ion-row>
-          <ion-col col-12 no-padding *ngIf="state.routeTypeState==='pickup';else dropOff">
+          <ion-col col-12 no-padding *ngIf="state.routeTypeState==='p';else dropOff">
             <button ion-button *ngIf="!state.pickupDidStart;else pDidStart" (click)="onStartRoute()" style="background-color:#6EFFA3;color:black;" [disabled]="!state.pickupCanStart">
               <ion-icon name="send"></ion-icon>
               Start Pickup Trip

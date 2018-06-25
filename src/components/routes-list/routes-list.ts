@@ -68,6 +68,7 @@ export class RoutesListComponent {
   // Subscriptions
   private locationChangedSubscription: Subscription;
   private routesChangedSubscription: Subscription;
+  private stateChangedSubscription: Subscription;
 
   // Component States from Routes Provider
   isActive: boolean;
@@ -95,12 +96,24 @@ export class RoutesListComponent {
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
-                this.state = this.routesProvider.getState();
+                this.routes = this.routesProvider.getRoutes();
+                this.currentRoute = this.routes[0];
+                // this.routesProvider.setCurrentRoute(this.currentRoute);
+
+                this.routesProvider.getState();
               }
 
   ionViewWillEnter() {
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-      this.updateRoutes();
+      this.routes = this.routesProvider.getRoutes();
+      this.currentRoute = this.routes[0];
+      // this.routesProvider.setCurrentRoute(this.currentRoute);
+
+      this.routesProvider.updateState();
+    });
+
+    this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
+      this.state = stateCopy;
     });
 
     // locationChangedSubscription needs to be tested
@@ -135,15 +148,16 @@ export class RoutesListComponent {
 
    this.locationChangedSubscription.unsubscribe();
    this.routesChangedSubscription.unsubscribe();
+   this.stateChangedSubscription.unsubscribe();
   }
 
-  private updateRoutes() {
-    this.routes = this.routesProvider.getRoutes();
-    this.currentRoute = this.routes[0];
-
-    this.state = this.routesProvider.updateState();
-    // alert(JSON.stringify(this.state))
-  }
+  // private updateRoutes() {
+  //   this.routes = this.routesProvider.getRoutes();
+  //   this.currentRoute = this.routes[0];
+  //
+  //   this.state = this.routesProvider.updateState();
+  //   // alert(JSON.stringify(this.state))
+  // }
 
   onStartRoute(reOpen:boolean) {
     // if(this.routesProvider.canStartRoute()) {
@@ -162,17 +176,7 @@ export class RoutesListComponent {
     // }
 
 
-    if(this.state.routeTypeState==='pickup') {
-      if(!reOpen) {
-        this.state.pickupDidStart = true;
-      }
-      this.state.pickupCanEnd = true;
-    } else {
-      if(!reOpen) {
-        this.state.dropOffDidStart = true;
-      }
-      this.state.dropOffCanEnd = true;
-    }
+    this.routesProvider.startRoute(reOpen);
 
     let options: LaunchNavigatorOptions = {
       start: this.currentLocation.latitude + ', ' + this.currentLocation.longitude,
@@ -286,7 +290,7 @@ export class RoutesListComponent {
     this.startingMileageDropOffForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
-    this.state.startingMileagePickUpFormReady = true;
+    this.routesProvider.setState('startingMileagePickupForm', true);
 
   }
 
@@ -354,8 +358,10 @@ export class RoutesListComponent {
 
   onSubmitStartingMileagePickupForm() {
     this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-    this.state.startingMileagePickUpFormReady = false;
-    this.state.pickupCanStart = true;
+  alert(JSON.stringify(this.state))
+    this.routesProvider.setState('startingMileagePickUpFormReady', false);
+    this.routesProvider.setState('pickupCanStart', true);
+      alert(JSON.stringify(this.state))
   }
 
   onSubmitEndingMileagePickupForm() {
@@ -370,7 +376,7 @@ export class RoutesListComponent {
     this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
     this.startingMileageDropOffForm.reset();
 
-    this.routesProvider.setCurrentRoute(this.currentRoute);
+    // this.routesProvider.setCurrentRoute(this.currentRoute);
 
     alert(JSON.stringify(this.currentRoute));
     this.state.pickupStartMileageFormDidComplete = true;
