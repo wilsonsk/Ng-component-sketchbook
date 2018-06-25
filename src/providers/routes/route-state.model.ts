@@ -4,7 +4,7 @@ export class RouteState {
     public routeTypeState: string,
 
     public startingMileagePickUpAccessible: boolean,
-    public endingMileagePickUpFormReady: boolean ,
+    public endingMileagePickUpFormReady: boolean,
 
     public pickupCanStart: boolean,
     public pickupDidStart: boolean,

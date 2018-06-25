@@ -96,13 +96,17 @@ export class RoutesProvider {
   public updateState() {
     if(this.currentRoute.type === 'p') {
       this.initRouteState();
+      setTimeout(() => {
+        this.setState('startingMileagePickUpAccessible', true);
+      }, 1000);
     } else if(this.currentRoute.type === 'd') {
       this.state.numRoutes = this.routes.length;
       this.state.routeTypeState = this.currentRoute.type;
       setTimeout(() => {
-        this.state.pickupDidEnd = true;
+        this.setState('pickupDidEnd', true);
       }, 1000);
     }
+
     let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }

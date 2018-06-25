@@ -130,8 +130,6 @@ export class RoutesListComponent {
     this.initStartingMileageDropOffForm();
     this.initEndingMileageDropOffForm();
 
-    // NEED TO FIX WHERE THIS IS CALLED BECAUSE CURRENTLY IT IS CALLED EVERY RENDER - WHICH IS NOT CORRECT
-    // NEED TO BE CALLED ONLY ON FIRST STAGE OF TRIP CYCLE (ie initRouteState)
     if(!this.routesProvider.startingMileagePickupFormHasBeenSubmitted) {
       this.routesProvider.setState('startingMileagePickUpAccessible', true);
     }
@@ -338,6 +336,7 @@ export class RoutesListComponent {
 
   onSubmitStartingMileagePickupForm() {
     this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
+    this.startingMileagePickupForm.reset();
 
     this.routesProvider.setState('startingMileagePickUpAccessible', false);
     this.routesProvider.setState('pickupCanStart', true);
@@ -345,6 +344,7 @@ export class RoutesListComponent {
 
   onSubmitEndingMileagePickupForm() {
     this.currentRoute.endingMileage = this.endingMileagePickupForm.value['endingMileage'];
+    this.endingMileagePickupForm.reset();
 
     this.routesProvider.setState('endingMileagePickUpFormReady', false);
     this.routesProvider.setState('pickupDidStart', false);
@@ -356,7 +356,6 @@ export class RoutesListComponent {
     this.currentRoute.additionalPassengers = this.pickupNotesForm.value['additionalPassengers'];
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
     this.currentRoute.cancellation = this.pickupNotesForm.value['cancellation'];
-
     this.pickupNotesForm.reset();
 
     this.routesProvider.setState('pickupCanCompleteForm', false);
