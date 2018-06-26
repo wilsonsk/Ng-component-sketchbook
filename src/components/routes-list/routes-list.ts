@@ -107,7 +107,7 @@ export class RoutesListComponent {
 this.routesProvider.testHttp()
   .subscribe((data) => {
     if(data) {
-      alert(data)
+      alert(JSON.stringify(data))
     }
   });
 
