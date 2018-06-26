@@ -40,7 +40,7 @@ export class RoutesProvider {
     // const options = {
     //   headers: headers
     // };
-    return this.http.get('http://ua/drively/sites/_public/schedule/jsonexp.php', options);
+    return this.http.get('http://ua/drively/sites/_public/schedule/jsonexp.php');
   }
 
   setCurrentRoute(route: RouteModel) {
