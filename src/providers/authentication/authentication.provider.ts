@@ -53,8 +53,7 @@ export class AuthenticationProvider {
   }
 
   public setAuth(company: string, code: string) {
-    this.state.company = company;
-    this.state.code = code;
+    this.state = new AuthenticationState(company, code);
   }
 
   public saveTokenToDeviceStorage(token: any) {
