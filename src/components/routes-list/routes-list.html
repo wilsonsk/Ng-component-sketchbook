@@ -8,13 +8,13 @@
   <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
     <ion-col col-9>
       <div class="transition-animated" *ngIf="state.routeTypeState==='p';else dropOffHeader">
-        <h1 class="avenir f-headline fw8-ns fw2-l tracked white">Pickup</h1>
+        <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Pickup</h1>
         <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to start/end this pickup</span>
         <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
         <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this pickup card</span>
       </div>
       <ng-template class="transition-animated" #dropOffHeader>
-        <h1 class="avenir f-headline fw8-ns fw2- tracked white">Drop Off</h1>
+        <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Drop Off</h1>
         <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
         <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
         <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
@@ -179,7 +179,7 @@
                       <ion-card-content>
                         <ion-row>
                           <ion-col>
-                            <span class="avenir f1 fw8">Starting Mileage: </span>
+                            <span class="avenir f1 fw8-ns fw5-l">Starting Mileage: </span>
                             <span class="db avenir f3 fw6">Enter your starting mileage for this Pickup.</span>
                             <form class="db mt4" [formGroup]="startingMileagePickupForm" (ngSubmit)="onSubmitStartingMileagePickupForm()">
                               <ion-list>
@@ -214,7 +214,7 @@
                       <ion-card-content>
                         <ion-row>
                           <ion-col>
-                            <span class="avenir f1 fw8">Ending Mileage: </span>
+                            <span class="avenir f1 fw8-ns fw5-l">Ending Mileage: </span>
                             <span class="db avenir f3 fw6">Enter your ending mileage for this Pickup.</span>
                             <form class="db mt4" [formGroup]="endingMileagePickupForm" (ngSubmit)="onSubmitEndingMileagePickupForm()">
                               <ion-list>
@@ -249,7 +249,7 @@
                       <ion-card-content>
                         <ion-row>
                           <ion-col>
-                            <span class="avenir f1 fw8">Starting Mileage: </span>
+                            <span class="avenir f1 fw8-ns fw5-l">Starting Mileage: </span>
                             <span class="db avenir f3 fw6">Enter your starting mileage for this Drop Off.</span>
                             <form class="db mt4" [formGroup]="startingMileageDropOffForm" (ngSubmit)="onSubmitStartMileageDropOffForm()">
                               <ion-list>
@@ -284,7 +284,7 @@
                       <ion-card-content>
                         <ion-row>
                           <ion-col>
-                            <span class="avenir f1 fw8">Ending Mileage: </span>
+                            <span class="avenir f1 fw8-ns fw5-l">Ending Mileage: </span>
                             <span class="db avenir f3 fw6">Enter your ending mileage for this Drop Off.</span>
                             <form class="db mt4" [formGroup]="endingMileageDropOffForm" (ngSubmit)="onSubmitEndingMileageDropOffForm()">
                               <ion-list>
