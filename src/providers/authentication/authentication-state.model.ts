@@ -1,5 +1,5 @@
 export class AuthenticationState {
-  'class': string;
+  'company': string;
   'code': string;
   'isAuthenticated': boolean;
 }
