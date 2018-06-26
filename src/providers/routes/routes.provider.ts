@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RouteModel } from '../../models/route.model';
 import { Subject } from 'rxjs';
@@ -32,6 +32,15 @@ export class RoutesProvider {
 
   constructor(public http: HttpClient) {
     this.initRouteState();
+  }
+
+  testHttp(token: string) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+                                // .append('Authorization', token);
+    const options = {
+      headers: headers
+    };
+    return this.http.get('http://ua/drively/sites/_public/schedule/jsonexp.php', options);
   }
 
   setCurrentRoute(route: RouteModel) {

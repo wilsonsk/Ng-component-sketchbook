@@ -103,6 +103,15 @@ export class RoutesListComponent {
               }
 
   ionViewWillEnter() {
+// TESTING HTTP REQUESTS TO DRIVELY REST API
+this.routesProvider.testHttp()
+  .subscribe((data) => {
+    if(data) {
+      alert(data)
+    }
+  });
+
+
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
       this.routes = this.routesProvider.getRoutes();
       this.currentRoute = this.routesProvider.getCurrentRoute();
