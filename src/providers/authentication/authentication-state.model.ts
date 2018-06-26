@@ -1,5 +1,7 @@
 export class AuthenticationState {
-  'company': string;
-  'code': string;
-  'isAuthenticated': boolean;
+  constructor(
+    public company: string,
+    public code: string,
+    public isAuthenticated: boolean,
+  )
 }
