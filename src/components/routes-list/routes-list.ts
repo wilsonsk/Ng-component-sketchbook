@@ -80,7 +80,8 @@ export class RoutesListComponent {
   currentRoute: RouteModel;
   currentLocation: LocationModel;
   routes: RouteModel[] = [];
-  imageUrl = '';
+  // Image URL needs to reset after each trip type (p and d)
+  imagePath = '';
 
   // Animation only States
   folded: boolean = true;
@@ -103,13 +104,13 @@ export class RoutesListComponent {
               }
 
   ionViewWillEnter() {
-// TESTING HTTP REQUESTS TO DRIVELY REST API
-this.routesProvider.testHttp()
-  .subscribe((data) => {
-    if(data) {
-      alert(JSON.stringify(data))
-    }
-  });
+    // TESTING HTTP REQUESTS TO DRIVELY REST API
+    this.routesProvider.testHttp()
+      .subscribe((data) => {
+        if(data) {
+          alert(JSON.stringify(data))
+        }
+      });
 
 
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
@@ -317,10 +318,10 @@ this.routesProvider.testHttp()
         // File.moveFile(sourcePath, sourceFileName, destinationPath, destinationFileName)
         this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
           .then((data: Entry) => {
-            this.imageUrl = data.nativeURL;
+            this.imagePath = data.nativeURL;
           })
           .catch((error: FileError) => {
-            this.imageUrl = '';
+            this.imagePath = '';
             const toast = this.toastCtrl.create({
               message: 'Could not save image. Please try again',
               duration: 2500
@@ -331,7 +332,7 @@ this.routesProvider.testHttp()
             // OR
             // File.removeFile(path, currentName);
           });
-        this.imageUrl = imageData;
+        this.imagePath = imageData;
       })
       .catch((error) => {
         const toast = this.toastCtrl.create({
@@ -366,6 +367,7 @@ this.routesProvider.testHttp()
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
     this.currentRoute.cancellation = this.pickupNotesForm.value['cancellation'];
     this.pickupNotesForm.reset();
+    this.imagePath = '';
 
     this.routesProvider.setState('pickupCanCompleteForm', false);
     this.routesProvider.setState('pickupCanEnd', true);
@@ -389,6 +391,7 @@ this.routesProvider.testHttp()
   onSubmitEndingMileageDropOffForm() {
     this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
     this.endingMileageDropOffForm.reset();
+    this.imagePath = '';
 
     this.routesProvider.removeRoute();
   }

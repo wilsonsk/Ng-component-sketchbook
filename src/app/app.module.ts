@@ -35,6 +35,7 @@ import { LocationProvider } from '../providers/location/location.provider';
 import { RoutesProvider } from '../providers/routes/routes.provider';
 
 import { DottedBorderDirective } from '../directives/dotted-border/dotted-border';
+import { AuthenticationProvider } from '../providers/authentication/authentication.provider';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { DottedBorderDirective } from '../directives/dotted-border/dotted-border
     LocationProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RoutesProvider,
+    AuthenticationProvider,
   ]
 })
 export class AppModule {}
