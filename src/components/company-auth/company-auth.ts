@@ -83,6 +83,11 @@ export class CompanyAuthComponent {
           loading.dismiss();
           this.authenticationProvider.setAuth(form.value.company, form.value.companyCode);
           this.authenticationProvider.saveTokenToDeviceStorage(data);
+          const a = this.alertCtrl.create({
+            title: 'Company Authentication was Successful',
+            buttons: ['OK']
+          });
+          a.present();
           // this.navCtrl.setRoot(DriverLoginPage);
         } else {
           loading.dismiss();
