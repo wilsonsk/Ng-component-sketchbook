@@ -26,7 +26,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-list no-lines class="mt4" *ngIf="routes">
+  <ion-list no-lines class="mt4" *ngIf="currentRoute;else loadingSpinner">
     <ion-item-sliding>
       <ion-item>
         <ion-card class="br3 bl bw3 shadow-3 transition-animated" [ngStyle]="{'border-color': state.routeTypeState=='p' ? '#D87C27' : '#A8A8A8'}">
@@ -50,7 +50,7 @@
               </ion-col>
               <ion-col col-9 class="pl4">
                 <ion-row>
-                  <ion-col col-1 dotted-border [svgType]="state.routeTypeState" *ngIf="state.routeTypeState==='p';else altBorder">
+                  <ion-col col-1 dotted-border [svgType]="state.routeTypeState" *ngIf="state.routeTypeState=='p';else altBorder">
                   </ion-col>
                   <ng-template #altBorder>
                     <ion-col col-1 dotted-border [svgType]="state.routeTypeState">
@@ -375,5 +375,14 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-
+  <ng-template #loadingSpinner>
+    <ion-row>
+      <ion-col col-8>
+        <h1 class="avenir f3 fw6">Route data is loading...</h1>
+      </ion-col>
+      <ion-col col-4>
+        <ion-spinner></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>

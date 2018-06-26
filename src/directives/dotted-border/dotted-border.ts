@@ -14,7 +14,7 @@ export class DottedBorderDirective {
 
   @Input() set svgType(type: string) {
     this.initSize();
-    if(type==='dropOff') {
+    if(type==='d') {
       this.svgPath = 'assets/svg/dotted_border_alt.svg';
       this.bg = 'url(' + this.svgPath + ')';
     } else {
