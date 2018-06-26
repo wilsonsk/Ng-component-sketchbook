@@ -1,5 +1,5 @@
 export class AuthenticationState {
-  'class': string,
-  'code': string,
-  'isAuthenticated': boolean,
+  'class': string;
+  'code': string;
+  'isAuthenticated': boolean;
 }
