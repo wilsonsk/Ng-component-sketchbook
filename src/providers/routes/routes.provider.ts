@@ -34,12 +34,12 @@ export class RoutesProvider {
     this.initRouteState();
   }
 
-  testHttp(token: string) {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-                                // .append('Authorization', token);
-    const options = {
-      headers: headers
-    };
+  testHttp() {
+    // let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    //                             // .append('Authorization', token);
+    // const options = {
+    //   headers: headers
+    // };
     return this.http.get('http://ua/drively/sites/_public/schedule/jsonexp.php', options);
   }
 
