@@ -88,11 +88,11 @@ export class RoutesListComponent {
 
   // Reactive form vars
   pickupNotesForm: FormGroup;
-  startingMileagePickupForm: FormGroup;
-  endingMileagePickupForm: FormGroup;
+  startingMileageForm: FormGroup;
+  endingMileageForm: FormGroup;
 
-  startingMileageDropOffForm: FormGroup;
-  endingMileageDropOffForm: FormGroup;
+  // startingMileageDropOffForm: FormGroup;
+  // endingMileageDropOffForm: FormGroup;
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
