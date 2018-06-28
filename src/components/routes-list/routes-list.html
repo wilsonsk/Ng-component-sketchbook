@@ -204,7 +204,7 @@
                                 </ion-item>
                               </ion-list>
                               <ion-grid>
-                                <ion-row *ngIf="!startingMileageForm.valid && !startingMileageForm.get('startingMileage').valid">
+                                <ion-row *ngIf="!startingMileageForm.touch && !startingMileageForm.get('startingMileage').valid">
                                   Please enter a valid number of miles.
                                 </ion-row>
                                 <ion-row>
@@ -243,7 +243,7 @@
                                 </ion-item>
                               </ion-list>
                               <ion-grid>
-                                <ion-row *ngIf="!endingMileageForm.valid && !endingMileageForm.get('endingMileage').valid">
+                                <ion-row *ngIf="!endingMileageForm.touch && !endingMileageForm.get('endingMileage').valid">
                                   Please enter a valid number of miles.
                                 </ion-row>
                                 <ion-row>
