@@ -23,16 +23,16 @@
     <ion-col col-3>
       <ion-row align-items-start>
         <ion-col>
-          <span class="db avenir f3 f5-l fw6 white tr">Routes remaining:</span>
+          <span class="db avenir f3-ns f-subheadline-l fw6 white tr">Routes remaining:</span>
           <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mt6">
         <ion-col>
-          <span class="db avenir f3-ns f5-l fw6-ns white tr">Status:</span>
-          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
-          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="background-color:#6EFFA3;">In Progress</span>
-          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="background-color:#FF552E;">Ended</span>
+          <span class="db avenir f3-ns f-subheadline-l fw6-ns white tr">Status:</span>
+          <span class="db avenir f4-ns f1-l fw6-ns tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
+          <span class="db avenir f4-ns f1-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="background-color:#6EFFA3;">In Progress</span>
+          <span class="db avenir f4-ns f1-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="background-color:#FF552E;">Ended</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -47,7 +47,7 @@
               <ion-col col-3 class="br b--silver" [ngStyle]="{'border-color': state.routeType==='p' ? '' : 'white'}">
                 <ion-row>
                   <ion-col col-12>
-                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'black'}" *ngIf="state.routeType=='p'"  [@fade]>Pickup</h1>
+                    <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'black'}" *ngIf="state.routeType=='p'" [@fade]>Pickup</h1>
                     <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'black'}" *ngIf="state.routeType=='d'" [@fade]>Drop Off</h1>
                   </ion-col>
                 </ion-row>
