@@ -130,8 +130,7 @@ export class RoutesListComponent {
     this.initPickupNotesForm();
     this.initStartingMileageForm();
     this.initEndingMileageForm();
-    // this.initStartingMileageDropOffForm();
-    // this.initEndingMileageDropOffForm();
+
     if(!this.state.startingMileageFormHasBeenSubmitted) {
       this.routesProvider.setState('startingMileageFormAccessible', true);
     }
