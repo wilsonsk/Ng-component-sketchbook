@@ -31,8 +31,8 @@
         <ion-col>
           <span class="db avenir f3-ns f1-l fw6-ns white tr">Status:</span>
           <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="background-color:#6EFFA3;">In Progress</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="background-color:#FF552E;">Ended</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">In Progress</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="color:#FF552E;">Ended</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -71,10 +71,10 @@
                   <ion-col col-11 class="pl3">
                     <ion-row>
                       <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': state.routeType=='p' ? 'black' : 'white'}">
-                        <span class="avenir f3 fw3" style="color:#D87C27">From: </span><span class="avenir f3 fw3">{{ currentRoute.sourceAddr }}</span>
+                        <span class="avenir f3-ns f2-l fw3-ns fw4-l" style="color:#D87C27">From: </span><span class="avenir f3 fw3">{{ currentRoute.sourceAddr }}</span>
                       </ion-col>
                       <ion-col col-12 class="tc">
-                        <span class="avenir f3 fw3" style="color:#D87C27">To: </span><span class="avenir f3 fw3">{{ currentRoute.destinationAddr }}</span>
+                        <span class="avenir f3-ns f2-l fw3-ns fw4-l" style="color:#D87C27">To: </span><span class="avenir f3 fw3">{{ currentRoute.destinationAddr }}</span>
                       </ion-col>
                     </ion-row>
                   </ion-col>
