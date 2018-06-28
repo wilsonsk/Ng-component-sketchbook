@@ -204,6 +204,9 @@
                                 </ion-item>
                               </ion-list>
                               <ion-grid>
+                                <ion-row *ngIf="!startingMileageForm.valid && !startingMileageForm.get('startingMileage').valid">
+                                  Please enter a valid number of miles.
+                                </ion-row>
                                 <ion-row>
                                   <ion-col>
                                     <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!startingMileageForm.valid && !startingMileageForm.get('startingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
@@ -240,6 +243,9 @@
                                 </ion-item>
                               </ion-list>
                               <ion-grid>
+                                <ion-row *ngIf="!endingMileageForm.valid && !endingMileageForm.get('endingMileage').valid">
+                                  Please enter a valid number of miles.
+                                </ion-row>
                                 <ion-row>
                                   <ion-col>
                                     <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!endingMileageForm.valid && !endingMileageForm.get('endingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Ending Mileage</button>
