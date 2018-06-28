@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="currentRoute">
+<ion-content *ngIf="state.numRoutes > 1">
   <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
     <ion-col col-9>
       <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
