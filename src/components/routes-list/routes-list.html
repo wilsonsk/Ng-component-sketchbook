@@ -20,9 +20,21 @@
         <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
       </ng-template>
     </ion-col>
-    <ion-col col-3 align-self-start>
-      <span class="db avenir f3 fw6 white tr">Routes remaining</span>
-      <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
+    <ion-col col-3>
+      <ion-row align-items-start>
+        <ion-col>
+          <span class="db avenir f3 fw6 white tr">Routes remaining:</span>
+          <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row class="mt6">
+        <ion-col>
+          <span class="db avenir f3 fw6 white tr">Status:</span>
+          <span class="db avenir f4 fw6 tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
+          <span class="db avenir f4 fw6 tr" *ngIf="state.tripDidStart && state.tripCanEnd">In Progress</span>
+          <span class="db avenir f4 fw6 tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible">Ended</span>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
 
@@ -171,146 +183,6 @@
                 </ion-card>
               </ion-col>
             </ion-row>
-            <!-- <ion-row *ngIf="state.startingMileagePickUpAccessible" [@expandCard]>
-              <ion-col>
-                <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
-                  <ion-col>
-                    <ion-card class="pa4 bg-moon-gray">
-                      <ion-card-content>
-                        <ion-row>
-                          <ion-col>
-                            <span class="avenir f1 fw8-ns fw6-l">Starting Mileage: </span>
-                            <span class="db avenir f3 fw6">Enter your starting mileage for this Pickup.</span>
-                            <form class="db mt4" [formGroup]="startingMileagePickupForm" (ngSubmit)="onSubmitStartingMileagePickupForm()">
-                              <ion-list>
-                                <ion-item class="avenir f2 mb4 bg-moon-gray">
-                                  <ion-label for="startingMileage" floating>
-                                    Starting Mileage
-                                  </ion-label>
-                                  <ion-input name="startingMileage" formControlName="startingMileage"></ion-input>
-                                </ion-item>
-                              </ion-list>
-                              <ion-grid>
-                                <ion-row>
-                                  <ion-col>
-                                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!startingMileagePickupForm.valid && !startingMileagePickupForm.get('startingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-grid>
-                            </form>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </ion-card>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row *ngIf="state.endingMileagePickUpFormReady" [@expandCard]>
-              <ion-col>
-                <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
-                  <ion-col>
-                    <ion-card class="pa4 bg-moon-gray">
-                      <ion-card-content>
-                        <ion-row>
-                          <ion-col>
-                            <span class="avenir f1 fw8-ns fw6-l">Ending Mileage: </span>
-                            <span class="db avenir f3 fw6">Enter your ending mileage for this Pickup.</span>
-                            <form class="db mt4" [formGroup]="endingMileagePickupForm" (ngSubmit)="onSubmitEndingMileagePickupForm()">
-                              <ion-list>
-                                <ion-item class="avenir f2 mb4 bg-moon-gray">
-                                  <ion-label for="endingMileage" floating>
-                                    Ending Mileage
-                                  </ion-label>
-                                  <ion-input name="endingMileage" formControlName="endingMileage"></ion-input>
-                                </ion-item>
-                              </ion-list>
-                              <ion-grid>
-                                <ion-row>
-                                  <ion-col>
-                                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!endingMileagePickupForm.valid && !endingMileagePickupForm.get('endingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Ending Mileage</button>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-grid>
-                            </form>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </ion-card>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row style="background-color:#D87C27" *ngIf="state.pickupDidEnd" [@expandCard]>
-              <ion-col>
-                <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
-                  <ion-col>
-                    <ion-card class="pa4 bg-moon-gray">
-                      <ion-card-content>
-                        <ion-row>
-                          <ion-col>
-                            <span class="avenir f1 fw8-ns fw6-l">Starting Mileage: </span>
-                            <span class="db avenir f3 fw6">Enter your starting mileage for this Drop Off.</span>
-                            <form class="db mt4" [formGroup]="startingMileageDropOffForm" (ngSubmit)="onSubmitStartMileageDropOffForm()">
-                              <ion-list>
-                                <ion-item class="avenir f2 mb4 bg-moon-gray">
-                                  <ion-label for="startingMileage" floating>
-                                    Starting Mileage
-                                  </ion-label>
-                                  <ion-input name="startingMileage" formControlName="startingMileage"></ion-input>
-                                </ion-item>
-                              </ion-list>
-                              <ion-grid>
-                                <ion-row>
-                                  <ion-col>
-                                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!startingMileageDropOffForm.valid && !startingMileageDropOffForm.get('startingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Starting Mileage</button>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-grid>
-                            </form>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </ion-card>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <ion-row style="background-color:#D87C27" *ngIf="state.dropOffDidEnd" [@expandCard]>
-              <ion-col>
-                <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">
-                  <ion-col>
-                    <ion-card class="pa4 bg-moon-gray">
-                      <ion-card-content>
-                        <ion-row>
-                          <ion-col>
-                            <span class="avenir f1 fw8-ns fw6-l">Ending Mileage: </span>
-                            <span class="db avenir f3 fw6">Enter your ending mileage for this Drop Off.</span>
-                            <form class="db mt4" [formGroup]="endingMileageDropOffForm" (ngSubmit)="onSubmitEndingMileageDropOffForm()">
-                              <ion-list>
-                                <ion-item class="avenir f2 mb4 bg-moon-gray">
-                                  <ion-label for="endingMileage" floating>
-                                    Ending Mileage
-                                  </ion-label>
-                                  <ion-input name="endingMileage" formControlName="endingMileage"></ion-input>
-                                </ion-item>
-                              </ion-list>
-                              <ion-grid>
-                                <ion-row>
-                                  <ion-col>
-                                    <button class="w-75" ion-button color="secondary" block type="submit" [disabled]="!endingMileageDropOffForm.valid && !endingMileageDropOffForm.get('endingMileage').valid" style="background-color:#D87C27; margin: 0 auto;">Submit Ending Mileage</button>
-                                  </ion-col>
-                                </ion-row>
-                              </ion-grid>
-                            </form>
-                          </ion-col>
-                        </ion-row>
-                      </ion-card-content>
-                    </ion-card>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row> -->
             <ion-row *ngIf="state.startingMileageFormAccessible" [ngStyle]="{'background-color': state.routeType=='d' ? '#D87C27' : ''}" [@expandCard]>
               <ion-col>
                 <ion-row class="pt4 pb4 w-80 bt bw1" style="margin: 0 auto;">

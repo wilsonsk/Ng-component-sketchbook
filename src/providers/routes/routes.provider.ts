@@ -137,22 +137,10 @@ export class RoutesProvider {
   }
 
   public startRoute(reOpen:boolean) {
-    // if(this.state.routeType==='p') {
-    //   if(!reOpen) {
-    //     this.state.pickupDidStart = true;
-    //   }
-    //   this.state.pickupCanEnd = true;
-    // } else {
-    //   if(!reOpen) {
-    //     this.state.dropOffDidStart = true;
-    //   }
-    //   this.state.dropOffCanEnd = true;
-    // }
-
-      if(!reOpen) {
-        this.state.tripDidStart = true;
-      }
-      this.state.tripCanEnd = true;
+    if(!reOpen) {
+      this.state.tripDidStart = true;
+    }
+    this.state.tripCanEnd = true;
 
     let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);

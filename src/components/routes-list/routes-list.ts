@@ -91,9 +91,6 @@ export class RoutesListComponent {
   startingMileageForm: FormGroup;
   endingMileageForm: FormGroup;
 
-  // startingMileageDropOffForm: FormGroup;
-  // endingMileageDropOffForm: FormGroup;
-
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
@@ -164,22 +161,6 @@ export class RoutesListComponent {
   }
 
   onStartRoute(reOpen:boolean) {
-    // if(this.routesProvider.canStartRoute()) {
-    //   let options: LaunchNavigatorOptions = {
-    //     start: this.currentLocation.latitude + ', ' + this.currentLocation.longitude,
-    //     app: this.launchNavigator.APP.GOOGLE_MAPS,
-    //     transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
-    //   };
-    //
-    //   // get first param from Drively API
-    //   this.launchNavigator.navigate(this.currentRoute.destinationAddr, options)
-    //     .then(
-    //       success => console.log('Launched navigator'),
-    //       error => console.log('Error launching navigator', error)
-    //     );
-    // }
-
-
     this.routesProvider.startRoute(reOpen);
 
     let options: LaunchNavigatorOptions = {
@@ -188,7 +169,7 @@ export class RoutesListComponent {
       transportMode: this.launchNavigator.TRANSPORT_MODE.DRIVING,
     };
 
-    // get first param from Drively API
+    // get coords (ie first param) from Drively API
     this.launchNavigator.navigate(this.currentRoute.destinationAddr, options)
       .then(
         success => console.log('Launched navigator'),
@@ -215,8 +196,6 @@ export class RoutesListComponent {
   onOpenRouteNotes() {
     this.navCtrl.push(RouteNotesComponent);
   }
-
-
 
   private confirmPickupComplete() {
     const pickupCompleteAlert = this.alertCtrl.create({
@@ -288,22 +267,6 @@ export class RoutesListComponent {
     });
   }
 
-  // initStartingMileageDropOffForm() {
-  //   let startingMileage: string = null;
-  //
-  //   this.startingMileageDropOffForm = new FormGroup({
-  //     'startingMileage': new FormControl(startingMileage, Validators.required),
-  //   });
-  // }
-  //
-  // initEndingMileageDropOffForm() {
-  //   let endingMileage: string = null;
-  //
-  //   this.endingMileageDropOffForm = new FormGroup({
-  //     'endingMileage': new FormControl(endingMileage, Validators.required),
-  //   });
-  // }
-
   onOpenCamera() {
     this.camera.getPicture({
       correctOrientation: true,
@@ -353,14 +316,6 @@ export class RoutesListComponent {
     this.routesProvider.setState('tripCanStart', true);
   }
 
-  // onSubmitStartingMileagePickupForm() {
-  //   this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-  //   this.startingMileagePickupForm.reset();
-  //
-  //   this.routesProvider.setState('startingMileagePickUpAccessible', false);
-  //   this.routesProvider.setState('pickupCanStart', true);
-  // }
-
   onSubmitEndingMileageForm() {
     this.currentRoute.endingMileage = this.endingMileageForm.value['endingMileage'];
     this.endingMileageForm.reset();
@@ -381,16 +336,6 @@ export class RoutesListComponent {
     }
   }
 
-  // onSubmitEndingMileagePickupForm() {
-  //   this.currentRoute.endingMileage = this.endingMileagePickupForm.value['endingMileage'];
-  //   this.endingMileagePickupForm.reset();
-  //
-  //   this.routesProvider.setState('endingMileagePickUpFormReady', false);
-  //   this.routesProvider.setState('pickupDidStart', false);
-  //   this.routesProvider.setState('pickupCanCompleteForm', true);
-  //   this.routesProvider.setState('pickupCanStart', false);
-  // }
-
   onSubmitPickupNotes() {
     this.currentRoute.additionalPassengers = this.pickupNotesForm.value['additionalPassengers'];
     this.currentRoute.noShow = this.pickupNotesForm.value['noShow'];
@@ -407,23 +352,4 @@ export class RoutesListComponent {
       this.routesProvider.setState('tripDidEnd', true);
     }, 1000);
   }
-
-  // onSubmitStartMileageDropOffForm() {
-  //   this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
-  //   this.startingMileageDropOffForm.reset();
-  //
-  //   // this.routesProvider.setCurrentRoute(this.currentRoute);
-  //   this.routesProvider.setState('pickupStartMileageFormDidComplete', true);
-  //   this.routesProvider.setState('pickupDidEnd', false);
-  //   this.routesProvider.setState('dropOffCanStart', true);
-  // }
-  //
-  // onSubmitEndingMileageDropOffForm() {
-  //   this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
-  //   this.endingMileageDropOffForm.reset();
-  //   this.imagePath = '';
-  //
-  //   this.routesProvider.removeRoute();
-  // }
-
 }
