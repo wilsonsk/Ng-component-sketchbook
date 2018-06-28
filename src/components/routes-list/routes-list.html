@@ -69,11 +69,11 @@
                     </ion-col>
                   </ng-template>
                   <ion-col col-11 class="pl3">
-                    <ion-row justify-content-center>
-                      <ion-col col-12 class="bb bw6  transition-animated" [ngStyle]="{'border-color': state.routeType=='p' ? 'black' : 'white'}">
+                    <ion-row>
+                      <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': state.routeType=='p' ? 'black' : 'white'}">
                         <span class="avenir f3-ns f2-l fw3-ns fw4-l" style="color:#D87C27">From: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.sourceAddr }}</span>
                       </ion-col>
-                      <ion-col col-12 class=" transition-animated">
+                      <ion-col col-12 class="tc transition-animated">
                         <span class="avenir f3-ns f2-l fw3-ns fw4-l" style="color:#D87C27">To: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.destinationAddr }}</span>
                       </ion-col>
                     </ion-row>
