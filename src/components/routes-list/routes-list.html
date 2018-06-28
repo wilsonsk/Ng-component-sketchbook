@@ -30,9 +30,12 @@
       <ion-row class="mt6">
         <ion-col>
           <span class="db avenir f3-ns f1-l fw6-ns white tr">Status:</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">In Progress</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="color:#FF552E;">Ended</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Pickup Not Started</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Pickup in Progress</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Pickup</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Dropoff Not Started</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Drop Off in Progress</span>
+          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Drop Off</span>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -71,7 +74,7 @@
                   <ion-col col-11 class="pl3">
                     <ion-row>
                       <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': state.routeType=='p' ? 'black' : 'white'}">
-                        <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'white'}">From: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.sourceAddr }}</span>
+                        <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'white'}">From: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l" ></span>
                       </ion-col>
                       <ion-col col-12 class="tc transition-animated">
                         <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': state.routeType=='p' ? '#D87C27' : 'white'}">To: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.destinationAddr }}</span>
@@ -192,7 +195,7 @@
                         <ion-row>
                           <ion-col>
                             <span class="avenir f1 fw8-ns fw6-l">Starting Mileage: </span>
-                            <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='p'">Enter your starting mileage for this Pickup.</span>
+                            <!-- <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='p'">Enter your starting mileage for this Pickup.</span> -->
                             <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='d'">Enter your ending mileage for this Drop Off.</span>
                             <form class="db mt4" [formGroup]="startingMileageForm" (ngSubmit)="onSubmitStartingMileageForm()">
                               <ion-list>
@@ -231,7 +234,7 @@
                         <ion-row>
                           <ion-col>
                             <span class="avenir f1 fw8-ns fw6-l">Ending Mileage: </span>
-                            <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='p'">Enter your ending mileage for this Pickup.</span>
+                            <!-- <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='p'">Enter your ending mileage for this Pickup.</span> -->
                             <span class="db avenir f3 fw6" *ngIf="this.state.routeType==='d'">Enter your ending mileage for this Drop Off.</span>
                             <form class="db mt4" [formGroup]="endingMileageForm" (ngSubmit)="onSubmitEndingMileageForm()">
                               <ion-list>

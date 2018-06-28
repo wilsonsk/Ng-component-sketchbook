@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -81,6 +82,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     NativePageTransitions,
     LaunchNavigator,
     Geolocation,
+    NativeGeocoder,
     LocationProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RoutesProvider,

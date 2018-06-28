@@ -37,7 +37,7 @@ export class RouteNavigationComponent {
       this.currentLocation = this.locationProvider.getLocation();
     });
 
-    this.locationProvider.initLocation().then(() => {
+    this.locationProvider.initCoords().then(() => {
       this.currentLocation = this.locationProvider.getLocation();
       this.currentRoute = this.routesProvider.getCurrentRoute();
       this.curLoc = JSON.stringify(this.currentLocation);

@@ -2,7 +2,6 @@ export class RouteModel {
     constructor(
       public pickUpTime: string,
       public tripCount: number,
-      public sourceAddr: string,
       public destinationAddr: string,
       // public sourceLatitude: string,
       // public sourceLongitude: string,

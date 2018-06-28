@@ -121,8 +121,11 @@ export class RoutesListComponent {
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.currentLocation = this.locationProvider.getLocation();
     });
-    this.locationProvider.initLocation().then(() => {
-      this.currentLocation = this.locationProvider.getLocation();
+    this.locationProvider.initCoords().then(() => {
+      this.locationProvider.initAddress().then(() => {
+        this.currentLocation = this.locationProvider.getLocation();
+        alert(JSON.stringify(this.currentLocation))
+      });
     });
     this.initPickupNotesForm();
     this.initStartingMileageForm();
@@ -199,7 +202,7 @@ export class RoutesListComponent {
 
   private confirmPickupComplete() {
     const pickupCompleteAlert = this.alertCtrl.create({
-      title: 'Is your pickup really complete?',
+      title: 'Please confirm you have arrived at your pickup location?',
       buttons: [
         {
           text: 'Cancel',
@@ -208,9 +211,13 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.routesProvider.setState('endingMileageFormAccessible', true);
+            // this.routesProvider.setState('endingMileageFormAccessible', true);
             this.routesProvider.setState('tripCanStart', false);
             this.routesProvider.setState('tripCanEnd', false);
+
+            this.routesProvider.setState('tripDidStart', false);
+            this.routesProvider.setState('tripCanStart', false);
+            this.routesProvider.setState('pickNotesFormAccessible', true);
           }
         }
       ]
