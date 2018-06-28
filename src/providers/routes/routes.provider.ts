@@ -58,7 +58,11 @@ export class RoutesProvider {
     this.routes.splice(0,1);
     this.currentRoute = this.routes[0];
 
-    this.routesChanged.next(this.routes.slice());
+    if(this.routes.length == 0) {
+      this.setState('numRoutes', this.routes.length);
+    } else {
+      this.routesChanged.next(this.routes.slice());
+    }
   }
 
   // Restarting the trip cycle - Starting at pickup - so assumes tourType = 'pickup'
@@ -112,19 +116,6 @@ export class RoutesProvider {
 
   // Called at end of every trip (ie when a route is removed and the component is rerendered)
   public updateState() {
-    // if(this.currentRoute.type === 'p') {
-    //   this.initRouteState();
-    //   setTimeout(() => {
-    //     this.setState('startingMileageFormAccessible', true);
-    //   }, 1000);
-    // } else if(this.currentRoute.type === 'd') {
-    //   this.state.numRoutes = this.routes.length;
-    //   this.state.routeType = this.currentRoute.type;
-    //   setTimeout(() => {
-    //     this.setState('tripDidEnd', true);
-    //   }, 1000);
-    // }
-
     if(!this.state.startingMileageFormHasBeenSubmitted) {
       this.initRouteState();
       setTimeout(() => {
