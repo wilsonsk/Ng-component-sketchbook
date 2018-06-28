@@ -255,7 +255,7 @@ export class RoutesListComponent {
     let startingMileage: string = null;
 
     this.startingMileageForm = new FormGroup({
-      'startingMileage': new FormControl(startingMileage, Validators.required),
+      'startingMileage': new FormControl(startingMileage, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
     });
   }
 
@@ -263,7 +263,7 @@ export class RoutesListComponent {
     let endingMileage: string = null;
 
     this.endingMileageForm = new FormGroup({
-      'endingMileage': new FormControl(endingMileage, Validators.required),
+      'endingMileage': new FormControl(endingMileage, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
     });
   }
 
