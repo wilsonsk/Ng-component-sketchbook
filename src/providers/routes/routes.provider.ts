@@ -10,8 +10,8 @@ export class RoutesProvider {
   // Test Route Data
   routes: RouteModel[] = [
     new RouteModel('05:50AM', 1, 'source address 1', '1800 NE Alberta St, Portland, OR 97211', '06:40AM', true, false, null, 'p', null, null, null, null, null),
-    new RouteModel('07:20AM', 2, 'source address 2', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '10:20AM', true, true, null, 'd', null, null, null, null, null),
-    new RouteModel('01:15PM', 3, 'source address 3', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '02:00PM', false, false, null, 'p', null, null, null, null, null),
+    new RouteModel('07:20AM', 2, 'source address 2', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '10:20AM', true, true, null, 'p', null, null, null, null, null),
+    new RouteModel('01:15PM', 3, 'source address 3', '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '02:00PM', false, false, null, 'd', null, null, null, null, null),
     new RouteModel('03:25PM', 4, 'source address 4', '2211 NE 139th St, Vancouver, WA 98686', '04:20PM', false, false, null, 'd', null, null, null, null, null),
     new RouteModel('05:50PM', 5, 'source address 5', '700 NE 87th Ave, Vancouver, WA 98664', '07:00PM', true, true, null, 'p', null, null, null, null, null),
     new RouteModel('07:50PM', 5, 'source address 5', '700 NE 87th Ave, Vancouver, WA 98664', '08:30PM', true, true, null, 'd', null, null, null, null, null),
@@ -25,10 +25,9 @@ export class RoutesProvider {
   // Route Component State 'checker'
   canChangeState: boolean;
   canStartRoute: boolean;
-  public startingMileagePickupFormHasBeenSubmitted: boolean;
 
   // Route Component States - NOTE this is not immutable state (ie can be mutated by components)
-  public state: RouteState;
+  private state: RouteState;
 
   constructor(public http: HttpClient) {
     this.initRouteState();
@@ -64,14 +63,27 @@ export class RoutesProvider {
 
   // Restarting the trip cycle - Starting at pickup - so assumes tourType = 'pickup'
   initRouteState() {
-    this.startingMileagePickupFormHasBeenSubmitted = false;
     this.currentRoute = this.routes[0];
 
+    // this.state = new RouteState(
+    //   this.routes.length,
+    //   this.currentRoute.type,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    //   false,
+    // );
     this.state = new RouteState(
       this.routes.length,
       this.currentRoute.type,
-      false,
-      false,
       false,
       false,
       false,
@@ -91,28 +103,32 @@ export class RoutesProvider {
   }
 
   public setState(prop:string, val:any) {
-    if(prop === 'startingMileagePickUpAccessible' && val === true) {
-      this.startingMileagePickupFormHasBeenSubmitted = true;
-    } else if(prop === 'dropOffDidEnd' && val === true) {
-      this.startingMileagePickupFormHasBeenSubmitted = false;
-    }
-
+    // alert('called ' + prop + " " + val)
+    // alert(JSON.stringify(this.state))
     this.state[prop] = val;
     let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }
 
+  // Called at end of every trip (ie when a route is removed and the component is rerendered)
   public updateState() {
-    if(this.currentRoute.type === 'p') {
+    // if(this.currentRoute.type === 'p') {
+    //   this.initRouteState();
+    //   setTimeout(() => {
+    //     this.setState('startingMileageFormAccessible', true);
+    //   }, 1000);
+    // } else if(this.currentRoute.type === 'd') {
+    //   this.state.numRoutes = this.routes.length;
+    //   this.state.routeType = this.currentRoute.type;
+    //   setTimeout(() => {
+    //     this.setState('tripDidEnd', true);
+    //   }, 1000);
+    // }
+
+    if(!this.state.startingMileageFormHasBeenSubmitted) {
       this.initRouteState();
       setTimeout(() => {
-        this.setState('startingMileagePickUpAccessible', true);
-      }, 1000);
-    } else if(this.currentRoute.type === 'd') {
-      this.state.numRoutes = this.routes.length;
-      this.state.routeTypeState = this.currentRoute.type;
-      setTimeout(() => {
-        this.setState('pickupDidEnd', true);
+        this.setState('startingMileageFormAccessible', true);
       }, 1000);
     }
 
@@ -121,17 +137,23 @@ export class RoutesProvider {
   }
 
   public startRoute(reOpen:boolean) {
-    if(this.state.routeTypeState==='p') {
+    // if(this.state.routeType==='p') {
+    //   if(!reOpen) {
+    //     this.state.pickupDidStart = true;
+    //   }
+    //   this.state.pickupCanEnd = true;
+    // } else {
+    //   if(!reOpen) {
+    //     this.state.dropOffDidStart = true;
+    //   }
+    //   this.state.dropOffCanEnd = true;
+    // }
+
       if(!reOpen) {
-        this.state.pickupDidStart = true;
+        this.state.tripDidStart = true;
       }
-      this.state.pickupCanEnd = true;
-    } else {
-      if(!reOpen) {
-        this.state.dropOffDidStart = true;
-      }
-      this.state.dropOffCanEnd = true;
-    }
+      this.state.tripCanEnd = true;
+
     let stateCopy: RouteState = Object.assign({}, this.state);
     this.stateChanged.next(stateCopy);
   }

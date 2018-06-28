@@ -17,10 +17,10 @@ export class AuthenticationProvider {
     return this.storage.get('drivelyToken')
       .then((token) => {
         if(token) {
-          // alert('fetch token successful');
+          alert('fetch token successful');
           return token;
         } else {
-          // alert('fetch token successful, but token is empty')
+          alert('fetch token successful, but token is empty')
           return token;
         }
       })
@@ -59,7 +59,7 @@ export class AuthenticationProvider {
   public saveTokenToDeviceStorage(token: any) {
     this.storage.set('drivelyToken', token)
       .then(() => {
-        // alert('save token to device successful');
+        alert('save token to device successful');
       })
       .catch((error) => {
         alert('save token to device failed');

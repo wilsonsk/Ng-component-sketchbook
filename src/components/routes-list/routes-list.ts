@@ -112,36 +112,28 @@ export class RoutesListComponent {
         }
       });
 
-
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
       this.routes = this.routesProvider.getRoutes();
       this.currentRoute = this.routesProvider.getCurrentRoute();
-
       this.routesProvider.updateState();
     });
-
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;
     });
-
     // locationChangedSubscription needs to be tested
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.currentLocation = this.locationProvider.getLocation();
     });
-
     this.locationProvider.initLocation().then(() => {
       this.currentLocation = this.locationProvider.getLocation();
     });
-
     this.initPickupNotesForm();
-    this.initStartingMileagePickupForm();
-    this.initEndingMileagePickupForm();
-
-    this.initStartingMileageDropOffForm();
-    this.initEndingMileageDropOffForm();
-
-    if(!this.routesProvider.startingMileagePickupFormHasBeenSubmitted) {
-      this.routesProvider.setState('startingMileagePickUpAccessible', true);
+    this.initStartingMileageForm();
+    this.initEndingMileageForm();
+    // this.initStartingMileageDropOffForm();
+    // this.initEndingMileageDropOffForm();
+    if(!this.state.startingMileageFormHasBeenSubmitted) {
+      this.routesProvider.setState('startingMileageFormAccessible', true);
     }
   }
 
@@ -161,6 +153,15 @@ export class RoutesListComponent {
    this.locationChangedSubscription.unsubscribe();
    this.routesChangedSubscription.unsubscribe();
    this.stateChangedSubscription.unsubscribe();
+  }
+
+  onUnFold() {
+    if(this.folded) {
+      this.isActive = true;
+    } else {
+      this.isActive = false;
+    }
+    this.folded = !this.folded;
   }
 
   onStartRoute(reOpen:boolean) {
@@ -204,18 +205,19 @@ export class RoutesListComponent {
     this.confirmDropOffComplete().present();
   }
 
+  onTripComplete() {
+    if(this.state.routeType==='p') {
+      this.confirmPickupComplete().present();
+    } else {
+      this.confirmDropOffComplete().present();
+    }
+  }
+
   onOpenRouteNotes() {
     this.navCtrl.push(RouteNotesComponent);
   }
 
-  onUnFold() {
-    if(this.folded) {
-      this.isActive = true;
-    } else {
-      this.isActive = false;
-    }
-    this.folded = !this.folded;
-  }
+
 
   private confirmPickupComplete() {
     const pickupCompleteAlert = this.alertCtrl.create({
@@ -228,9 +230,9 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.routesProvider.setState('endingMileagePickUpFormReady', true);
-            this.routesProvider.setState('pickupCanStart', false);
-            this.routesProvider.setState('pickupCanEnd', false);
+            this.routesProvider.setState('endingMileageFormAccessible', true);
+            this.routesProvider.setState('tripCanStart', false);
+            this.routesProvider.setState('tripCanEnd', false);
           }
         }
       ]
@@ -272,37 +274,37 @@ export class RoutesListComponent {
     });
   }
 
-  initStartingMileagePickupForm() {
+  initStartingMileageForm() {
     let startingMileage: string = null;
 
-    this.startingMileagePickupForm = new FormGroup({
+    this.startingMileageForm = new FormGroup({
       'startingMileage': new FormControl(startingMileage, Validators.required),
     });
   }
 
-  initEndingMileagePickupForm() {
+  initEndingMileageForm() {
     let endingMileage: string = null;
 
-    this.endingMileagePickupForm = new FormGroup({
+    this.endingMileageForm = new FormGroup({
       'endingMileage': new FormControl(endingMileage, Validators.required),
     });
   }
 
-  initStartingMileageDropOffForm() {
-    let startingMileage: string = null;
-
-    this.startingMileageDropOffForm = new FormGroup({
-      'startingMileage': new FormControl(startingMileage, Validators.required),
-    });
-  }
-
-  initEndingMileageDropOffForm() {
-    let endingMileage: string = null;
-
-    this.endingMileageDropOffForm = new FormGroup({
-      'endingMileage': new FormControl(endingMileage, Validators.required),
-    });
-  }
+  // initStartingMileageDropOffForm() {
+  //   let startingMileage: string = null;
+  //
+  //   this.startingMileageDropOffForm = new FormGroup({
+  //     'startingMileage': new FormControl(startingMileage, Validators.required),
+  //   });
+  // }
+  //
+  // initEndingMileageDropOffForm() {
+  //   let endingMileage: string = null;
+  //
+  //   this.endingMileageDropOffForm = new FormGroup({
+  //     'endingMileage': new FormControl(endingMileage, Validators.required),
+  //   });
+  // }
 
   onOpenCamera() {
     this.camera.getPicture({
@@ -344,23 +346,45 @@ export class RoutesListComponent {
       });
   }
 
-  onSubmitStartingMileagePickupForm() {
-    this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
-    this.startingMileagePickupForm.reset();
+  onSubmitStartingMileageForm() {
+    this.currentRoute.startingMileage = this.startingMileageForm.value['startingMileage'];
+    this.startingMileageForm.reset();
 
-    this.routesProvider.setState('startingMileagePickUpAccessible', false);
-    this.routesProvider.setState('pickupCanStart', true);
+    this.routesProvider.setState('startingMileageFormAccessible', false);
+    this.routesProvider.setState('startingMileageFormHasBeenSubmitted', true);
+    this.routesProvider.setState('tripCanStart', true);
   }
 
-  onSubmitEndingMileagePickupForm() {
-    this.currentRoute.endingMileage = this.endingMileagePickupForm.value['endingMileage'];
-    this.endingMileagePickupForm.reset();
+  // onSubmitStartingMileagePickupForm() {
+  //   this.currentRoute.startingMileage = this.startingMileagePickupForm.value['startingMileage'];
+  //   this.startingMileagePickupForm.reset();
+  //
+  //   this.routesProvider.setState('startingMileagePickUpAccessible', false);
+  //   this.routesProvider.setState('pickupCanStart', true);
+  // }
 
-    this.routesProvider.setState('endingMileagePickUpFormReady', false);
-    this.routesProvider.setState('pickupDidStart', false);
-    this.routesProvider.setState('pickupCanCompleteForm', true);
-    this.routesProvider.setState('pickupCanStart', false);
+  onSubmitEndingMileageForm() {
+    this.currentRoute.endingMileage = this.endingMileageForm.value['endingMileage'];
+    this.endingMileageForm.reset();
+
+    this.routesProvider.setState('endingMileageFormAccessible', false);
+    this.routesProvider.setState('tripDidStart', false);
+    this.routesProvider.setState('tripCanStart', false);
+
+    if(this.state.routeType==='p') {
+      this.routesProvider.setState('pickNotesFormAccessible', true);
+    }
   }
+
+  // onSubmitEndingMileagePickupForm() {
+  //   this.currentRoute.endingMileage = this.endingMileagePickupForm.value['endingMileage'];
+  //   this.endingMileagePickupForm.reset();
+  //
+  //   this.routesProvider.setState('endingMileagePickUpFormReady', false);
+  //   this.routesProvider.setState('pickupDidStart', false);
+  //   this.routesProvider.setState('pickupCanCompleteForm', true);
+  //   this.routesProvider.setState('pickupCanStart', false);
+  // }
 
   onSubmitPickupNotes() {
     this.currentRoute.additionalPassengers = this.pickupNotesForm.value['additionalPassengers'];
@@ -369,31 +393,32 @@ export class RoutesListComponent {
     this.pickupNotesForm.reset();
     this.imagePath = '';
 
-    this.routesProvider.setState('pickupCanCompleteForm', false);
-    this.routesProvider.setState('pickupCanEnd', true);
+    this.routesProvider.setState('pickNotesFormAccessible', false);
+    this.routesProvider.setState('tripCanEnd', true);
+    this.routesProvider.setState('startingMileageFormHasBeenSubmitted', false);
 
     this.routesProvider.removeRoute();
     setTimeout(() => {
-      this.routesProvider.setState('pickupDidEnd', true);
+      this.routesProvider.setState('tripDidEnd', true);
     }, 1000);
   }
 
-  onSubmitStartMileageDropOffForm() {
-    this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
-    this.startingMileageDropOffForm.reset();
-
-    // this.routesProvider.setCurrentRoute(this.currentRoute);
-    this.routesProvider.setState('pickupStartMileageFormDidComplete', true);
-    this.routesProvider.setState('pickupDidEnd', false);
-    this.routesProvider.setState('dropOffCanStart', true);
-  }
-
-  onSubmitEndingMileageDropOffForm() {
-    this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
-    this.endingMileageDropOffForm.reset();
-    this.imagePath = '';
-
-    this.routesProvider.removeRoute();
-  }
+  // onSubmitStartMileageDropOffForm() {
+  //   this.currentRoute.startingMileage = this.startingMileageDropOffForm.value['startingMileage'];
+  //   this.startingMileageDropOffForm.reset();
+  //
+  //   // this.routesProvider.setCurrentRoute(this.currentRoute);
+  //   this.routesProvider.setState('pickupStartMileageFormDidComplete', true);
+  //   this.routesProvider.setState('pickupDidEnd', false);
+  //   this.routesProvider.setState('dropOffCanStart', true);
+  // }
+  //
+  // onSubmitEndingMileageDropOffForm() {
+  //   this.currentRoute.endingMileage = this.endingMileageDropOffForm.value['startingMileage'];
+  //   this.endingMileageDropOffForm.reset();
+  //   this.imagePath = '';
+  //
+  //   this.routesProvider.removeRoute();
+  // }
 
 }
