@@ -124,7 +124,6 @@ export class RoutesListComponent {
     this.locationProvider.initCoords().then(() => {
       this.locationProvider.initAddress().then(() => {
         this.currentLocation = this.locationProvider.getLocation();
-        alert(JSON.stringify(this.currentLocation))
       });
     });
     this.initPickupNotesForm();
