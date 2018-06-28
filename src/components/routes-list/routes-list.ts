@@ -250,10 +250,9 @@ export class RoutesListComponent {
         {
           text: 'OK',
           handler: () => {
-            this.routesProvider.setState('dropOffCanStart', false);
-            this.routesProvider.setState('dropOffDidStart', false);
-            this.routesProvider.setState('dropOffCanEnd', false);
-            this.routesProvider.setState('dropOffDidEnd', true);
+            this.routesProvider.setState('endingMileageFormAccessible', true);
+            this.routesProvider.setState('tripCanStart', false);
+            this.routesProvider.setState('tripCanEnd', false);
           }
         }
       ]
@@ -372,6 +371,13 @@ export class RoutesListComponent {
 
     if(this.state.routeType==='p') {
       this.routesProvider.setState('pickNotesFormAccessible', true);
+    } else if (this.state.routeType==='d'){
+      this.routesProvider.setState('tripCanEnd', true);
+      this.routesProvider.setState('startingMileageFormHasBeenSubmitted', false);
+      this.routesProvider.removeRoute();
+      setTimeout(() => {
+        this.routesProvider.setState('tripDidEnd', true);
+      }, 1000);
     }
   }
 
