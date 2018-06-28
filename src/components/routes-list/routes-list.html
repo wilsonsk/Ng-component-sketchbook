@@ -29,10 +29,10 @@
       </ion-row>
       <ion-row class="mt6">
         <ion-col>
-          <span class="db avenir f3 fw6 white tr">Status:</span>
-          <span class="db avenir f4 fw6 tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
-          <span class="db avenir f4 fw6 tr" *ngIf="state.tripDidStart && state.tripCanEnd">In Progress</span>
-          <span class="db avenir f4 fw6 tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible">Ended</span>
+          <span class="db avenir f3 fw6-ns fw8-l white tr">Status:</span>
+          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
+          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="state.tripDidStart && state.tripCanEnd">In Progress</span>
+          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible">Ended</span>
         </ion-col>
       </ion-row>
     </ion-col>
