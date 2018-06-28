@@ -23,16 +23,16 @@
     <ion-col col-3>
       <ion-row align-items-start>
         <ion-col>
-          <span class="db avenir f3 fw6 white tr">Routes remaining:</span>
+          <span class="db avenir f3 f5-l fw6 white tr">Routes remaining:</span>
           <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
         </ion-col>
       </ion-row>
       <ion-row class="mt6">
         <ion-col>
-          <span class="db avenir f3 fw6-ns fw8-l white tr">Status:</span>
-          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
-          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="background-color:#6EFFA3;">In Progress</span>
-          <span class="db avenir f4 fw6-ns fw8-l tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="background-color:#FF552E;">Ended</span>
+          <span class="db avenir f3-ns f5-l fw6-ns white tr">Status:</span>
+          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="!state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Not Started</span>
+          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="state.tripDidStart && state.tripCanEnd" style="background-color:#6EFFA3;">In Progress</span>
+          <span class="db avenir f4-ns f6-l fw6-ns tr" *ngIf="state.endingMileageFormAccessible || state.pickNotesFormAccessible" style="background-color:#FF552E;">Ended</span>
         </ion-col>
       </ion-row>
     </ion-col>
