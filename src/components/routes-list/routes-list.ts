@@ -172,11 +172,10 @@ export class RoutesListComponent {
             this.routesProvider.setState('showAllRoutes', false);
             this.currentRoute = this.routesProvider.getCurrentRoute();
             if(!this.state.startingMileageFormHasBeenSubmitted) {
-              alert('called')
-                setTimeout(() => {
-                  this.routesProvider.setState('startingMileageFormAccessible', true);
-                }, 1000);
-              }
+              setTimeout(() => {
+                this.routesProvider.setState('startingMileageFormAccessible', true);
+              }, 1000);
+            }
           }
         }
       ]
