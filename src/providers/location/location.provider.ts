@@ -8,12 +8,6 @@ import { Subscription } from 'rxjs';
 
 import { LocationModel } from '../../models/location.model';
 
-/*
-  Generated class for the LocationProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class LocationProvider implements OnDestroy {
   locationChanged = new Subject<any>();

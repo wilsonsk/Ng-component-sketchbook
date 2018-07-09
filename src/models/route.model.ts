@@ -11,7 +11,7 @@ export class RouteModel {
       public ambulatory: boolean,
       public shared: boolean,
       public tripNotes: string,
-      public type: string,
+      public routeType: string,
       public additionalPassengers: boolean,
       public noShow: boolean,
       public cancellation: boolean,

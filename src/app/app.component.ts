@@ -11,7 +11,7 @@ import { InspectionFormComponent } from '../components/inspection-form/inspectio
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class Drively {
   rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

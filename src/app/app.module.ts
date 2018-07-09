@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { Drively } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
@@ -31,6 +31,7 @@ import { CompanyAuthComponent } from '../components/company-auth/company-auth';
 import { InspectionFormComponent } from '../components/inspection-form/inspection-form';
 import { RoutesListComponent } from '../components/routes-list/routes-list';
 import { RouteNotesComponent } from '../components/route-notes/route-notes';
+import { PendingRouteListComponent } from '../components/pending-route-list/pending-route-list';
 
 import { LocationProvider } from '../providers/location/location.provider';
 import { RoutesProvider } from '../providers/routes/routes.provider';
@@ -40,7 +41,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 
 @NgModule({
   declarations: [
-    MyApp,
+    Drively,
     HomePage,
     TabsPage,
     DrivelyLogoComponent,
@@ -51,6 +52,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     RoutesListComponent,
     DottedBorderDirective,
     RouteNotesComponent,
+    PendingRouteListComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,11 +61,11 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     FormsModule,
     ReactiveFormsModule,
     IonicStorageModule.forRoot(),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(Drively)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    Drively,
     HomePage,
     TabsPage,
     CompanyAuthComponent,
@@ -72,6 +74,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     InspectionFormComponent,
     RoutesListComponent,
     RouteNotesComponent,
+    PendingRouteListComponent,
   ],
   providers: [
     StatusBar,

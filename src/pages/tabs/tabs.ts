@@ -6,6 +6,7 @@ import { DriverLoginComponent } from '../../components/driver-login/driver-login
 import { InspectionFormComponent } from '../../components/inspection-form/inspection-form';
 import { RouteNavigationComponent } from '../../components/route-navigation/route-navigation';
 import { RoutesListComponent } from '../../components/routes-list/routes-list';
+import { PendingRouteListComponent } from '../../components/pending-route-list/pending-route-list';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -17,6 +18,7 @@ export class TabsPage {
   tab4Root = CompanyAuthComponent;
   tab5Root = DriverLoginComponent;
   tab6Root = RoutesListComponent;
+  tab7Root = PendingRouteListComponent;
 
   constructor() {
 

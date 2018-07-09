@@ -95,7 +95,7 @@ export class RoutesListComponent {
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
                 this.routes = this.routesProvider.getRoutes();
-                this.currentRoute = this.routesProvider.getCurrentRoute();
+                // this.currentRoute = this.routesProvider.getCurrentRoute();
 
                 this.state = this.routesProvider.getState();
               }
@@ -109,11 +109,11 @@ export class RoutesListComponent {
         }
       });
 
-    this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-      this.routes = this.routesProvider.getRoutes();
-      this.currentRoute = this.routesProvider.getCurrentRoute();
-      this.routesProvider.updateState();
-    });
+    // this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
+    //   this.routes = this.routesProvider.getRoutes();
+    //   this.currentRoute = this.routesProvider.getCurrentRoute();
+    //   this.routesProvider.updateState();
+    // });
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;
     });
@@ -151,6 +151,16 @@ export class RoutesListComponent {
    this.locationChangedSubscription.unsubscribe();
    this.routesChangedSubscription.unsubscribe();
    this.stateChangedSubscription.unsubscribe();
+  }
+
+  onSetCurrentRoute() {
+    // this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
+    //   this.routes = this.routesProvider.getRoutes();
+    //   this.currentRoute = this.routesProvider.getCurrentRoute();
+    //   this.routesProvider.updateState();
+    // });
+    this.state.showAllRoutes = false;
+    this.currentRoute = this.routesProvider.getCurrentRoute();
   }
 
   onUnFold() {

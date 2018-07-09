@@ -15,5 +15,6 @@ export class RouteState {
     public tripInProgress: boolean,
     public tripCanEnd: boolean,
     public tripDidEnd: boolean,
+    public showAllRoutes: boolean,
   ) {}
 }
