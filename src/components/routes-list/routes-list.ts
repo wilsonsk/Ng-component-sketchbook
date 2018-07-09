@@ -154,13 +154,8 @@ export class RoutesListComponent {
   }
 
   onSetCurrentRoute() {
-    // this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-    //   this.routes = this.routesProvider.getRoutes();
-    //   this.currentRoute = this.routesProvider.getCurrentRoute();
-    //   this.routesProvider.updateState();
-    // });
-    this.state.showAllRoutes = false;
-    this.currentRoute = this.routesProvider.getCurrentRoute();
+    this.confirmSetRoute().present();
+
   }
 
   onUnFold() {
@@ -207,6 +202,31 @@ export class RoutesListComponent {
 
   onOpenRouteNotes() {
     this.navCtrl.push(RouteNotesComponent);
+  }
+
+  private confirmSetRoute() {
+    const setRouteCompleteAlert = this.alertCtrl.create({
+      title: 'Are you sure you want to select this route?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
+              this.routes = this.routesProvider.getRoutes();
+              this.currentRoute = this.routesProvider.getCurrentRoute();
+              this.routesProvider.updateState();
+            });
+            this.state.showAllRoutes = false;
+            this.currentRoute = this.routesProvider.getCurrentRoute();
+          }
+        }
+      ]
+    });
+    return setRouteCompleteAlert;
   }
 
   private confirmPickupComplete() {

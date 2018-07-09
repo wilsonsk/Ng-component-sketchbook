@@ -5,44 +5,43 @@
 </ion-header>
 
 <ion-content *ngIf="state.numRoutes >= 1">
-  <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
-    <ion-col col-9>
-      <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
-        <h1 class="avenir f-headline fw8-ns fw6-l tracked white">Pickup</h1>
-        <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to start/end this pickup</span>
-        <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
-        <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this pickup card</span>
-      </div>
-      <ng-template class="transition-animated" #dropOffHeader>
-        <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Drop Off</h1>
-        <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
-        <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
-        <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
-      </ng-template>
-    </ion-col>
-    <ion-col col-3>
-      <ion-row align-items-start>
-        <ion-col>
-          <span class="db avenir f3-ns f1-l fw6 white tr">Routes remaining:</span>
-          <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="mt6">
-        <ion-col>
-          <span class="db avenir f3-ns f1-l fw6-ns white tr">Status:</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Pickup Not Started</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Pickup in Progress</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Pickup</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Dropoff Not Started</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Drop Off in Progress</span>
-          <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Drop Off</span>
-        </ion-col>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-
   <!-- <ion-list no-lines class="mt4" *ngIf="currentRoute;else noRoutes"> -->
   <div *ngIf="state.showAllRoutes;else curRoute">
+    <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
+      <ion-col col-9>
+        <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
+          <h1 class="avenir f-headline fw8-ns fw6-l tracked white">Routes</h1>
+          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to select route</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Tap to see all riders of shared trip</span>
+        </div>
+        <ng-template class="transition-animated" #dropOffHeader>
+          <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Drop Off</h1>
+          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
+        </ng-template>
+      </ion-col>
+      <ion-col col-3>
+        <ion-row align-items-start>
+          <ion-col>
+            <span class="db avenir f3-ns f1-l fw6 white tr">Routes remaining:</span>
+            <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mt6">
+          <ion-col>
+            <span class="db avenir f3-ns f1-l fw6-ns white tr">Status:</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Pickup Not Started</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Pickup in Progress</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Pickup</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Dropoff Not Started</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Drop Off in Progress</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Drop Off</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
     <ion-list *ngFor="let currentRoute of routes; let i = index;" no-lines class="mt4">
       <ion-item-sliding>
         <ion-item>
@@ -118,6 +117,14 @@
                       </ion-row>
                     </ion-col>
                   </ion-row>
+                  <ion-row class="unfold-second-child" *ngIf="currentRoute.shared" [ngStyle]="{'background-color': currentRoute.routeType=='p' ? '' : '#D87C27'}">
+                    <ion-col col-1 push-1 dotted-border [svgType]="currentRoute.routeType">
+                    </ion-col>
+                    <ion-col col-8 push-1 text-wrap>
+                      <h1 class="avenir f2 fw4">Riders: </h1>
+                      <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? 'black' : 'white'}">list of riders</span>
+                    </ion-col>
+                  </ion-row>
                 </ion-col>
               </ion-row>
             </ion-card-content>
@@ -140,6 +147,42 @@
 
 
   <ng-template #curRoute>
+    <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
+      <ion-col col-9>
+        <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
+          <h1 class="avenir f-headline fw8-ns fw6-l tracked white">Pickup</h1>
+          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to start/end this pickup</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this pickup card</span>
+        </div>
+        <ng-template class="transition-animated" #dropOffHeader>
+          <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Drop Off</h1>
+          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
+        </ng-template>
+      </ion-col>
+      <ion-col col-3>
+        <ion-row align-items-start>
+          <ion-col>
+            <span class="db avenir f3-ns f1-l fw6 white tr">Routes remaining:</span>
+            <span class="db avenir f-headline fw6 tr">{{ state.numRoutes }}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="mt6">
+          <ion-col>
+            <span class="db avenir f3-ns f1-l fw6-ns white tr">Status:</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Pickup Not Started</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Pickup in Progress</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='p' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Pickup</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && !state.tripDidStart && !state.endingMileageFormAccessible && !state.pickNotesFormAccessible">Dropoff Not Started</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && state.tripDidStart && state.tripCanEnd" style="color:#6EFFA3;">Drop Off in Progress</span>
+            <span class="db avenir f4-ns f2-l fw6-ns tr" *ngIf="state.routeType==='d' && (state.endingMileageFormAccessible || state.pickNotesFormAccessible)" style="color:#FF552E;">Arrived at Drop Off</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
     <ion-list no-lines class="mt4">
       <ion-item-sliding>
         <ion-item>
