@@ -109,14 +109,15 @@ export class RoutesListComponent {
         }
       });
 
-    // this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-    //   this.routes = this.routesProvider.getRoutes();
-    //   this.currentRoute = this.routesProvider.getCurrentRoute();
-    //   this.routesProvider.updateState();
-    // });
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;
     });
+    this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
+      this.routes = this.routesProvider.getRoutes();
+      this.currentRoute = this.routesProvider.getCurrentRoute();
+      this.routesProvider.updateState();
+    });
+
     // locationChangedSubscription needs to be tested
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.currentLocation = this.locationProvider.getLocation();
@@ -130,9 +131,9 @@ export class RoutesListComponent {
     this.initStartingMileageForm();
     this.initEndingMileageForm();
 
-    if(!this.state.startingMileageFormHasBeenSubmitted) {
-      this.routesProvider.setState('startingMileageFormAccessible', true);
-    }
+    // if(!this.state.startingMileageFormHasBeenSubmitted) {
+    //   this.routesProvider.setState('startingMileageFormAccessible', true);
+    // }
   }
 
   ionViewWillLeave() {
@@ -153,9 +154,34 @@ export class RoutesListComponent {
    this.stateChangedSubscription.unsubscribe();
   }
 
-  onSetCurrentRoute() {
-    this.confirmSetRoute().present();
+  onSelectCurrentRoute() {
+    this.confirmSelectRoute().present();
+  }
 
+  private confirmSelectRoute() {
+    const setRouteCompleteAlert = this.alertCtrl.create({
+      title: 'Are you sure you want to select this route?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'OK',
+          handler: () => {
+            this.routesProvider.setState('showAllRoutes', false);
+            this.currentRoute = this.routesProvider.getCurrentRoute();
+            if(!this.state.startingMileageFormHasBeenSubmitted) {
+              alert('called')
+                setTimeout(() => {
+                  this.routesProvider.setState('startingMileageFormAccessible', true);
+                }, 1000);
+              }
+          }
+        }
+      ]
+    });
+    return setRouteCompleteAlert;
   }
 
   onUnFold() {
@@ -202,31 +228,6 @@ export class RoutesListComponent {
 
   onOpenRouteNotes() {
     this.navCtrl.push(RouteNotesComponent);
-  }
-
-  private confirmSetRoute() {
-    const setRouteCompleteAlert = this.alertCtrl.create({
-      title: 'Are you sure you want to select this route?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'OK',
-          handler: () => {
-            this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
-              this.routes = this.routesProvider.getRoutes();
-              this.currentRoute = this.routesProvider.getCurrentRoute();
-              this.routesProvider.updateState();
-            });
-            this.state.showAllRoutes = false;
-            this.currentRoute = this.routesProvider.getCurrentRoute();
-          }
-        }
-      ]
-    });
-    return setRouteCompleteAlert;
   }
 
   private confirmPickupComplete() {
@@ -370,6 +371,9 @@ export class RoutesListComponent {
         this.routesProvider.setState('tripDidEnd', true);
       }, 1000);
     }
+
+    this.currentRoute = null;
+    this.routesProvider.setState('showAllRoutes', true);
   }
 
   onSubmitPickupNotes() {
@@ -387,5 +391,8 @@ export class RoutesListComponent {
     setTimeout(() => {
       this.routesProvider.setState('tripDidEnd', true);
     }, 1000);
+
+    this.currentRoute = null;
+    this.routesProvider.setState('showAllRoutes', true);
   }
 }

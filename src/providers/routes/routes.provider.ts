@@ -107,11 +107,11 @@ export class RoutesProvider {
   public updateState() {
     if(!this.state.startingMileageFormHasBeenSubmitted) {
       this.initRouteState();
-      if(this.state.routeType==='d') {
-        setTimeout(() => {
-          this.setState('startingMileageFormAccessible', true);
-        }, 1000);
-      }
+      // if(this.state.routeType==='d') {
+      //   setTimeout(() => {
+      //     this.setState('startingMileageFormAccessible', true);
+      //   }, 1000);
+      // }
     }
 
     let stateCopy: RouteState = Object.assign({}, this.state);

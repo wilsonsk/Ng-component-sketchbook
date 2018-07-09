@@ -15,10 +15,9 @@
           <span class="avenir f3 fw4 tracked white db mt2">Tap to see all riders of shared trip</span>
         </div>
         <ng-template class="transition-animated" #dropOffHeader>
-          <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Drop Off</h1>
-          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to begin/end this drop off</span>
-          <span class="avenir f3 fw4 tracked white db mt2">Swipe a route right to access trip notes</span>
-          <span class="avenir f3 fw4 tracked white db mt2">Tap to expand this drop off card</span>
+          <h1 class="avenir f-headline fw8-ns fw4-l tracked white">Routes</h1>
+          <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to select route</span>
+          <span class="avenir f3 fw4 tracked white db mt2">Tap to see all riders of shared trip</span>
         </ng-template>
       </ion-col>
       <ion-col col-3>
@@ -133,10 +132,10 @@
         <ion-item-options side="right">
           <ion-row>
             <ion-col col-12 no-padding>
-              <button ion-button *ngIf="i == 0" (click)="onSetCurrentRoute()" style="background-color:#6EFFA3;color:black;">
+              <button ion-button *ngIf="i == 0" (click)="onSelectCurrentRoute()" style="background-color:#6EFFA3;color:black;">
                 <ion-icon name="send"></ion-icon>
-                <span *ngIf="currentRoute.routeType==='p'">Start Pickup Trip</span>
-                <span *ngIf="currentRoute.routeType==='d'">Start Drop Off Trip</span>
+                <span *ngIf="currentRoute.routeType==='p'">Select Pickup Trip</span>
+                <span *ngIf="currentRoute.routeType==='d'">Select Drop Off Trip</span>
               </button>
             </ion-col>
           </ion-row>
@@ -144,7 +143,6 @@
       </ion-item-sliding>
     </ion-list>
   </div>
-
 
   <ng-template #curRoute>
     <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
@@ -182,7 +180,6 @@
         </ion-row>
       </ion-col>
     </ion-row>
-
     <ion-list no-lines class="mt4">
       <ion-item-sliding>
         <ion-item>
@@ -268,6 +265,16 @@
                   <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': state.routeType=='p' ? 'black' : 'white'}">{{ currentRoute.tripNotes }}</span>
                 </ion-col>
               </ion-row>
+
+              <ion-row class="unfold-second-child" *ngIf="currentRoute.shared" [ngStyle]="{'background-color': currentRoute.routeType=='p' ? '' : '#D87C27'}">
+                <ion-col col-1 push-1 dotted-border [svgType]="currentRoute.routeType">
+                </ion-col>
+                <ion-col col-8 push-1 text-wrap>
+                  <h1 class="avenir f2 fw4">Riders: </h1>
+                  <span class="db avenir f3 fw3 mt4 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? 'black' : 'white'}">list of riders</span>
+                </ion-col>
+              </ion-row>
+
               <ion-row class="pt4 pb4 w-80 bt bw1" *ngIf="state.pickNotesFormAccessible" style="margin: 0 auto;" [@expandCard]>
                 <ion-col>
                   <ion-card class="pa4 bg-moon-gray">
