@@ -70,7 +70,7 @@ export class RoutesProvider {
     this.currentRoute = this.routes[0];
     this.state = new RouteState(
       this.routes.length,
-      this.currentRoute.type,
+      this.currentRoute.routeType,
       false,
       false,
       false,
