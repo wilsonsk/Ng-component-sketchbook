@@ -94,8 +94,7 @@ export class RoutesListComponent {
   routeCardStyle(routeType: string, index: number): Object {
     if(routeType == 'p' && index != 0) {
         return {
-          backgroundColor: '',
-          filter: 'greyscale(80%)',
+          backgroundColor: 'gray',
         };
     } else if(routeType == 'p' && index == 0) {
       return {
@@ -103,8 +102,7 @@ export class RoutesListComponent {
       };
     } else if (routeType == 'd' && index != 0) {
       return {
-        backgroundColor: '#D87C27',
-        filter: 'greyscale(80%)',
+        backgroundColor: 'gray',
       };
     } else if (routeType == 'd' && index == 0) {
       return {

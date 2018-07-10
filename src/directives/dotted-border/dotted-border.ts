@@ -17,7 +17,7 @@ export class DottedBorderDirective {
     if(type==='d') {
       this.svgPath = 'assets/svg/dotted_border_alt.svg';
       this.bg = 'url(' + this.svgPath + ')';
-    } else {
+    } else if(type==='p'){
       this.svgPath = 'assets/svg/dotted_border.svg';
       this.bg = 'url(' + this.svgPath + ')';
     }
