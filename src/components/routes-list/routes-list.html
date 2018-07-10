@@ -8,7 +8,7 @@
   <!-- <ion-list no-lines class="mt4" *ngIf="currentRoute;else noRoutes"> -->
   <div *ngIf="state.showAllRoutes;else curRoute">
     <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
-      <ion-col col-9>
+      <ion-col no-padding col-9>
         <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
           <h1 class="avenir f-headline fw8-ns fw6-l tracked white">Routes</h1>
           <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to select route</span>
@@ -19,6 +19,11 @@
           <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to select route</span>
           <span class="avenir f3 fw4 tracked white db mt2">Tap to see all riders of shared trip</span>
         </ng-template>
+        <ion-card class="mt2 br3 bl bw3 shadow-3 transition-animated dark-red" *ngIf="state.havePendingRoutes" (click)="onAcceptPendingRoute()">
+          <ion-card-content>
+            <h1 class="dib "><ion-icon name="alert"></ion-icon> Have Pending Routes</h1>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col col-3>
         <ion-row align-items-start>

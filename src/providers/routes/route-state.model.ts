@@ -16,5 +16,6 @@ export class RouteState {
     public tripCanEnd: boolean,
     public tripDidEnd: boolean,
     public showAllRoutes: boolean,
+    public havePendingRoutes: boolean,
   ) {}
 }

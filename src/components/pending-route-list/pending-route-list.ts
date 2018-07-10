@@ -84,12 +84,12 @@ export class PendingRouteListComponent {
 
   ionViewWillEnter() {
     // TESTING HTTP REQUESTS TO DRIVELY REST API
-    this.routesProvider.testHttp()
-      .subscribe((data) => {
-        if(data) {
-          alert(JSON.stringify(data))
-        }
-      });
+    // this.routesProvider.testHttp()
+    //   .subscribe((data) => {
+    //     if(data) {
+    //       alert(JSON.stringify(data))
+    //     }
+    //   });
 
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;

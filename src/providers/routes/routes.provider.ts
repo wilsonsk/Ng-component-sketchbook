@@ -28,6 +28,7 @@ export class RoutesProvider {
 
   // Publically Accessible Vars
   currentRoute: RouteModel;
+  pendingRoteute: RouteModel;
   routesChanged = new Subject<RouteModel[]>();
   pendingRoutesChanged = new Subject<RouteModel[]>();
   stateChanged = new Subject<RouteState>();
@@ -113,7 +114,11 @@ export class RoutesProvider {
       false,
       false,
       true,
+      false
     );
+    if(this.pendingRoutes.length > 0) {
+      this.setState('havePendingRoutes', true);
+    }
     if(this.state.routeType==='p') {
       this.setState('startingMileageFormAccessible', false);
       this.setState('startingMileageFormHasBeenSubmitted', true);
