@@ -8,10 +8,14 @@ import { RouteNavigationComponent } from '../../components/route-navigation/rout
 import { RoutesListComponent } from '../../components/routes-list/routes-list';
 import { PendingRouteListComponent } from '../../components/pending-route-list/pending-route-list';
 
+import { RoutesProvider } from '../../providers/routes/routes.provider';
+
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
+
+  havePendingRoutes: boolean = false;
 
   tab1Root = HomePage;
   tab2Root = InspectionFormComponent;
@@ -20,7 +24,7 @@ export class TabsPage {
   tab6Root = RoutesListComponent;
   tab7Root = PendingRouteListComponent;
 
-  constructor() {
-
+  constructor(private routesProvider: RoutesProvider) {
+    this.havePendingRoutes = this.routesProvider.checkPendingRoutes();
   }
 }
