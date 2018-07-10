@@ -91,6 +91,29 @@ export class RoutesListComponent {
   startingMileageForm: FormGroup;
   endingMileageForm: FormGroup;
 
+  routeCardStyle(routeType: string, index: number): Object {
+    if(routeType == 'p' && index != 0) {
+        return {
+          backgroundColor: '',
+          filter: 'greyscale(80%)',
+        };
+    } else if(routeType == 'p' && index == 0) {
+      return {
+        backgroundColor: '',
+      };
+    } else if (routeType == 'd' && index != 0) {
+      return {
+        backgroundColor: '#D87C27',
+        filter: 'greyscale(80%)',
+      };
+    } else if (routeType == 'd' && index == 0) {
+      return {
+        backgroundColor: '#D87C27',
+      };
+    }
+
+  }
+
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private locationProvider:LocationProvider, private routesProvider: RoutesProvider, private alertCtrl: AlertController,
               private camera: Camera, private toastCtrl: ToastController, private file: File) {
@@ -393,5 +416,9 @@ export class RoutesListComponent {
 
     this.currentRoute = null;
     this.routesProvider.setState('showAllRoutes', true);
+  }
+
+  onAcceptPendingRoute() {
+    alert("Do something on accept pending route");
   }
 }
