@@ -12,15 +12,20 @@ export class DottedBorderDirective {
   @HostBinding('style.backgroundPosition') bgPos: string = 'center';
   svgPath:string = '';
 
-  @Input() set svgType(type: string) {
+  @Input() set svgType(type: string = null) {
     this.initSize();
-    if(type==='d') {
+    if(type=='d') {
       this.svgPath = 'assets/svg/dotted_border_alt.svg';
       this.bg = 'url(' + this.svgPath + ')';
-    } else if(type==='p'){
+    } else if (type=='p'){
       this.svgPath = 'assets/svg/dotted_border.svg';
       this.bg = 'url(' + this.svgPath + ')';
+    } else {
+      this.svgPath = 'assets/svg/dotted_border_alt.svg';
+      this.bg = 'url(' + this.svgPath + ')';
     }
+
+
   }
 
   constructor() {

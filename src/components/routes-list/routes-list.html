@@ -167,7 +167,7 @@
         </ng-template>
         <ion-card class="mt5 br3 bl bw3 shadow-3 transition-animated dark-red" *ngIf="state.havePendingRoutes" (click)="onAcceptPendingRoute()" style="margin-left:0;margin-right:0;margin-bottom:0;">
           <ion-card-content>
-            <h1 style="color:red"><ion-icon name="alert"></ion-icon> New Pending Route</h1>
+            <h1 style="color:red"><ion-icon name="alert"></ion-icon> New Pending Routes ( {{ state.numPendingRoutes }} )</h1>
           </ion-card-content>
         </ion-card>
       </ion-col>

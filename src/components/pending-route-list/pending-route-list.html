@@ -4,12 +4,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="state.numRoutes >= 1">
+<ion-content>
   <!-- <ion-list no-lines class="mt4" *ngIf="currentRoute;else noRoutes"> -->
-    <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">
+    <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(119,119,119) 0%, rgb(204,204,204) 100%) no-repeat;">
       <ion-col col-7>
         <div class="transition-animated" *ngIf="state.routeType==='p';else dropOffHeader">
-          <h1 class="avenir f-headline fw8-ns fw6-l tracked white">Pending Routes</h1>
+          <h1 class="avenir f-headline fw8-ns fw6-l tracked" [ngStyle]="{'color': '#D87C27'}">Pending Routes</h1>
           <span class="avenir f3 fw4 tracked white db mt4">Swipe a route left to accept route</span>
           <span class="avenir f3 fw4 tracked white db mt2">Tap to see all riders of shared trip</span>
         </div>
@@ -23,7 +23,7 @@
         <ion-row align-items-start>
           <ion-col>
             <span class="db avenir f1-ns f1-l fw6 white tr">Pending Routes:</span>
-            <span class="db avenir f-headline fw6 tr red">{{ state.numPendingRoutes }}</span>
+            <span class="db avenir f-headline fw6 tr" [ngStyle]="{'color': '#D87C27'}">{{ state.numPendingRoutes }}</span>
           </ion-col>
         </ion-row>
         <ion-row class="mt6">
@@ -43,19 +43,19 @@
     <ion-list *ngFor="let currentRoute of pendingRoutes; let i = index;" no-lines class="mt4">
       <ion-item-sliding>
         <ion-item>
-          <ion-card class="br3 bl bw3 shadow-3 transition-animated" [ngStyle]="{'border-color': currentRoute.routeType=='p' ? '#D87C27' : '#A8A8A8'}">
+          <ion-card class="br3 bl bw3 shadow-3 transition-animated" [ngStyle]="{'border-color': '#D87C27'}">
             <ion-card-content no-padding class="unfold-parent" (click)="onUnFold()" [ngClass]="{'isActive': isActive}">
-              <ion-row class="pa4 relative unfold-first-child transition-animated" [ngStyle]="{'background-color': currentRoute.routeType=='p' ? '' : '#D87C27'}">
+              <ion-row class="pa4 relative unfold-first-child transition-animated" [ngStyle]="routeCardStyle()">
                 <ion-col col-3 class="br b--silver" [ngStyle]="{'border-color': currentRoute.routeType==='p' ? '' : 'white'}">
                   <ion-row>
                     <ion-col col-12>
-                      <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'black'}" *ngIf="currentRoute.routeType=='p'" [@fade]>Pickup</h1>
-                      <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'black'}" *ngIf="currentRoute.routeType=='d'" [@fade]>Drop Off</h1>
+                      <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': '#D87C27'}" *ngIf="currentRoute.routeType=='p'" [@fade]>Pickup</h1>
+                      <h1 class="avenir f-headline fw8 tracked" [ngStyle]="{'color': '#D87C27'}" *ngIf="currentRoute.routeType=='d'" [@fade]>Drop Off</h1>
                     </ion-col>
                   </ion-row>
                   <ion-row class="mt5">
                     <ion-col col-12>
-                      <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">Pick Up Time:</span>
+                      <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': 'white'}">Pick Up Time:</span>
                     </ion-col>
                     <ion-col col-12>
                       <span class="avenir f2 fw7">{{ currentRoute.pickUpTime }}</span>
@@ -64,19 +64,15 @@
                 </ion-col>
                 <ion-col col-9 class="pl4">
                   <ion-row>
-                    <ion-col col-1 dotted-border [svgType]="currentRoute.routeType" *ngIf="currentRoute.routeType=='p';else altBorder">
+                    <ion-col col-1 dotted-border [svgType]="currentRoute.routeType">
                     </ion-col>
-                    <ng-template #altBorder>
-                      <ion-col col-1 dotted-border [svgType]="currentRoute.routeType">
-                      </ion-col>
-                    </ng-template>
                     <ion-col col-11 class="pl3">
                       <ion-row>
                         <ion-col col-12 class="bb bw6 tc transition-animated" [ngStyle]="{'border-color': currentRoute.routeType=='p' ? 'black' : 'white'}">
-                          <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">From: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">Current Location</span>
+                          <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': 'white'}">From: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">Current Location</span>
                         </ion-col>
                         <ion-col col-12 class="tc transition-animated">
-                          <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">To: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.destinationAddr }}</span>
+                          <span class="avenir f3-ns f2-l fw3-ns fw4-l" [ngStyle]="{'color': 'white'}">To: </span><span class="avenir f3-ns f2-l fw3-ns fw4-l">{{ currentRoute.destinationAddr }}</span>
                         </ion-col>
                       </ion-row>
                     </ion-col>
@@ -85,7 +81,7 @@
                     <ion-col col-3 push-1>
                       <ion-row>
                         <ion-col col-12>
-                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">Appointment Time:</span>
+                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': 'white'}">Appointment Time:</span>
                         </ion-col>
                         <ion-col col-12>
                           <span class="avenir f2 fw7 transition-animated">{{ currentRoute.appointmentTime }}</span>
@@ -95,7 +91,7 @@
                     <ion-col col-2 push-2>
                       <ion-row>
                         <ion-col col-12>
-                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">Ambulatory</span>
+                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': 'white'}">Ambulatory</span>
                         </ion-col>
                         <ion-col col-12>
                           <span class="avenir f2 fw8" *ngIf="currentRoute.ambulatory;else notAmbulatory" [@fade]>Y</span>
@@ -106,7 +102,7 @@
                     <ion-col col-2 push-3>
                       <ion-row>
                         <ion-col col-12>
-                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': currentRoute.routeType=='p' ? '#D87C27' : 'white'}">Shared Ride:</span>
+                          <span class="avenir f4 fw6 transition-animated" [ngStyle]="{'color': 'white'}">Shared Ride:</span>
                         </ion-col>
                         <ion-col col-12>
                           <span class="avenir f2 fw8" *ngIf="currentRoute.shared;else notShared" [@fade]>Y</span>

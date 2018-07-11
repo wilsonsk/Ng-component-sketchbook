@@ -76,24 +76,10 @@ export class PendingRouteListComponent {
   // Animation only States
   folded: boolean = true;
 
-  routeCardStyle(routeType: string, index: number): Object {
-    if(routeType == 'p' && index != 0) {
-        return {
-          backgroundColor: 'gray',
-        };
-    } else if(routeType == 'p' && index == 0) {
-      return {
-        backgroundColor: '',
-      };
-    } else if (routeType == 'd' && index != 0) {
-      return {
-        backgroundColor: 'gray',
-      };
-    } else if (routeType == 'd' && index == 0) {
-      return {
-        backgroundColor: '#D87C27',
-      };
-    }
+  routeCardStyle(): Object {
+    return {
+      backgroundColor: 'gray',
+    };
   }
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,

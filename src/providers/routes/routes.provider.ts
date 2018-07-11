@@ -94,6 +94,7 @@ export class RoutesProvider {
 
     if(this.routes.length == 0) {
       this.setState('numRoutes', this.routes.length);
+      this.routesChanged.next(this.routes.slice());
     } else {
       this.routesChanged.next(this.routes.slice());
     }
