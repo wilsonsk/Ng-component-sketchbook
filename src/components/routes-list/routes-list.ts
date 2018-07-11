@@ -134,7 +134,7 @@ export class RoutesListComponent {
       this.state = this.routesProvider.getState();
     });
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
-      this.state = stateCopy;
+      this.state = this.routesProvider.getState();
     });
     this.routesChangedSubscription = this.routesProvider.routesChanged.subscribe((routes: RouteModel[]) => {
       this.routes = this.routesProvider.getRoutes();

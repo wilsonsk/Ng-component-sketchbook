@@ -80,7 +80,12 @@ export class RoutesProvider {
   removePendingRoute(index: number) {
     this.pendingRoutes.splice(index,1);
     this.setState('numPendingRoutes', this.pendingRoutes.length);
-    this.pendingRoutesChanged.next(this.pendingRoutes.slice());
+    if(this.pendingRoutes.length == 0) {
+      this.setState('havePendingRoutes', false);
+      this.pendingRoutesChanged.next(this.pendingRoutes.slice());
+    } else {
+      this.pendingRoutesChanged.next(this.pendingRoutes.slice());
+    }
   }
 
   removeRoute() {

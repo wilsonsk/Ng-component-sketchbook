@@ -116,9 +116,6 @@ export class PendingRouteListComponent {
     });
     this.pendingRoutesChangedSubscription = this.routesProvider.pendingRoutesChanged.subscribe((pendingRoutes: RouteModel[]) => {
       this.pendingRoutes = pendingRoutes;
-      if(this.pendingRoutes.length < 1) {
-        this.routesProvider.setState('havePendingRoutes', false);
-      }
     });
   }
 
