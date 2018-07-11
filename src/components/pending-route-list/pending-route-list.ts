@@ -76,6 +76,26 @@ export class PendingRouteListComponent {
   // Animation only States
   folded: boolean = true;
 
+  routeCardStyle(routeType: string, index: number): Object {
+    if(routeType == 'p' && index != 0) {
+        return {
+          backgroundColor: 'gray',
+        };
+    } else if(routeType == 'p' && index == 0) {
+      return {
+        backgroundColor: '',
+      };
+    } else if (routeType == 'd' && index != 0) {
+      return {
+        backgroundColor: 'gray',
+      };
+    } else if (routeType == 'd' && index == 0) {
+      return {
+        backgroundColor: '#D87C27',
+      };
+    }
+  }
+
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
               private routesProvider: RoutesProvider, private alertCtrl: AlertController) {
                 this.pendingRoutes = this.routesProvider.getPendingRoutes();
@@ -96,6 +116,9 @@ export class PendingRouteListComponent {
     });
     this.pendingRoutesChangedSubscription = this.routesProvider.pendingRoutesChanged.subscribe((pendingRoutes: RouteModel[]) => {
       this.pendingRoutes = pendingRoutes;
+      if(this.pendingRoutes.length < 1) {
+        this.routesProvider.setState('havePendingRoutes', false);
+      }
     });
   }
 

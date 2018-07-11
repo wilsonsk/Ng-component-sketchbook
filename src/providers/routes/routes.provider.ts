@@ -20,10 +20,6 @@ export class RoutesProvider {
   pendingRoutes: RouteModel[] = [
     new RouteModel('6:40AM', 1, '1800 NE Alberta St, Portland, OR 97211', '06:40AM', true, false, null, 'p', null, null, null, null, null),
     new RouteModel('10:20AM', 2, '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '10:20AM', true, true, null, 'd', null, null, null, null, null),
-    new RouteModel('01:15PM', 3, '8801 NE Hazel Dell Ave, Vancouver, WA 98665', '02:00PM', false, false, null, 'p', null, null, null, null, null),
-    new RouteModel('03:25PM', 4, '2211 NE 139th St, Vancouver, WA 98686', '04:20PM', false, false, null, 'd', null, null, null, null, null),
-    new RouteModel('05:50PM', 5, '700 NE 87th Ave, Vancouver, WA 98664', '07:00PM', true, true, null, 'p', null, null, null, null, null),
-    new RouteModel('07:50PM', 6, '700 NE 87th Ave, Vancouver, WA 98664', '08:30PM', true, true, null, 'd', null, null, null, null, null),
   ];
 
   // Publically Accessible Vars
@@ -83,6 +79,7 @@ export class RoutesProvider {
 
   removePendingRoute(index: number) {
     this.pendingRoutes.splice(index,1);
+    this.setState('numPendingRoutes', this.pendingRoutes.length);
     this.pendingRoutesChanged.next(this.pendingRoutes.slice());
   }
 
@@ -114,7 +111,8 @@ export class RoutesProvider {
       false,
       false,
       true,
-      false
+      false,
+      this.pendingRoutes.length,
     );
     if(this.pendingRoutes.length > 0) {
       this.setState('havePendingRoutes', true);
@@ -132,7 +130,7 @@ export class RoutesProvider {
   }
 
   public setState(prop:string, val:any) {
-    // alert('called ' + prop + " " + val)
+    // alert('setState() called ' + prop + " " + val)
     // alert(JSON.stringify(this.state))
     this.state[prop] = val;
     let stateCopy: RouteState = Object.assign({}, this.state);

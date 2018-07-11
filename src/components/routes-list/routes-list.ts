@@ -69,6 +69,7 @@ export class RoutesListComponent {
   private locationChangedSubscription: Subscription;
   private routesChangedSubscription: Subscription;
   private stateChangedSubscription: Subscription;
+  private pendingRoutesChanged: Subscription;
 
   // Component States from Routes Provider
   isActive: boolean;
@@ -80,6 +81,7 @@ export class RoutesListComponent {
   currentRoute: RouteModel;
   currentLocation: LocationModel;
   routes: RouteModel[] = [];
+
   // Image URL needs to reset after each trip type (p and d)
   imagePath = '';
 
@@ -109,7 +111,6 @@ export class RoutesListComponent {
         backgroundColor: '#D87C27',
       };
     }
-
   }
 
   constructor(public navCtrl: NavController, private launchNavigator: LaunchNavigator, private nativePageTransitions: NativePageTransitions,
@@ -129,7 +130,9 @@ export class RoutesListComponent {
           alert(JSON.stringify(data))
         }
       });
-
+    this.pendingRoutesChanged = this.routesProvider.pendingRoutesChanged.subscribe((pendingRoutes) => {
+      this.state = this.routesProvider.getState();
+    });
     this.stateChangedSubscription = this.routesProvider.stateChanged.subscribe((stateCopy: RouteState) => {
       this.state = stateCopy;
     });
@@ -138,7 +141,6 @@ export class RoutesListComponent {
       this.currentRoute = this.routesProvider.getCurrentRoute();
       this.routesProvider.updateState();
     });
-
     // locationChangedSubscription needs to be tested
     this.locationChangedSubscription = this.locationProvider.locationChanged.subscribe((loc) => {
       this.currentLocation = this.locationProvider.getLocation();
