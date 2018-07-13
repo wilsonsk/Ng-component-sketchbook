@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="state.numRoutes >= 1">
+<ion-content #content *ngIf="state.numRoutes >= 1">
   <!-- <ion-list no-lines class="mt4" *ngIf="currentRoute;else noRoutes"> -->
   <div *ngIf="state.showAllRoutes;else curRoute">
     <ion-row class="pa5" style="background:linear-gradient(90deg, rgb(216, 124, 39) 0%, rgb(247, 184, 126) 100%) no-repeat;">

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
@@ -92,6 +92,8 @@ export class RoutesListComponent {
   pickupNotesForm: FormGroup;
   startingMileageForm: FormGroup;
   endingMileageForm: FormGroup;
+
+  @ViewChild('content') content: ElementRef;
 
   routeCardStyle(routeType: string, index: number): Object {
     if(routeType == 'p' && index != 0) {
@@ -396,6 +398,7 @@ export class RoutesListComponent {
 
     this.currentRoute = null;
     this.routesProvider.setState('showAllRoutes', true);
+    this.content.scrollToTop();
   }
 
   onSubmitPickupNotes() {
@@ -416,6 +419,7 @@ export class RoutesListComponent {
 
     this.currentRoute = null;
     this.routesProvider.setState('showAllRoutes', true);
+    this.content.scrollToTop();
   }
 
   onAcceptPendingRoute() {

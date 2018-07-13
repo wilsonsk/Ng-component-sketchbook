@@ -12,7 +12,7 @@ export class DottedBorderDirective {
   @HostBinding('style.backgroundPosition') bgPos: string = 'center';
   svgPath:string = '';
 
-  @Input() set svgType(type: string = null) {
+  @Input() set svgType(type: string) {
     this.initSize();
     if(type=='d') {
       this.svgPath = 'assets/svg/dotted_border_alt.svg';
