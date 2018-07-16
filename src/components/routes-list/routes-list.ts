@@ -93,7 +93,7 @@ export class RoutesListComponent {
   startingMileageForm: FormGroup;
   endingMileageForm: FormGroup;
 
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content') content;
 
   routeCardStyle(routeType: string, index: number): Object {
     if(routeType == 'p' && index != 0) {
